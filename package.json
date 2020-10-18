@@ -4,8 +4,14 @@
   "description": "A website to shorten and inflate URLs",
   "main": "index.js",
   "scripts": {
+    "start": "concurrently \"npm run build:watch\" \"npm run serve\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jorden Garcia",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/hapi": "^20.0.1",
+    "@hapi/inert": "^6.0.3",
+    "path": "^0.12.7"
+  }
 }
