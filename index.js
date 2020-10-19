@@ -2,6 +2,9 @@
 
 const Hapi = require('@hapi/hapi');
 const Path = require('path');
+const URLdb = require('./model');
+const crypto = require('crypto')
+
 const init = async() => {
 
     const server = Hapi.server({
@@ -44,18 +47,57 @@ const init = async() => {
     server.route({
         method: 'GET',
         path: '/url/inflate',
-        handler: (req, h) =>{
-            console.log(req.query.url);
-            return 'Hello';
+        handler: async (req, h) =>{
+            let res;
+            try {
+                res = await URLdb.findOne({where: {longUrl: req.query.url}});  
+            } catch (error) {
+                res = error;
+            }
+            return res;
         }
     })
 
     server.route({
         method: 'POST',
         path: '/url/shorten',
-        handler: (req, h) =>{
-            console.log(req.payload.url);
-            return 'Hello';
+        handler: async (req, h) =>{
+            let longUrl = req.payload.url;
+            let shortUrl = crypto.createHash('md5').update(longUrl).digest('hex').slice(0,8);
+            let res;
+            let created = false;
+            try {
+                [res,created] = await 
+                findOrCreate({
+                    where:{longUrl: longUrl},  
+                    defaults:{
+                        shortUrl: shortUrl
+                    }
+                });
+            } catch (error) {
+                console.log(error);
+                /*if a shortUrl matches one in the db then add random number from 0 to 99999 to the 
+                end of the longUrl, hash, and try again */
+                if(error.name === 'SequelizeUniqueConstraintError'){
+                    let tempLongUrl = longUrl.concat(Math.floor(Math.random() * Math.floor(100000)))
+                    shortUrl = crypto.createHash('md5').update(tempLongUrl).digest('hex').slice(0,8);
+                    try {
+                        [res,created] = await 
+                        findOrCreate({
+                            where:{longUrl: longUrl},  
+                            defaults:{
+                                shortUrl: shortUrl
+                            }
+                        });
+                    } catch (error) {
+                        return error;
+                    }
+                }
+                
+
+                return error;
+            }
+            return res.shortUrl;
         }
     })
 
