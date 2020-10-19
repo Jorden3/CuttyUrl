@@ -6,8 +6,9 @@ import { Router } from '@angular/router';
 })
 export class RedirectDirective {
   @Input() url: string;
-  @HostListener('click', ['$event']) clicked(event: Event){
+  @HostListener('click', ['$event']) clicked = (event: Event) => {
     window.open(this.url, '_blank');
-  };
+  }
+
   constructor(private elRef: ElementRef, private router: Router){}
 }

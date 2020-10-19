@@ -22,13 +22,26 @@ export class InflateUrlComponent implements OnInit {
 
   constructor(private httpService: DataStorageService, private compFact: ComponentFactoryResolver) { }
 
+  private showErrorAlert = (error: string) => {
+    const alertComponentFactory = this.compFact.resolveComponentFactory(AlertComponent);
+    const hostViewContainerRef = this.alertHost.viewRef;
+    hostViewContainerRef.clear();
+
+    const componentRef = hostViewContainerRef.createComponent(alertComponentFactory);
+    componentRef.instance.message = error;
+    this.sub = componentRef.instance.closeAlert.subscribe( () => {
+        this.sub.unsubscribe();
+        hostViewContainerRef.clear();
+    });
+  }
+
   ngOnInit(): void {
     this.initForm();
   }
 
   urlSent(): void {
-    let passedUrl = this.url.value.urlInput;
-    let short = passedUrl.slice(passedUrl.lastIndexOf('/')+1, passedUrl.length);
+    const passedUrl = this.url.value.urlInput;
+    const short = passedUrl.slice(passedUrl.lastIndexOf('/') + 1, passedUrl.length);
     // send url to server to inflate
     this.dbSub = this.httpService.inflateUrl(short);
     this.dbSub.subscribe((inflated) => {
@@ -42,20 +55,8 @@ export class InflateUrlComponent implements OnInit {
     this.url.reset();
   }
 
-  private showErrorAlert(error: string) {
-    const alertComponentFactory = this.compFact.resolveComponentFactory(AlertComponent);
-    const hostViewContainerRef = this.alertHost.viewRef;
-    hostViewContainerRef.clear();
 
-    const componentRef = hostViewContainerRef.createComponent(alertComponentFactory);
-    componentRef.instance.message = error;
-    this.sub = componentRef.instance.closeAlert.subscribe( () => {
-        this.sub.unsubscribe();
-        hostViewContainerRef.clear();
-    });
-}
-
-  initForm(){
+  initForm(): void{
     this.url = new FormGroup({
       urlInput: new FormControl('', [Validators.required])
     });
