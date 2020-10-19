@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-sm-12">
+        <form [formGroup]="url" (ngSubmit)="urlSent()">
+            <div class="row">
+                <div class="col-sm-12 mt-1">
+                    <button 
+                    type="submit"
+                    class="btn btn-primary"
+                    [disabled]="!url.valid">
+                    Shorten the URL
+                </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 mt-1">
+                    <div class="form-group">
+                        <label for="ShortenedURL">Inflated URL:</label>
+                        <input type="text" class="form-control"
+                        id="urlInput"
+                        formControlName="urlInput"
+                        >
+                    </div>
+                </div>
+            </div>
+        </form> 
+    </div> 
+</div>
+<div class="row" *ngIf="longUrl">
+    <div class="col-md-10">
+        <h3>Inflated URL:</h3>
+        <h4 class='ml-3'>{{longUrl}}</h4>
+    </div>
+</div>
+<div class="row" *ngIf="shrotenedUrl">
+    <div class="col-md-10">
+        <h3>Shortened URL:</h3>
+        <h4 class="ml-3">{{shrotenedUrl}}</h4>
+    </div>
+</div>

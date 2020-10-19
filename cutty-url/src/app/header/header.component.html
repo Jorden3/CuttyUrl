@@ -1,1 +1,17 @@
-<p>header works!</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a routerLink="/" class="navbar-brand">CuttyURL</a>
+            <button type="submit" class="navbar-toggler" (click)="collapsed = !collapsed">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse" [class.collapse]="collapsed" (window:resize)="collapsed = true">
+            <ul class="nav navbar-nav">
+                <!-- <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li> -->
+                <li class="nav-item" routerLinkActive="active" (click)="collapsed = !collapsed" routerLink="/shorten"><a class="nav-link">Shorten URL</a></li>
+                <li class="nav-item" routerLinkActive="active" (click)="collapsed = !collapsed" routerLink="/inflate"><a class="nav-link">Inflate URL</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
