@@ -9,7 +9,7 @@ const init = async() => {
 
     const server = Hapi.server({
         host: 'localhost',
-        port: 4102
+        port: 4103
     });
 
     await server.register(require('@hapi/inert'));
@@ -50,11 +50,15 @@ const init = async() => {
         handler: async (req, h) =>{
             let res;
             try {
-                res = await URLdb.findOne({where: {longUrl: req.query.url}});  
+                res = await URLdb.findOne({where: {shortUrl: req.query.url}});
+                if(res === null){
+                    return 'Link is not found'
+                }
+                      
             } catch (error) {
-                res = error;
+                return error;
             }
-            return res;
+            return res
         }
     })
 
@@ -67,7 +71,7 @@ const init = async() => {
             let res;
             let created = false;
             try {
-                [res,created] = await 
+                [res,created] = await URLdb.
                 findOrCreate({
                     where:{longUrl: longUrl},  
                     defaults:{
@@ -93,11 +97,9 @@ const init = async() => {
                         return error;
                     }
                 }
-                
-
                 return error;
             }
-            return res.shortUrl;
+            return res;
         }
     })
 

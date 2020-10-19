@@ -10,6 +10,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ShortenUrlComponent } from './shorten-url/shorten-url.component';
 import { RedirectDirective } from './shared/redirect.directive';
+import { UrlNamePipe } from './shared/url-name.pipe';
+import { AlertComponent } from './shared/alert/alert.component';
+import { PlaceHolderDirective } from './shared/place-holder.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,10 @@ import { RedirectDirective } from './shared/redirect.directive';
     HomeComponent,
     InflateUrlComponent,
     ShortenUrlComponent,
-    RedirectDirective
+    RedirectDirective,
+    UrlNamePipe,
+    AlertComponent,
+    PlaceHolderDirective
   ],
   imports: [
     BrowserModule,

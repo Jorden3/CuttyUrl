@@ -1,3 +1,5 @@
+<ng-template appPlaceHolder></ng-template>
+
 <div class="row">
     <div class="col-sm-12">
         <form [formGroup]="url" (ngSubmit)="urlSent()">
@@ -28,13 +30,12 @@
 <div class="row" *ngIf="shrotenedUrl">
     <div class="col-md-10">
         <h3>Shortened URL:</h3>
-        <h4 class='ml-3'>{{shrotenedUrl}}</h4>
+        <button class="btn btn-primary" appRedirect [url]="longUrl">{{dbSub | async | url:'short'}}</button>
     </div>
 </div>
 <div class="row" *ngIf="longUrl">
-    <div class="col-md-10">
+    <div class="col-md-10 align-items-center">
         <h3>Inflated URL:</h3>
-        <span style="font-size: larger;" class="text-center ml-2 mr-2">Visit:</span>
-        <button class="btn btn-primary" appRedirect>{{longUrl}}</button>
+        <button class="btn btn-primary" appRedirect [url]="longUrl">{{dbSub | async | url:'long'}}</button>
     </div>
 </div>

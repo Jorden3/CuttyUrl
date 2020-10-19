@@ -1,15 +1,13 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Directive({
   selector: '[appRedirect]'
 })
 export class RedirectDirective {
-
-  constructor(private elRef: ElementRef, private router: Router){}
-
+  @Input() url: string;
   @HostListener('click', ['$event']) clicked(event: Event){
-      const url = this.elRef.nativeElement.innerHTML;
-      window.open(url, '_blank');
+    window.open(this.url, '_blank');
   };
+  constructor(private elRef: ElementRef, private router: Router){}
 }

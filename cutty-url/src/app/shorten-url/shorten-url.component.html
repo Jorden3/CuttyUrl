@@ -26,14 +26,14 @@
     </div> 
 </div>
 <div class="row" *ngIf="longUrl">
-    <div class="col-md-10">
+    <div class="col-md-10 align-items-center">
         <h3>Inflated URL:</h3>
-        <h4 class='ml-3'>{{longUrl}}</h4>
+        <button class="btn btn-primary" appRedirect [url]="longUrl">{{dbSub | async | url:'long'}}</button>
     </div>
 </div>
 <div class="row" *ngIf="shrotenedUrl">
     <div class="col-md-10">
         <h3>Shortened URL:</h3>
-        <h4 class="ml-3">{{shrotenedUrl}}</h4>
+        <button class="btn btn-primary" appRedirect [url]="longUrl">{{dbSub | async | url:'short'}}</button>
     </div>
 </div>
