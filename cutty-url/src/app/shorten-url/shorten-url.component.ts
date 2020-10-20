@@ -26,6 +26,8 @@ export class ShortenUrlComponent implements OnInit {
   }
 
   urlSent(): void {
+    this.longUrl = null;
+    this.shrotenedUrl = null;
     this.longUrl = this.url.value.urlInput;
     console.log(this.longUrl);
     // send url to server to shorten

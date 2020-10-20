@@ -40,6 +40,8 @@ export class InflateUrlComponent implements OnInit {
   }
 
   urlSent(): void {
+    this.longUrl = null;
+    this.shrotenedUrl = null;
     const passedUrl = this.url.value.urlInput;
     const short = passedUrl.slice(passedUrl.lastIndexOf('/') + 1, passedUrl.length);
     // send url to server to inflate
