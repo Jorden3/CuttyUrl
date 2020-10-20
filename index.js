@@ -4,7 +4,6 @@ const Hapi = require('@hapi/hapi');
 const Path = require('path');
 const URLdb = require('./model');
 const crypto = require('crypto')
-const boom = require('boom');
 
 const init = async() => {
 
@@ -14,22 +13,6 @@ const init = async() => {
     });
 
     await server.register(require('@hapi/inert'));
-
-    server.route({
-        method:'GET',
-        path: '/cutty/{params*}',
-        handler: async (req, reply) => {
-            let res; 
-            try {
-                res = await URLdb.findOne({where: {shortUrl: req.params.params}});
-                if (res === null)
-                    return reply.response('Link not found').code(404);
-            } catch (error) {
-                throw boom.notFound('Can\'t find Link')
-            }
-            return reply.redirect(res.longUrl);
-        }
-    })
 
     server.route({
         method: 'GET',
