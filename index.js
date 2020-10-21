@@ -5,8 +5,13 @@ const Path = require('path');
 const URLdb = require('./model');
 const crypto = require('crypto')
 const boom = require('boom');
+const secret = require('./config');
+const Jwt = require('@hapi/jwt');
+
+
 
 const init = async() => {
+    const tokens = [];
 
     const server = Hapi.server({
         host: 'localhost',
@@ -14,6 +19,38 @@ const init = async() => {
     });
 
     await server.register(require('@hapi/inert'));
+    await server.register(require('@hapi/jwt'));
+    server.auth.strategy('jwt', 'jwt', {
+        keys: secret,
+        verify: {
+            aud: false,
+            iss: false,
+            sub: false,
+            nbf: false,
+            maxAgeSec: 14400, // 4 hours
+            timeSkewSec: 15
+        },
+        validate: async (artifacts, request, h) => {
+            // console.log(artifacts)
+            // Jwt.token.verify(artifacts);
+            let dbRes = await URLdb.user.findOne({where:{jwt: artifacts.token}});
+            if(dbRes === null){
+                let res = h.response().code(401)
+                return res;
+            }
+            return {isValid: true}
+        }
+    })
+   
+    server.auth.default('jwt')
+
+    server.route({
+        method:'GET',
+        path:'/test',
+        handler: (req, reply) =>{
+            return 'Hello you\'re verified'
+        }
+    })
 
     server.route({
         method:'GET',
@@ -21,7 +58,7 @@ const init = async() => {
         handler: async (req, reply) => {
             let res; 
             try {
-                res = await URLdb.findOne({where: {shortUrl: req.params.params}});
+                res = await URLdb.url.findOne({where: {shortUrl: req.params.params}});
                 if (res === null)
                     return reply.response('Link not found').code(404);
             } catch (error) {
@@ -34,6 +71,7 @@ const init = async() => {
     server.route({
         method: 'GET',
         path: '/{params*}',
+        config: {auth: false},
         handler: {
             directory: {
              path: 'cutty-url/dist/cutty-url/'
@@ -44,6 +82,7 @@ const init = async() => {
     server.route({
         method: 'GET',
         path: '/inflate/{params*}',
+        config: {auth: false},
         handler: {
             directory: {
              path: 'cutty-url/dist/cutty-url/'
@@ -54,6 +93,7 @@ const init = async() => {
     server.route({
         method: 'GET',
         path: '/shorten/{params*}',
+        config: {auth: false},
         handler: {
             directory: {
              path: 'cutty-url/dist/cutty-url/'
@@ -64,10 +104,11 @@ const init = async() => {
     server.route({
         method: 'GET',
         path: '/url/inflate',
+        config: {auth: false},
         handler: async (req, h) =>{
             let res;
             try {
-                res = await URLdb.findOne({where: {shortUrl: req.query.url}});
+                res = await URLdb.url.findOne({where: {shortUrl: req.query.url}});
                 if(res === null){
                     return 'Link is not found'
                 }
@@ -82,13 +123,14 @@ const init = async() => {
     server.route({
         method: 'POST',
         path: '/url/shorten',
+        config: {auth: false},
         handler: async (req, h) =>{
             let longUrl = req.payload.url;
             let shortUrl = crypto.createHash('md5').update(longUrl).digest('hex').slice(0,8);
             let res;
             let created = false;
             try {
-                [res,created] = await URLdb.
+                [res,created] = await URLdb.url.
                 findOrCreate({
                     where:{longUrl: longUrl},  
                     defaults:{
@@ -118,7 +160,69 @@ const init = async() => {
             }
             return res;
         }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/auth/login',
+        config: {auth: false},      
+        handler: async (req, h) =>{
+
+            try {
+                let dbRes = await URLdb.user.findOne({
+                    where:{
+                        email: req.payload.email,
+                        password: req.payload.password
+                    }
+                });
+                if(dbRes === null){
+                    const res = h.response({message: "Couldn't find account! Try signing up!", isValid: false})
+                    return res;
+                }
+                console.log(dbRes.jwt);
+                let token = Jwt.token.generate(req.payload, secret,{
+                    ttlSec: 86400000
+                });
+                dbRes.update({jwt: token});
+                console.log(dbRes.jwt);
+                const res = h.response({token: dbRes.jwt, isValid: true});
+                return res;
+            } catch (error) {
+                console.log(error);
+                return error
+            }
+        }
+    });
+
+    server.route({
+        method: 'POST',
+        path: '/auth/signup',
+        config: {auth:false},
+        handler: async (req,h) =>{
+            console.log(req.payload);
+            let token = Jwt.token.generate(req.payload, secret,{
+                ttlSec: 86400000
+            });
+            try {
+                let dbRes = await URLdb.user.create({
+                    email: req.payload.email,
+                    password: req.payload.password,
+                    jwt: token
+                });
+                let res = h.response({token:token, isValid: true}).code(200);               
+                return res;
+                
+            } catch (error) {
+                if(error.errors[0].message === 'email must be unique'){
+                    let res = h.response({message:'Email must be unique', isValid:false}).code(409);     
+                    return res;
+                }
+                else
+                    return error;
+            }
+        }
     })
+
 
 
     await server.start();

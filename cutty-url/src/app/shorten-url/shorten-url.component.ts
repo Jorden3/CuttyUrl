@@ -43,7 +43,7 @@ export class ShortenUrlComponent implements OnInit {
     this.url.reset();
   }
 
-  private showErrorAlert(error: string) {
+  private showErrorAlert = (error: string)  => {
     const alertComponentFactory = this.compFact.resolveComponentFactory(AlertComponent);
     const hostViewContainerRef = this.alertHost.viewRef;
     hostViewContainerRef.clear();

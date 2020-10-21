@@ -13,7 +13,7 @@ import { RedirectDirective } from './shared/redirect.directive';
 import { UrlNamePipe } from './shared/url-name.pipe';
 import { AlertComponent } from './shared/alert/alert.component';
 import { PlaceHolderDirective } from './shared/place-holder.directive';
-import { ClipboardModule } from "@angular/cdk/clipboard";
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   declarations: [
@@ -26,14 +26,14 @@ import { ClipboardModule } from "@angular/cdk/clipboard";
     UrlNamePipe,
     AlertComponent,
     PlaceHolderDirective,
+    AuthComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    ClipboardModule
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
