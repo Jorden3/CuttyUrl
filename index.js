@@ -79,6 +79,16 @@ const init = async() => {
             }
         }
     });
+    server.route({
+        method: 'GET',
+        path: '/account/{params*}',
+        config: {auth: false},
+        handler: {
+            directory: {
+             path: 'cutty-url/dist/cutty-url/'
+            }
+        }
+    });
 
     server.route({
         method: 'GET',
@@ -142,17 +152,18 @@ const init = async() => {
             let res;
             let userDBRes;
             let created = false;
+            let email = '';
             try {
                 if(token !== ''){
                     userDBRes = await URLdb.user.findOne({where: {jwt: token}});
-                    console.log(userDBRes.email)
+                    email = userDBRes.email;
                 }
                 [res,created] = await URLdb.url.
                 findOrCreate({
                     where:{longUrl: longUrl},  
                     defaults:{
                         shortUrl: shortUrl,
-                        emailOfCreator: userDBRes.email
+                        emailOfCreator: email
                     }
                 });
 

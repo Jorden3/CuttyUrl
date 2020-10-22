@@ -10,7 +10,7 @@ export class AppComponent implements OnInit{
   title = 'cutty-url';
   constructor(private authService: AuthService){}
 
-  ngOnInit = () => {
+  ngOnInit(){
     this.authService.autoLogin();
   }
 }
