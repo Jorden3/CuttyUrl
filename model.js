@@ -1,4 +1,5 @@
 const path = require('path');
+const { Sequelize } = require('sequelize');
 const Squealize = require('sequelize');
 
 const sequalize = new Squealize(null, null, null, {
@@ -11,7 +12,8 @@ const url = sequalize.define('url',{
               allowNull: false},
     shortUrl: {type: Squealize.DataTypes.STRING,
               unique: true,
-              allowNull: false}
+              allowNull: false},
+    emailOfCreator: {type: Squealize.DataTypes.STRING}
 })
 
 const user = sequalize.define('user',{

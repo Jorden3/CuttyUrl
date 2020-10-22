@@ -7,6 +7,7 @@ const crypto = require('crypto')
 const boom = require('boom');
 const secret = require('./config');
 const Jwt = require('@hapi/jwt');
+const { user } = require('./model');
 
 
 
@@ -100,6 +101,16 @@ const init = async() => {
             }
         }
     });
+    server.route({
+        method: 'GET',
+        path: '/auth/{params*}',
+        config: {auth: false},
+        handler: {
+            directory: {
+             path: 'cutty-url/dist/cutty-url/'
+            }
+        }
+    });
 
     server.route({
         method: 'GET',
@@ -126,17 +137,25 @@ const init = async() => {
         config: {auth: false},
         handler: async (req, h) =>{
             let longUrl = req.payload.url;
+            let token = req.payload.token;
             let shortUrl = crypto.createHash('md5').update(longUrl).digest('hex').slice(0,8);
             let res;
+            let userDBRes;
             let created = false;
             try {
+                if(token !== ''){
+                    userDBRes = await URLdb.user.findOne({where: {jwt: token}});
+                    console.log(userDBRes.email)
+                }
                 [res,created] = await URLdb.url.
                 findOrCreate({
                     where:{longUrl: longUrl},  
                     defaults:{
-                        shortUrl: shortUrl
+                        shortUrl: shortUrl,
+                        emailOfCreator: userDBRes.email
                     }
                 });
+
             } catch (error) {
                 console.log(error);
                 /*if a shortUrl matches one in the db then add random number from 0 to 99999 to the 
@@ -176,16 +195,14 @@ const init = async() => {
                     }
                 });
                 if(dbRes === null){
-                    const res = h.response({message: "Couldn't find account! Try signing up!", isValid: false})
-                    return res;
+                    return boom.unauthorized("Couldn't find account! Try signing up!");
                 }
-                console.log(dbRes.jwt);
                 let token = Jwt.token.generate(req.payload, secret,{
                     ttlSec: 86400000
                 });
                 dbRes.update({jwt: token});
-                console.log(dbRes.jwt);
-                const res = h.response({token: dbRes.jwt, isValid: true});
+                let urls = await URLdb.url.findAll({where: {emailOfCreator: req.payload.email}})
+                const res = h.response({email: req.payload.email, token: dbRes.jwt, createdUrls:urls});
                 return res;
             } catch (error) {
                 console.log(error);
@@ -209,13 +226,13 @@ const init = async() => {
                     password: req.payload.password,
                     jwt: token
                 });
-                let res = h.response({token:token, isValid: true}).code(200);               
+                let res = h.response({email: req.payload.email, token:token, isValid: true}).code(200);               
                 return res;
                 
             } catch (error) {
                 if(error.errors[0].message === 'email must be unique'){
-                    let res = h.response({message:'Email must be unique', isValid:false}).code(409);     
-                    return res;
+                    //let res = h.response({message:'Email must be unique', isValid:false}).code(409);     
+                    return boom.notAcceptable('Email must be unique');
                 }
                 else
                     return error;

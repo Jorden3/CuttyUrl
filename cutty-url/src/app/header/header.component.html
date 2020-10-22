@@ -11,6 +11,9 @@
                 <!-- <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li> -->
                 <li class="nav-item" routerLinkActive="active" (click)="collapsed = !collapsed" routerLink="/shorten"><a class="nav-link">Shorten URL</a></li>
                 <li class="nav-item" routerLinkActive="active" (click)="collapsed = !collapsed" routerLink="/inflate"><a class="nav-link">Inflate URL</a></li>
+                <li class="nav-item" *ngIf="isAuthenticated" (click)="onLogout()"><a class="nav-link">Logout</a></li>
+                <li class="nav-item" *ngIf="!isAuthenticated" routerLink="/auth"><a class="nav-link">Login</a></li>
+                <li class="nav-item" routerLinkActive="active" (click)="collapsed = !collapsed" *ngIf="isAuthenticated" routerLink="/account"><a class="nav-link">Account</a></li>
             </ul>
         </div>
     </div>

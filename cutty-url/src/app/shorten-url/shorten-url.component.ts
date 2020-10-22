@@ -1,6 +1,7 @@
 import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { DataStorageService } from '../shared/data-storage.service';
 import { DbURL } from '../shared/database-url.model';
@@ -19,7 +20,10 @@ export class ShortenUrlComponent implements OnInit {
   sub: Subscription;
   @ViewChild(PlaceHolderDirective, {static: true}) alertHost: PlaceHolderDirective;
 
-  constructor(private httpService: DataStorageService, private compFact: ComponentFactoryResolver) { }
+  constructor(private httpService: DataStorageService,
+              private compFact: ComponentFactoryResolver,
+              private authService: AuthService
+    ) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -29,12 +33,20 @@ export class ShortenUrlComponent implements OnInit {
     this.longUrl = null;
     this.shrotenedUrl = null;
     this.longUrl = this.url.value.urlInput;
+    if (this.authService.user.value){
+      var token = this.authService.user.value.token;
+    }else{
+      var token = '';
+    }
     console.log(this.longUrl);
     // send url to server to shorten
-    this.dbSub = this.httpService.shortenUrl(this.url.value.urlInput);
+    this.dbSub = this.httpService.shortenUrl({longUrl: this.longUrl, token});
     this.dbSub.subscribe((shorten) => {
         this.longUrl = shorten.longUrl;
         this.shrotenedUrl = shorten.shortUrl;
+        const user = this.authService.user.value;
+        user.createdUrls.push(shorten);
+        this.authService.user.next(user);
     },
     (err) => {
       this.showErrorAlert(err.error.text);
