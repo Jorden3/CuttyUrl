@@ -49,7 +49,8 @@ export class DynamicInputComponent implements OnInit {
       },
       (err) => {
         this.showErrorAlert(err.error.text);
-      });} else if (this.inputType === 'Inflate') {
+      }); }
+      else if (this.inputType === 'Inflate') {
         const short = this.inputUrl.slice(this.inputUrl.lastIndexOf('/') + 1, this.inputUrl.length);
         // send url to server to inflate
         this.dbSub = this.httpService.inflateUrl(short);
