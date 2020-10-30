@@ -1,6 +1,7 @@
 import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { DataStorageService } from '../shared/data-storage.service';
 import { DbURL } from '../shared/database-url.model';
@@ -12,7 +13,7 @@ import { PlaceHolderDirective } from '../shared/place-holder.directive';
   styleUrls: ['./dynamic-input.component.css']
 })
 export class DynamicInputComponent implements OnInit {
-  @Input('type') type: string;
+  @Input('type') inputType: string;
   url: FormGroup;
   inputUrl: string;
   convertedUrl: string;
@@ -21,7 +22,9 @@ export class DynamicInputComponent implements OnInit {
   @ViewChild(PlaceHolderDirective, {static: true}) alertHost: PlaceHolderDirective;
   longUrl: string;
 
-  constructor(private httpService: DataStorageService, private compFact: ComponentFactoryResolver) { }
+  constructor(private httpService: DataStorageService,
+              private compFact: ComponentFactoryResolver,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -32,8 +35,13 @@ export class DynamicInputComponent implements OnInit {
     this.convertedUrl = null;
     //console.log(this.longUrl);
     // send url to server to shorten
-    if(this.type === 'Shrink'){
-      this.dbSub = this.httpService.shortenUrl(this.inputUrl);
+    if (this.authService.user.value){
+        var token = this.authService.user.value.token;
+      }else{
+        var token = '';
+      }
+    if(this.inputType === 'Shrink'){
+      this.dbSub = this.httpService.shortenUrl({longUrl: this.longUrl, token});
       this.dbSub.subscribe((shorten) => {
           this.inputUrl = shorten.longUrl;
           this.convertedUrl = shorten.shortUrl;
@@ -41,7 +49,7 @@ export class DynamicInputComponent implements OnInit {
       },
       (err) => {
         this.showErrorAlert(err.error.text);
-      });} else if (this.type === 'Inflate') {
+      });} else if (this.inputType === 'Inflate') {
         const short = this.inputUrl.slice(this.inputUrl.lastIndexOf('/') + 1, this.inputUrl.length);
         // send url to server to inflate
         this.dbSub = this.httpService.inflateUrl(short);
