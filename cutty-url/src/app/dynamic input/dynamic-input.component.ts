@@ -40,6 +40,7 @@ export class DynamicInputComponent implements OnInit {
       }else{
         var token = '';
       }
+      
     if(this.inputType === 'Shrink'){
       this.dbSub = this.httpService.shortenUrl({longUrl: this.longUrl, token});
       this.dbSub.subscribe((shorten) => {
