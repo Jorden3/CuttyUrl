@@ -31,11 +31,14 @@
     <div class="col-md-10">
         <h3>Shortened URL:</h3>
         <button class="btn btn-primary" appRedirect [url]="longUrl">{{dbSub | async | url:'short'}}</button>
+        <h5 class="mt-2">To Copy: {{dbSub | async | url:'short'}}</h5>       
     </div>
 </div>
 <div class="row" *ngIf="longUrl">
     <div class="col-md-10 align-items-center">
         <h3>Inflated URL:</h3>
         <button class="btn btn-primary" appRedirect [url]="longUrl">{{dbSub | async | url:'long'}}</button>
+        <h5 class="mt-2">To Copy: {{dbSub | async | url:'long'}}</h5>       
+
     </div>
 </div>

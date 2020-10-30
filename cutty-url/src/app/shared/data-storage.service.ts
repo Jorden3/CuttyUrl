@@ -19,7 +19,8 @@ export class DataStorageService {
     });
   }
 
-  shortenUrl(longUrl: string): Observable<DbURL> {
-    return this.http.post<DbURL>(this.serverUrl + '/url/shorten', {url: longUrl});
+  shortenUrl(longURL: {longUrl: any, token: any}): Observable<DbURL> {
+   const token = longURL.token || '';
+   return this.http.post<DbURL>(this.serverUrl + '/url/shorten', {url: longURL.longUrl, token});
   }
 }

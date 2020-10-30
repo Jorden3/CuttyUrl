@@ -1,0 +1,23 @@
+<div class="row">
+    <h3>Email:</h3>
+</div>
+<div class="row">
+    <h6>{{user.email}}</h6>
+</div>
+<!-- <button class="btn btn-primary" (click)="test()">Test</button> -->
+    <!-- <ng-template #longUrl let-longUrl>
+        {{longUrl | async | url:'long'}}
+    </ng-template>
+    <ng-template #shortUrl let-shortUrl>
+        {{shortUrl | async | url:'short'}}
+    </ng-template> -->
+<ul *ngFor="let urls of user.createdUrls">
+    <div class="row">
+        Long: {{urls | url:'long'}}
+    </div>
+    <div class="row">
+        Short: {{urls| url:'short'}}
+    </div>
+    <hr>     
+</ul>
+

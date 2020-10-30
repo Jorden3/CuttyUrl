@@ -1,6 +1,7 @@
 import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { DataStorageService } from '../shared/data-storage.service';
 import { DbURL } from '../shared/database-url.model';
@@ -13,6 +14,7 @@ import { PlaceHolderDirective } from '../shared/place-holder.directive';
 })
 export class ShortenUrlComponent implements OnInit {
   @Input('type') type: string;
+  shrotenedUrl: string;
   url: FormGroup;
   inputUrl: string;
   convertedUrl: string;
@@ -21,43 +23,42 @@ export class ShortenUrlComponent implements OnInit {
   @ViewChild(PlaceHolderDirective, {static: true}) alertHost: PlaceHolderDirective;
   longUrl: string;
 
-  constructor(private httpService: DataStorageService, private compFact: ComponentFactoryResolver) { }
+  constructor(private httpService: DataStorageService,
+              private compFact: ComponentFactoryResolver,
+              private authService: AuthService
+    ) { }
 
   ngOnInit(): void {
     this.initForm();
   }
 
   urlSent(): void {
-    this.inputUrl = this.url.value.urlInput;
-    this.convertedUrl = null;
-    //console.log(this.longUrl);
+    this.longUrl = null;
+    this.shrotenedUrl = null;
+    this.longUrl = this.url.value.urlInput;
+    if (this.authService.user.value){
+      var token = this.authService.user.value.token;
+    }else{
+      var token = '';
+    }
+    console.log(this.longUrl);
     // send url to server to shorten
-    if(this.type === 'Shrink'){
-      this.dbSub = this.httpService.shortenUrl(this.inputUrl);
-      this.dbSub.subscribe((shorten) => {
-          this.inputUrl = shorten.longUrl;
-          this.convertedUrl = shorten.shortUrl;
-          this.longUrl = shorten.longUrl;
-      },
-      (err) => {
-        this.showErrorAlert(err.error.text);
-      });} else if (this.type === 'Inflate') {
-        const short = this.inputUrl.slice(this.inputUrl.lastIndexOf('/') + 1, this.inputUrl.length);
-        // send url to server to inflate
-        this.dbSub = this.httpService.inflateUrl(short);
-        this.dbSub.subscribe((inflated) => {
-            this.convertedUrl = inflated.longUrl;
-            this.inputUrl = inflated.shortUrl;
-            this.longUrl = inflated.longUrl;
-        },
-        (err) => {
-          this.showErrorAlert(err.error.text);
-        });
-      }
+    this.dbSub = this.httpService.shortenUrl({longUrl: this.longUrl, token});
+    this.dbSub.subscribe((shorten) => {
+        this.longUrl = shorten.longUrl;
+        this.shrotenedUrl = shorten.shortUrl;
+        const user = this.authService.user.value;
+        user.createdUrls.push(shorten);
+        this.authService.user.next(user);
+    },
+    (err) => {
+      this.showErrorAlert(err.error.text);
+    });
+
     this.url.reset();
   }
 
-  private showErrorAlert = (error: string) => {
+  private showErrorAlert = (error: string)  => {
     const alertComponentFactory = this.compFact.resolveComponentFactory(AlertComponent);
     const hostViewContainerRef = this.alertHost.viewRef;
     hostViewContainerRef.clear();
