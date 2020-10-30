@@ -7,11 +7,11 @@ import { DbURL } from '../shared/database-url.model';
 import { PlaceHolderDirective } from '../shared/place-holder.directive';
 
 @Component({
-  selector: 'app-shorten-url',
-  templateUrl: './shorten-url.component.html',
-  styleUrls: ['./shorten-url.component.css']
+  selector: 'app-dynamic-input',
+  templateUrl: './dynamic-input.component.html',
+  styleUrls: ['./dynamic-input.component.css']
 })
-export class ShortenUrlComponent implements OnInit {
+export class DynamicInputComponent implements OnInit {
   @Input('type') type: string;
   url: FormGroup;
   inputUrl: string;
