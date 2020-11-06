@@ -33,7 +33,7 @@ const init = async() => {
         },
         validate: async (artifacts, request, h) => {
             // console.log(artifacts)
-            // Jwt.token.verify(artifacts);
+            Jwt.token.verify(artifacts);
             let dbRes = await URLdb.user.findOne({where:{jwt: artifacts.token}});
             if(dbRes === null){
                 let res = h.response().code(401)

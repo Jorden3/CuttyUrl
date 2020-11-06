@@ -13,7 +13,7 @@ import { PlaceHolderDirective } from '../shared/place-holder.directive';
   styleUrls: ['./dynamic-input.component.css']
 })
 export class DynamicInputComponent implements OnInit {
-  @Input('type') inputType: string;
+  @Input() type: string;
   url: FormGroup;
   inputUrl: string;
   convertedUrl: string;
@@ -33,16 +33,16 @@ export class DynamicInputComponent implements OnInit {
   urlSent(): void {
     this.inputUrl = this.url.value.urlInput;
     this.convertedUrl = null;
-    //console.log(this.longUrl);
+    let token = '';
+    // console.log(this.longUrl);
     // send url to server to shorten
     if (this.authService.user.value){
-        var token = this.authService.user.value.token;
-      }else{
-        var token = '';
-      }
-      
-    if(this.inputType === 'Shrink'){
-      this.dbSub = this.httpService.shortenUrl({longUrl: this.longUrl, token});
+        // tslint:disable-next-line: no-var-keyword
+        token = this.authService.user.value.token;
+    }
+
+    if (this.type === 'Shrink'){
+      this.dbSub = this.httpService.shortenUrl({longUrl: this.inputUrl, token});
       this.dbSub.subscribe((shorten) => {
           this.inputUrl = shorten.longUrl;
           this.convertedUrl = shorten.shortUrl;
@@ -51,7 +51,7 @@ export class DynamicInputComponent implements OnInit {
       (err) => {
         this.showErrorAlert(err.error.text);
       }); }
-      else if (this.inputType === 'Inflate') {
+      else if (this.type === 'Inflate') {
         const short = this.inputUrl.slice(this.inputUrl.lastIndexOf('/') + 1, this.inputUrl.length);
         // send url to server to inflate
         this.dbSub = this.httpService.inflateUrl(short);

@@ -297,7 +297,7 @@ function DynamicInputComponent_div_8_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", !ctx_r1.url.valid && ctx_r1.inputType !== "Inflate");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("disabled", !ctx_r1.url.valid && ctx_r1.type !== "Inflate");
 } }
 function DynamicInputComponent_ng_template_9_div_3_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div");
@@ -308,7 +308,7 @@ function DynamicInputComponent_ng_template_9_div_3_Template(rf, ctx) { if (rf & 
 } if (rf & 2) {
     const ctx_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](2, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 4, ctx_r4.dbSub), "long"));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](2, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](3, 4, ctx_r4.convertedUrl), "long"));
 } }
 function DynamicInputComponent_ng_template_9_ng_template_4_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "input", 13);
@@ -316,7 +316,7 @@ function DynamicInputComponent_ng_template_9_ng_template_4_Template(rf, ctx) { i
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](2, "async");
 } if (rf & 2) {
     const ctx_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](1, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 4, ctx_r6.dbSub), "short"));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("value", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](1, 1, _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind1"](2, 4, ctx_r6.convertedUrl), "short"));
 } }
 function DynamicInputComponent_ng_template_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 8);
@@ -332,7 +332,7 @@ function DynamicInputComponent_ng_template_9_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("url", ctx_r3.longUrl);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r3.inputType === "Inflate")("ngIfElse", _r5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx_r3.type === "Inflate")("ngIfElse", _r5);
 } }
 class DynamicInputComponent {
     constructor(httpService, compFact, authService) {
@@ -357,16 +357,15 @@ class DynamicInputComponent {
     urlSent() {
         this.inputUrl = this.url.value.urlInput;
         this.convertedUrl = null;
-        //console.log(this.longUrl);
+        let token = '';
+        // console.log(this.longUrl);
         // send url to server to shorten
         if (this.authService.user.value) {
-            var token = this.authService.user.value.token;
+            // tslint:disable-next-line: no-var-keyword
+            token = this.authService.user.value.token;
         }
-        else {
-            var token = '';
-        }
-        if (this.inputType === 'Shrink') {
-            this.dbSub = this.httpService.shortenUrl({ longUrl: this.longUrl, token });
+        if (this.type === 'Shrink') {
+            this.dbSub = this.httpService.shortenUrl({ longUrl: this.inputUrl, token });
             this.dbSub.subscribe((shorten) => {
                 this.inputUrl = shorten.longUrl;
                 this.convertedUrl = shorten.shortUrl;
@@ -375,7 +374,7 @@ class DynamicInputComponent {
                 this.showErrorAlert(err.error.text);
             });
         }
-        else if (this.inputType === 'Inflate') {
+        else if (this.type === 'Inflate') {
             const short = this.inputUrl.slice(this.inputUrl.lastIndexOf('/') + 1, this.inputUrl.length);
             // send url to server to inflate
             this.dbSub = this.httpService.inflateUrl(short);
@@ -402,7 +401,7 @@ DynamicInputComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
     } if (rf & 2) {
         var _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.alertHost = _t.first);
-    } }, inputs: { inputType: ["type", "inputType"] }, decls: 11, vars: 4, consts: [["appPlaceHolder", ""], [1, "row"], [1, "col-sm-12"], ["for", ""], [3, "formGroup", "ngSubmit"], [1, "col-sm-12", "mt-1"], [4, "ngIf", "ngIfElse"], ["elseTemplate", ""], [1, "input-group-prepend"], ["type", "submit", 1, "btn", "btn-outline-secondary", 3, "disabled"], ["type", "text", "formControlName", "urlInput", "aria-label", "", "aria-describedby", "basic-addon1", 1, "form-control"], ["appRedirect", "", "type", "button", 1, "btn", "btn-outline-secondary", 3, "url"], ["else2Template", ""], ["formControlName", "urlInput", "type", "text", "aria-describedby", "basic-addon1", 1, "form-control", 3, "value"]], template: function DynamicInputComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, inputs: { type: "type" }, decls: 11, vars: 4, consts: [["appPlaceHolder", ""], [1, "row"], [1, "col-sm-12"], ["for", ""], [3, "formGroup", "ngSubmit"], [1, "col-sm-12", "mt-1"], [4, "ngIf", "ngIfElse"], ["elseTemplate", ""], [1, "input-group-prepend"], ["type", "submit", 1, "btn", "btn-outline-secondary", 3, "disabled"], ["type", "text", "formControlName", "urlInput", "aria-label", "", "aria-describedby", "basic-addon1", 1, "form-control"], ["appRedirect", "", "type", "button", 1, "btn", "btn-outline-secondary", 3, "url"], ["else2Template", ""], ["formControlName", "urlInput", "type", "text", "aria-describedby", "basic-addon1", 1, "form-control", 3, "value"]], template: function DynamicInputComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, DynamicInputComponent_ng_template_0_Template, 0, 0, "ng-template", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
@@ -423,11 +422,11 @@ DynamicInputComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
     } if (rf & 2) {
         const _r2 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](10);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("To ", ctx.inputType, "");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("To ", ctx.type, "");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("formGroup", ctx.url);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !ctx.dbSub)("ngIfElse", _r2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", !ctx.convertedUrl)("ngIfElse", _r2);
     } }, directives: [_shared_place_holder_directive__WEBPACK_IMPORTED_MODULE_3__["PlaceHolderDirective"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["NgIf"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["DefaultValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlName"], _shared_redirect_directive__WEBPACK_IMPORTED_MODULE_7__["RedirectDirective"]], pipes: [_shared_url_name_pipe__WEBPACK_IMPORTED_MODULE_8__["UrlNamePipe"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["AsyncPipe"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2R5bmFtaWMgaW5wdXQvZHluYW1pYy1pbnB1dC5jb21wb25lbnQuY3NzIn0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](DynamicInputComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
@@ -436,9 +435,8 @@ DynamicInputComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵde
                 templateUrl: './dynamic-input.component.html',
                 styleUrls: ['./dynamic-input.component.css']
             }]
-    }], function () { return [{ type: _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_4__["DataStorageService"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"] }, { type: _auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"] }]; }, { inputType: [{
-            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"],
-            args: ['type']
+    }], function () { return [{ type: _shared_data_storage_service__WEBPACK_IMPORTED_MODULE_4__["DataStorageService"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"] }, { type: _auth_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"] }]; }, { type: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }], alertHost: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"],
             args: [_shared_place_holder_directive__WEBPACK_IMPORTED_MODULE_3__["PlaceHolderDirective"], { static: true }]
@@ -488,9 +486,7 @@ PlaceHolderDirective.ɵdir = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeComponent", function() { return HomeComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var _shorten_url_shorten_url_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../shorten-url/shorten-url.component */ "2jB4");
-/* harmony import */ var _inflate_url_inflate_url_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../inflate-url/inflate-url.component */ "l3pv");
-
+/* harmony import */ var _dynamic_input_dynamic_input_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../dynamic input/dynamic-input.component */ "4hPV");
 
 
 
@@ -500,10 +496,9 @@ class HomeComponent {
     }
 }
 HomeComponent.ɵfac = function HomeComponent_Factory(t) { return new (t || HomeComponent)(); };
-HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 2, vars: 0, template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-shorten-url");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-inflate-url");
-    } }, directives: [_shorten_url_shorten_url_component__WEBPACK_IMPORTED_MODULE_1__["ShortenUrlComponent"], _inflate_url_inflate_url_component__WEBPACK_IMPORTED_MODULE_2__["InflateUrlComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS5jb21wb25lbnQuY3NzIn0= */"] });
+HomeComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: HomeComponent, selectors: [["app-home"]], decls: 1, vars: 0, consts: [["type", "Shrink"]], template: function HomeComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "app-dynamic-input", 0);
+    } }, directives: [_dynamic_input_dynamic_input_component__WEBPACK_IMPORTED_MODULE_1__["DynamicInputComponent"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS5jb21wb25lbnQuY3NzIn0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](HomeComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
