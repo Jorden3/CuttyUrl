@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, pipe, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { DbURL } from '../shared/database-url.model';
 import { User } from './user.model';
@@ -54,6 +54,7 @@ export class AuthService {
       })
     );
   }
+
   autoLogin = () => {
     const userData: {
       email: string;
@@ -64,15 +65,18 @@ export class AuthService {
       return;
     }
 
-    const loadedUser = new User(
-      userData.email,
-      userData._token,
-      userData.createdUrls
-    );
-
-    if (loadedUser.token) {
-      this.user.next(loadedUser);
-    }
+    //TODO: hit autologin endpoint
+    this.http.get<AuthResData>(this.serverUrl + '/autologin',{
+      headers: {
+        Authorization: 'Bearer ' + userData._token
+      }
+    }).pipe(
+      catchError(this.handleError)
+    ).subscribe((resData)=>this.handleAuth(
+      resData.email,
+      resData.token,
+      resData.createdUrls
+    ))
   }
 
   logout = () => {
