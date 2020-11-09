@@ -271,7 +271,7 @@ const init = async() => {
                     password: req.payload.password,
                     jwt: token
                 });
-                let res = h.response({email: req.payload.email, token:token, isValid: true}).code(200);               
+                let res = h.response({email: dbRes.email, token:token, isValid: true}).code(200);               
                 return res;
                 
             } catch (error) {
