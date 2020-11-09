@@ -4,22 +4,22 @@
         <label for="">To {{type}}</label>
         <form [formGroup]="url" (ngSubmit)="urlSent()">
             <div class="row">
-                
                 <div class="col-sm-12 mt-1"> 
                     <div *ngIf="!convertedUrl; else elseTemplate">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary" [disabled]="!url.valid && type !=='Inflate'" type="submit">Convert</button>
-                            <input type="text" class="form-control"formControlName="urlInput" aria-label="" aria-describedby="basic-addon1">
+                            <input type="text" class="form-control" formControlName="urlInput">
                         </div>
                     </div>
                     <ng-template #elseTemplate>
                         <div class="input-group-prepend">
                         <button class="btn btn-outline-secondary" [url]="longUrl" appRedirect type="button">Visit</button>
+                        <button class="btn btn-danger" (click)="clear()" type="button">Clear</button>
                         <div *ngIf="type ==='Inflate'; else else2Template">
-                            <input formControlName="urlInput" [value]="convertedUrl | async | url:'long'" type="text" class="form-control" aria-describedby="basic-addon1">
+                            <input formControlName="urlInput" type="text" class="form-control">
                         </div>
                         <ng-template #else2Template>
-                            <input formControlName="urlInput" [value]="convertedUrl | async | url:'short'" type="text" class="form-control" aria-describedby="basic-addon1">
+                            <input formControlName="urlInput" type="text" class="form-control">
                         </ng-template>
                     </div>
                     </ng-template>                   

@@ -14,6 +14,10 @@ Then run
 ```bash
 npm install
 ```
+Then run 
+```bash
+ng build
+```
 
 navigate out of the app directory using
 ```bash

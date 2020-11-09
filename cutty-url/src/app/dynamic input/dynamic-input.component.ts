@@ -1,11 +1,13 @@
-import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { DataStorageService } from '../shared/data-storage.service';
 import { DbURL } from '../shared/database-url.model';
 import { PlaceHolderDirective } from '../shared/place-holder.directive';
+import { UrlNamePipe } from '../shared/url-name.pipe';
 
 @Component({
   selector: 'app-dynamic-input',
@@ -20,17 +22,24 @@ export class DynamicInputComponent implements OnInit {
   dbSub: Observable<DbURL>;
   sub: Subscription;
   @ViewChild(PlaceHolderDirective, {static: true}) alertHost: PlaceHolderDirective;
+  @ViewChild('urlInput', {static: false}) urlInput: ElementRef;
   longUrl: string;
 
   constructor(private httpService: DataStorageService,
               private compFact: ComponentFactoryResolver,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private activeRouter: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.initForm();
+    let tempType = this.activeRouter.snapshot.params['type']
+    if (tempType){
+      this.type = tempType;
+    }
   }
 
   urlSent(): void {
+    let urlPipe: UrlNamePipe = new UrlNamePipe;
     this.inputUrl = this.url.value.urlInput;
     this.convertedUrl = null;
     let token = '';
@@ -47,6 +56,11 @@ export class DynamicInputComponent implements OnInit {
           this.inputUrl = shorten.longUrl;
           this.convertedUrl = shorten.shortUrl;
           this.longUrl = shorten.longUrl;
+          const user = this.authService.user.value;
+          user.createdUrls.push(shorten);
+          this.authService.user.next(user);
+          let temp = urlPipe.transform(shorten, 'short')
+          this.url.setValue({urlInput: temp});
       },
       (err) => {
         this.showErrorAlert(err.error.text);
@@ -59,12 +73,14 @@ export class DynamicInputComponent implements OnInit {
             this.convertedUrl = inflated.longUrl;
             this.inputUrl = inflated.shortUrl;
             this.longUrl = inflated.longUrl;
+            let temp = urlPipe.transform(inflated, 'long');
+            this.url.setValue({urlInput: temp});
         },
         (err) => {
           this.showErrorAlert(err.error.text);
         });
       }
-    this.url.reset();
+    //this.url.reset();
   }
 
   private showErrorAlert = (error: string) => {
@@ -78,6 +94,11 @@ export class DynamicInputComponent implements OnInit {
         this.sub.unsubscribe();
         hostViewContainerRef.clear();
     });
+  }
+
+  clear(): void{
+    this.url.reset();
+    this.convertedUrl = null;
   }
 
   initForm(): void{

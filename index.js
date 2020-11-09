@@ -33,13 +33,13 @@ const init = async() => {
         },
         validate: async (artifacts, request, h) => {
             // console.log(artifacts)
-            Jwt.token.verify(artifacts);
+            //Jwt.token.verify(artifacts);
             let dbRes = await URLdb.user.findOne({where:{jwt: artifacts.token}});
             if(dbRes === null){
                 let res = h.response().code(401)
                 return res;
             }
-            return {isValid: true}
+            return {isValid: true, user: dbRes}
         }
     })
    
@@ -100,6 +100,16 @@ const init = async() => {
             }
         }
     });
+    server.route({
+        method: 'GET',
+        path: '/inflate/Inflate/{params*}',
+        config: {auth: false},
+        handler: {
+            directory: {
+             path: 'cutty-url/dist/cutty-url/'
+            }
+        }
+    });
 
     server.route({
         method: 'GET',
@@ -111,6 +121,19 @@ const init = async() => {
             }
         }
     });
+
+    server.route({
+        method: 'GET',
+        path: '/shorten/Shrink/{params*}',
+        config: {auth: false},
+        handler: {
+            directory: {
+             path: 'cutty-url/dist/cutty-url/'
+            }
+        }
+    });
+
+
     server.route({
         method: 'GET',
         path: '/auth/{params*}',
@@ -221,6 +244,17 @@ const init = async() => {
             }
         }
     });
+
+    server.route({
+        method: 'GET',
+        path: '/auth/autologin',
+        handler: async (req, h) =>{
+            let urls = await URLdb.url.findAll({where: {emailOfCreator: req.auth.credentials.email}});
+            const res = h.response({email: req.auth.credentials.email, token: req.auth.artifacts.token, createdUrls:urls}).code(200);
+            console.log(res);
+            return res;
+        }
+    })
 
     server.route({
         method: 'POST',
