@@ -32,14 +32,14 @@ export class DynamicInputComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    let tempType = this.activeRouter.snapshot.params['type']
+    const tempType = this.activeRouter.snapshot.params.type;
     if (tempType){
       this.type = tempType;
     }
   }
 
   urlSent(): void {
-    let urlPipe: UrlNamePipe = new UrlNamePipe;
+    const urlPipe: UrlNamePipe = new UrlNamePipe();
     this.inputUrl = this.url.value.urlInput;
     this.convertedUrl = null;
     let token = '';
@@ -59,7 +59,7 @@ export class DynamicInputComponent implements OnInit {
           const user = this.authService.user.value;
           user.createdUrls.push(shorten);
           this.authService.user.next(user);
-          let temp = urlPipe.transform(shorten, 'short')
+          const temp = urlPipe.transform(shorten, 'short');
           this.url.setValue({urlInput: temp});
       },
       (err) => {
@@ -73,14 +73,13 @@ export class DynamicInputComponent implements OnInit {
             this.convertedUrl = inflated.longUrl;
             this.inputUrl = inflated.shortUrl;
             this.longUrl = inflated.longUrl;
-            let temp = urlPipe.transform(inflated, 'long');
+            const temp = urlPipe.transform(inflated, 'long');
             this.url.setValue({urlInput: temp});
         },
         (err) => {
           this.showErrorAlert(err.error.text);
         });
       }
-    //this.url.reset();
   }
 
   private showErrorAlert = (error: string) => {

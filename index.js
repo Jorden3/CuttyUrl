@@ -8,6 +8,7 @@ const boom = require('boom');
 const secret = require('./config');
 const Jwt = require('@hapi/jwt');
 const { user } = require('./model');
+const key = require('./config');
 
 
 
@@ -29,11 +30,16 @@ const init = async() => {
             sub: false,
             nbf: false,
             maxAgeSec: 14400, // 4 hours
-            timeSkewSec: 15
+            timeSkewSec: 15,
         },
+        // 
         validate: async (artifacts, request, h) => {
             // console.log(artifacts)
-            //Jwt.token.verify(artifacts);
+            try {
+                Jwt.token.verify(artifacts, key);               
+            } catch (error) {
+                console.log(error);
+            }
             let dbRes = await URLdb.user.findOne({where:{jwt: artifacts.token}});
             if(dbRes === null){
                 let res = h.response().code(401)
