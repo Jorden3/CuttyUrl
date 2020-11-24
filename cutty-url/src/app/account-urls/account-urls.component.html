@@ -1,0 +1,17 @@
+<ul *ngFor="let url of urls">
+    <div class="row input-group">
+        <div class="input-group-prepend">
+            <h6 class="pt-2 mr-1">Long:</h6>
+            <button class="btn btn-outline-secondary" [url]="url.longUrl" appRedirect type="button">Visit</button>
+            <input class="col-12" readonly type="text" [(ngModel)]="url.longUrl"> 
+        </div>
+    </div>
+    <div class="row input-group mt-2">
+        <div class="input-group-prepend">
+            <h6 class="pt-2 mr-1">Short:</h6>
+            <button class="btn btn-outline-secondary" [url]="url.longUrl" appRedirect type="button">Visit</button>
+            <input class="col-12" readonly type="text" [ngModel]="url | url:'short'" (ngModelChange)="url.shortUrl = $event"> 
+        </div>
+    </div>
+    <hr>     
+</ul>

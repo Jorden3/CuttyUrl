@@ -13,8 +13,8 @@
                     </div>
                     <ng-template #elseTemplate>
                         <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary" [url]="longUrl" appRedirect type="button">Visit</button>
-                        <button class="btn btn-danger" (click)="clear()" type="button">Clear</button>
+                            <button class="btn btn-outline-secondary" [url]="longUrl" appRedirect type="button">Visit</button>
+                            <button class="btn btn-danger" (click)="clear()" type="button">Clear</button>
                         <div *ngIf="type ==='Inflate'; else else2Template">
                             <input formControlName="urlInput" type="text" class="form-control">
                         </div>

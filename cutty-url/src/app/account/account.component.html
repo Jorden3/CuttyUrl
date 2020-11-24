@@ -11,7 +11,7 @@
     <ng-template #shortUrl let-shortUrl>
         {{shortUrl | async | url:'short'}}
     </ng-template> -->
-<ul *ngFor="let urls of user.createdUrls">
+<!-- <ul *ngFor="let urls of user.createdUrls">
     <div class="row">
         Long:
         <button class="btn btn-primary ml-2" [url]="urls.longUrl" appRedirect>{{urls | url:'long'}}</button>
@@ -21,5 +21,6 @@
         <button class="btn btn-primary ml-2" [url]="urls.longUrl" appRedirect>{{urls| url:'short'}}</button>
     </div>
     <hr>     
-</ul>
+</ul> -->
+<app-account-urls [urls]='user.createdUrls'></app-account-urls>
 

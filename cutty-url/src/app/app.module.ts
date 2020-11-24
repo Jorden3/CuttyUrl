@@ -18,6 +18,7 @@ import { AuthComponent } from './auth/auth.component';
 import { CommonModule } from '@angular/common';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AccountComponent } from './account/account.component';
+import { AccountUrlsComponent } from './account-urls/account-urls.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AccountComponent } from './account/account.component';
     DynamicInputComponent,
     AuthComponent,
     AccountComponent,
+    AccountUrlsComponent,
   ],
   imports: [
     BrowserModule,
