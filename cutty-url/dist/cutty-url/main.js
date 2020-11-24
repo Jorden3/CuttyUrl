@@ -1172,7 +1172,7 @@ AccountUrlsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
     } if (rf & 2) {
         var _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵloadQuery"]()) && (ctx.urlOutput = _t.first);
-    } }, inputs: { urls: "urls" }, decls: 1, vars: 1, consts: [[4, "ngFor", "ngForOf"], [1, "row", "input-group"], [1, "input-group-prepend"], [1, "pt-2", "mr-1"], ["appRedirect", "", "type", "button", 1, "btn", "btn-outline-secondary", 3, "url"], ["readonly", "", "type", "text", 1, "col-12", 3, "ngModel", "ngModelChange"], [1, "row", "input-group", "mt-2"]], template: function AccountUrlsComponent_Template(rf, ctx) { if (rf & 1) {
+    } }, inputs: { urls: "urls" }, decls: 1, vars: 1, consts: [[4, "ngFor", "ngForOf"], [1, "row", "form-group"], [1, "input-group-prepend"], [1, "pt-2", "mr-1"], ["appRedirect", "", "type", "button", 1, "btn", "btn-outline-secondary", 3, "url"], ["readonly", "", "type", "text", 1, "col-12", 3, "ngModel", "ngModelChange"], [1, "row", "form-group", "mt-2"]], template: function AccountUrlsComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](0, AccountUrlsComponent_ul_0_Template, 17, 7, "ul", 0);
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.urls);
