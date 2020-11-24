@@ -13,7 +13,7 @@ export class UrlNamePipe implements PipeTransform{
         if (property === 'long'){
             return value.longUrl;
         }else if (property === 'short'){
-            return 'http://localhost:4103/' + value.shortUrl;
+            return 'http://localhost:4103/cutty/' + value.shortUrl;
         }else {
             return '';
         }

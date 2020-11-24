@@ -12,14 +12,12 @@ export class AccountComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.authService.user.subscribe((user) =>{
+    this.authService.user.subscribe((user) => {
       this.user = user;
     });
+
+    this.authService.getUserUrls().subscribe((urls) => {
+      this.user.createdUrls = [...urls];
+    });
   }
-
-  test() {
-
-    console.log(this.user.createdUrls[0]);
-  }
-
 }

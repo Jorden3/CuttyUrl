@@ -62,6 +62,7 @@ const init = async() => {
     server.route({
         method:'GET',
         path: '/cutty/{params*}',
+        config: {auth:false},
         handler: async (req, reply) => {
             let res; 
             try {
@@ -291,7 +292,36 @@ const init = async() => {
         }
     })
 
+    server.route({
+        method: 'GET',
+        path:'/auth/getURL',
+        handler: async (req, h) =>{
+            // console.log(req.auth.artifacts.token);
+            let resData = await URLdb.url.findAll(
+                {
+                    where: {
+                        emailOfCreator: req.auth.credentials.email
 
+                    }
+                }
+            );
+            let res = h.response(resData).code(200);
+
+            return resData;
+        }
+    });
+
+    server.route({
+        method: '*',
+        path: '/{any*}',
+        config: {auth:false},
+        handler: (req, h) => {
+            console.log('hello');
+
+            return 'hello';
+        }
+        
+    })
 
     await server.start();
     console.log('Server running on %s', server.info.uri);

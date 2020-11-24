@@ -13,7 +13,7 @@ import { RedirectDirective } from './shared/redirect.directive';
 import { UrlNamePipe } from './shared/url-name.pipe';
 import { AlertComponent } from './shared/alert/alert.component';
 import { PlaceHolderDirective } from './shared/place-holder.directive';
-import { DynamicInputComponent } from "./dynamic input/dynamic-input.component";
+import { DynamicInputComponent } from './dynamic input/dynamic-input.component';
 import { AuthComponent } from './auth/auth.component';
 import { CommonModule } from '@angular/common';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';

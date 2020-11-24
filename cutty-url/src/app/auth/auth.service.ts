@@ -65,24 +65,28 @@ export class AuthService {
       return;
     }
 
-    //TODO: hit autologin endpoint
-    this.http.get<AuthResData>(this.serverUrl + '/autologin',{
+    return this.http.get<User>(this.serverUrl + '/autologin', {
       headers: {
         Authorization: 'Bearer ' + userData._token
       }
     }).pipe(
-      catchError(this.handleError)
-    ).subscribe((resData)=>this.handleAuth(
-      resData.email,
-      resData.token,
-      resData.createdUrls
-    ))
+      catchError(this.handleError),
+      tap((resData) => this.handleAuth(
+        resData.email,
+        resData.token,
+        resData.createdUrls
+      ))
+    );
   }
 
   logout = () => {
     this.user.next(null);
     localStorage.removeItem('userData');
     this.router.navigate(['/auth']);
+  }
+
+  getUserUrls = () => {
+    return this.http.get<DbURL[]>(this.serverUrl + '/getURL');
   }
 
   handleAuth(email: string, token: string, createUrls: Array<DbURL>): void{

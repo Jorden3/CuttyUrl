@@ -13,10 +13,12 @@
     </ng-template> -->
 <ul *ngFor="let urls of user.createdUrls">
     <div class="row">
-        Long: {{urls | url:'long'}}
+        Long:
+        <button class="btn btn-primary ml-2" [url]="urls.longUrl" appRedirect>{{urls | url:'long'}}</button>
     </div>
-    <div class="row">
-        Short: {{urls| url:'short'}}
+    <div class="row mt-2">
+        Short: 
+        <button class="btn btn-primary ml-2" [url]="urls.longUrl" appRedirect>{{urls| url:'short'}}</button>
     </div>
     <hr>     
 </ul>

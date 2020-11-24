@@ -35,7 +35,7 @@ class UrlNamePipe {
             return value.longUrl;
         }
         else if (property === 'short') {
-            return 'http://localhost:4103/' + value.shortUrl;
+            return 'http://localhost:4103/cutty/' + value.shortUrl;
         }
         else {
             return '';
@@ -351,13 +351,13 @@ class DynamicInputComponent {
     }
     ngOnInit() {
         this.initForm();
-        let tempType = this.activeRouter.snapshot.params['type'];
+        const tempType = this.activeRouter.snapshot.params.type;
         if (tempType) {
             this.type = tempType;
         }
     }
     urlSent() {
-        let urlPipe = new _shared_url_name_pipe__WEBPACK_IMPORTED_MODULE_4__["UrlNamePipe"];
+        const urlPipe = new _shared_url_name_pipe__WEBPACK_IMPORTED_MODULE_4__["UrlNamePipe"]();
         this.inputUrl = this.url.value.urlInput;
         this.convertedUrl = null;
         let token = '';
@@ -376,7 +376,7 @@ class DynamicInputComponent {
                 const user = this.authService.user.value;
                 user.createdUrls.push(shorten);
                 this.authService.user.next(user);
-                let temp = urlPipe.transform(shorten, 'short');
+                const temp = urlPipe.transform(shorten, 'short');
                 this.url.setValue({ urlInput: temp });
             }, (err) => {
                 this.showErrorAlert(err.error.text);
@@ -390,13 +390,12 @@ class DynamicInputComponent {
                 this.convertedUrl = inflated.longUrl;
                 this.inputUrl = inflated.shortUrl;
                 this.longUrl = inflated.longUrl;
-                let temp = urlPipe.transform(inflated, 'long');
+                const temp = urlPipe.transform(inflated, 'long');
                 this.url.setValue({ urlInput: temp });
             }, (err) => {
                 this.showErrorAlert(err.error.text);
             });
         }
-        //this.url.reset();
     }
     clear() {
         this.url.reset();
@@ -895,7 +894,9 @@ class AppComponent {
         this.title = 'cutty-url';
     }
     ngOnInit() {
-        this.authService.autoLogin();
+        this.authService.autoLogin().subscribe(res => {
+            this.authService.user.next(res);
+        });
     }
 }
 AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_auth_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"])); };
@@ -1248,7 +1249,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _auth_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../auth/auth.service */ "qXBG");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
-/* harmony import */ var _shared_url_name_pipe__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/url-name.pipe */ "1Q4g");
+/* harmony import */ var _shared_redirect_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../shared/redirect.directive */ "NuBN");
+/* harmony import */ var _shared_url_name_pipe__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../shared/url-name.pipe */ "1Q4g");
+
 
 
 
@@ -1257,21 +1260,31 @@ __webpack_require__.r(__webpack_exports__);
 function AccountComponent_ul_6_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "ul");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "div", 0);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](3, "url");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, " Long: ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](3, "button", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](5, "url");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](4, "div", 0);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](6, "url");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "hr");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](6, "div", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](7, " Short: ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "button", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipe"](10, "url");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](11, "hr");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
 } if (rf & 2) {
     const urls_r1 = ctx.$implicit;
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" Long: ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](3, 2, urls_r1, "long"), " ");
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](3);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"](" Short: ", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](6, 5, urls_r1, "short"), " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("url", urls_r1.longUrl);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](5, 4, urls_r1, "long"));
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("url", urls_r1.longUrl);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵpipeBind2"](10, 7, urls_r1, "short"));
 } }
 class AccountComponent {
     constructor(authService) {
@@ -1281,13 +1294,13 @@ class AccountComponent {
         this.authService.user.subscribe((user) => {
             this.user = user;
         });
-    }
-    test() {
-        console.log(this.user.createdUrls[0]);
+        this.authService.getUserUrls().subscribe((urls) => {
+            this.user.createdUrls = [...urls];
+        });
     }
 }
 AccountComponent.ɵfac = function AccountComponent_Factory(t) { return new (t || AccountComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_auth_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"])); };
-AccountComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AccountComponent, selectors: [["app-account"]], decls: 7, vars: 2, consts: [[1, "row"], [4, "ngFor", "ngForOf"]], template: function AccountComponent_Template(rf, ctx) { if (rf & 1) {
+AccountComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AccountComponent, selectors: [["app-account"]], decls: 7, vars: 2, consts: [[1, "row"], [4, "ngFor", "ngForOf"], ["appRedirect", "", 1, "btn", "btn-primary", "ml-2", 3, "url"], [1, "row", "mt-2"]], template: function AccountComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "h3");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](2, "Email:");
@@ -1298,13 +1311,13 @@ AccountComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineC
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](5);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, AccountComponent_ul_6_Template, 8, 8, "ul", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](6, AccountComponent_ul_6_Template, 12, 10, "ul", 1);
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](5);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.user.email);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngForOf", ctx.user.createdUrls);
-    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"]], pipes: [_shared_url_name_pipe__WEBPACK_IMPORTED_MODULE_3__["UrlNamePipe"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FjY291bnQvYWNjb3VudC5jb21wb25lbnQuY3NzIn0= */"] });
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["NgForOf"], _shared_redirect_directive__WEBPACK_IMPORTED_MODULE_3__["RedirectDirective"]], pipes: [_shared_url_name_pipe__WEBPACK_IMPORTED_MODULE_4__["UrlNamePipe"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FjY291bnQvYWNjb3VudC5jb21wb25lbnQuY3NzIn0= */"] });
 /*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](AccountComponent, [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
         args: [{
@@ -1534,17 +1547,19 @@ class AuthService {
             if (!userData) {
                 return;
             }
-            //TODO: hit autologin endpoint
-            this.http.get(this.serverUrl + '/autologin', {
+            return this.http.get(this.serverUrl + '/autologin', {
                 headers: {
                     Authorization: 'Bearer ' + userData._token
                 }
-            }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError)).subscribe((resData) => this.handleAuth(resData.email, resData.token, resData.createdUrls));
+            }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.handleError), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["tap"])((resData) => this.handleAuth(resData.email, resData.token, resData.createdUrls)));
         };
         this.logout = () => {
             this.user.next(null);
             localStorage.removeItem('userData');
             this.router.navigate(['/auth']);
+        };
+        this.getUserUrls = () => {
+            return this.http.get(this.serverUrl + '/getURL');
         };
     }
     signup(email, password) {
