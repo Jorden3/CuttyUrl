@@ -72,7 +72,11 @@ const init = async() => {
             } catch (error) {
                 throw boom.notFound('Can\'t find Link')
             }
-            return reply.redirect(res.longUrl);
+
+            if(!res.longUrl.includes('http') || !res.longUrl.includes('https')){
+                res.longUrl = 'http://'+res.longUrl
+            }
+            return reply.redirect(res.longUrl).code(301);
         }
     })
 

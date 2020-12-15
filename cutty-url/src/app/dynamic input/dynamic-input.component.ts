@@ -57,8 +57,10 @@ export class DynamicInputComponent implements OnInit {
           this.convertedUrl = shorten.shortUrl;
           this.longUrl = shorten.longUrl;
           const user = this.authService.user.value;
-          user.createdUrls.push(shorten);
-          this.authService.user.next(user);
+          if (user){
+            user.createdUrls.push(shorten);
+            this.authService.user.next(user);
+          }
           const temp = urlPipe.transform(shorten, 'short');
           this.url.setValue({urlInput: temp});
       },
