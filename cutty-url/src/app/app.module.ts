@@ -19,6 +19,12 @@ import { CommonModule } from '@angular/common';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AccountComponent } from './account/account.component';
 import { AccountUrlsComponent } from './account-urls/account-urls.component';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import * as fromApp from './store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { UrlEffects } from './shared/Url-store/url.effects';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -34,14 +40,20 @@ import { AccountUrlsComponent } from './account-urls/account-urls.component';
     DynamicInputComponent,
     AuthComponent,
     AccountComponent,
-    AccountUrlsComponent,
+    AccountUrlsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([UrlEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [    {
     provide: HTTP_INTERCEPTORS,

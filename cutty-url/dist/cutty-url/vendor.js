@@ -9168,6 +9168,1073 @@ function elementAt(index, defaultValue) {
 
 /***/ }),
 
+/***/ "9jGm":
+/*!**************************************************************************!*\
+  !*** ./node_modules/@ngrx/effects/__ivy_ngcc__/fesm2015/ngrx-effects.js ***!
+  \**************************************************************************/
+/*! exports provided: Actions, EFFECTS_ERROR_HANDLER, Effect, EffectSources, EffectsFeatureModule, EffectsModule, EffectsRootModule, EffectsRunner, ROOT_EFFECTS_INIT, USER_PROVIDED_EFFECTS, act, createEffect, defaultEffectsErrorHandler, getEffectsMetadata, mergeEffects, ofType, rootEffectsInit, ɵa, ɵb, ɵc, ɵd, ɵe, ɵf, ɵg, ɵh */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Actions", function() { return Actions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EFFECTS_ERROR_HANDLER", function() { return EFFECTS_ERROR_HANDLER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Effect", function() { return Effect; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EffectSources", function() { return EffectSources; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EffectsFeatureModule", function() { return EffectsFeatureModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EffectsModule", function() { return EffectsModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EffectsRootModule", function() { return EffectsRootModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EffectsRunner", function() { return EffectsRunner; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ROOT_EFFECTS_INIT", function() { return ROOT_EFFECTS_INIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "USER_PROVIDED_EFFECTS", function() { return USER_PROVIDED_EFFECTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "act", function() { return act; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createEffect", function() { return createEffect; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultEffectsErrorHandler", function() { return defaultEffectsErrorHandler; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getEffectsMetadata", function() { return getEffectsMetadata; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mergeEffects", function() { return mergeEffects; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ofType", function() { return ofType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rootEffectsInit", function() { return rootEffectsInit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵa", function() { return getSourceMetadata; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵb", function() { return createEffects; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵc", function() { return _provideForRootGuard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵd", function() { return _ROOT_EFFECTS_GUARD; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵe", function() { return _ROOT_EFFECTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵf", function() { return ROOT_EFFECTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵg", function() { return _FEATURE_EFFECTS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵh", function() { return FEATURE_EFFECTS; });
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ngrx/store */ "l7P3");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/models.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Configures an effect created by `createEffect`.
+ * @record
+ */
+
+
+
+function EffectConfig() { }
+if (false) {}
+/** @type {?} */
+const DEFAULT_EFFECT_CONFIG = {
+    dispatch: true,
+    useEffectsErrorHandler: true,
+};
+/** @type {?} */
+const CREATE_EFFECT_METADATA_KEY = '__@ngrx/effects_create__';
+/**
+ * @record
+ */
+function CreateEffectMetadata() { }
+if (false) {}
+/**
+ * @record
+ * @template T
+ */
+function EffectMetadata() { }
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effect_creator.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * \@description
+ * Creates an effect from an `Observable` and an `EffectConfig`.
+ *
+ * \@usageNotes
+ *
+ * ** Mapping to a different action **
+ * ```ts
+ * effectName$ = createEffect(
+ *   () => this.actions$.pipe(
+ *     ofType(FeatureActions.actionOne),
+ *     map(() => FeatureActions.actionTwo())
+ *   )
+ * );
+ * ```
+ *
+ *  ** Non-dispatching effects **
+ * ```ts
+ * effectName$ = createEffect(
+ *   () => this.actions$.pipe(
+ *     ofType(FeatureActions.actionOne),
+ *     tap(() => console.log('Action One Dispatched'))
+ *   ),
+ *   { dispatch: false }
+ *   // FeatureActions.actionOne is not dispatched
+ * );
+ * ```
+ * @template C, DT, OT, R
+ * @param {?} source A function which returns an `Observable`.
+ * @param {?=} config A `Partial<EffectConfig>` to configure the effect.  By default, `dispatch` is true and `useEffectsErrorHandler` is true.
+ * @return {?} If `EffectConfig`#`dispatch` is true, returns `Observable<Action>`.  Else, returns `Observable<unknown>`.
+ *
+ */
+function createEffect(source, config) {
+    /** @type {?} */
+    const effect = source();
+    /** @type {?} */
+    const value = Object.assign(Object.assign({}, DEFAULT_EFFECT_CONFIG), config);
+    Object.defineProperty(effect, CREATE_EFFECT_METADATA_KEY, {
+        value,
+    });
+    return (/** @type {?} */ (effect));
+}
+/**
+ * @template T
+ * @param {?} instance
+ * @return {?}
+ */
+function getCreateEffectMetadata(instance) {
+    /** @type {?} */
+    const propertyNames = (/** @type {?} */ (Object.getOwnPropertyNames(instance)));
+    /** @type {?} */
+    const metadata = propertyNames
+        .filter((/**
+     * @param {?} propertyName
+     * @return {?}
+     */
+    (propertyName) => instance[propertyName] &&
+        instance[propertyName].hasOwnProperty(CREATE_EFFECT_METADATA_KEY)))
+        .map((/**
+     * @param {?} propertyName
+     * @return {?}
+     */
+    (propertyName) => {
+        /** @type {?} */
+        const metaData = ((/** @type {?} */ (instance[propertyName])))[CREATE_EFFECT_METADATA_KEY];
+        return Object.assign({ propertyName }, metaData);
+    }));
+    return metadata;
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ * @param {?} instance
+ * @return {?}
+ */
+function getSourceForInstance(instance) {
+    return Object.getPrototypeOf(instance);
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effect_decorator.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const METADATA_KEY = '__@ngrx/effects__';
+/**
+ * @param {?=} config
+ * @return {?}
+ */
+function Effect(config = {}) {
+    return (/**
+     * @template T, K
+     * @param {?} target
+     * @param {?} propertyName
+     * @return {?}
+     */
+    function (target, propertyName) {
+        /** @type {?} */
+        const metadata = Object.assign(Object.assign(Object.assign({}, DEFAULT_EFFECT_CONFIG), config), { // Overrides any defaults if values are provided
+            propertyName });
+        addEffectMetadataEntry(target, metadata);
+    });
+}
+/**
+ * @template T
+ * @param {?} instance
+ * @return {?}
+ */
+function getEffectDecoratorMetadata(instance) {
+    /** @type {?} */
+    const effectsDecorators = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["compose"])(getEffectMetadataEntries, getSourceForInstance)(instance);
+    return effectsDecorators;
+}
+/**
+ * Type guard to detemine whether METADATA_KEY is already present on the Class
+ * constructor
+ * @template T
+ * @param {?} sourceProto
+ * @return {?}
+ */
+function hasMetadataEntries(sourceProto) {
+    return sourceProto.constructor.hasOwnProperty(METADATA_KEY);
+}
+/**
+ * Add Effect Metadata to the Effect Class constructor under specific key
+ * @template T
+ * @param {?} sourceProto
+ * @param {?} metadata
+ * @return {?}
+ */
+function addEffectMetadataEntry(sourceProto, metadata) {
+    if (hasMetadataEntries(sourceProto)) {
+        sourceProto.constructor[METADATA_KEY].push(metadata);
+    }
+    else {
+        Object.defineProperty(sourceProto.constructor, METADATA_KEY, {
+            value: [metadata],
+        });
+    }
+}
+/**
+ * @template T
+ * @param {?} sourceProto
+ * @return {?}
+ */
+function getEffectMetadataEntries(sourceProto) {
+    return hasMetadataEntries(sourceProto)
+        ? sourceProto.constructor[METADATA_KEY]
+        : [];
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effects_metadata.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ * @param {?} instance
+ * @return {?}
+ */
+function getEffectsMetadata(instance) {
+    return getSourceMetadata(instance).reduce((/**
+     * @param {?} acc
+     * @param {?} __1
+     * @return {?}
+     */
+    (acc, { propertyName, dispatch, useEffectsErrorHandler }) => {
+        acc[propertyName] = { dispatch, useEffectsErrorHandler };
+        return acc;
+    }), {});
+}
+/**
+ * @template T
+ * @param {?} instance
+ * @return {?}
+ */
+function getSourceMetadata(instance) {
+    /** @type {?} */
+    const effects = [
+        getEffectDecoratorMetadata,
+        getCreateEffectMetadata,
+    ];
+    return effects.reduce((/**
+     * @param {?} sources
+     * @param {?} source
+     * @return {?}
+     */
+    (sources, source) => sources.concat(source(instance))), []);
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effects_resolver.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} sourceInstance
+ * @param {?} globalErrorHandler
+ * @param {?} effectsErrorHandler
+ * @return {?}
+ */
+function mergeEffects(sourceInstance, globalErrorHandler, effectsErrorHandler) {
+    /** @type {?} */
+    const sourceName = getSourceForInstance(sourceInstance).constructor.name;
+    /** @type {?} */
+    const observables$ = getSourceMetadata(sourceInstance).map((/**
+     * @param {?} __0
+     * @return {?}
+     */
+    ({ propertyName, dispatch, useEffectsErrorHandler, }) => {
+        /** @type {?} */
+        const observable$ = typeof sourceInstance[propertyName] === 'function'
+            ? sourceInstance[propertyName]()
+            : sourceInstance[propertyName];
+        /** @type {?} */
+        const effectAction$ = useEffectsErrorHandler
+            ? effectsErrorHandler(observable$, globalErrorHandler)
+            : observable$;
+        if (dispatch === false) {
+            return effectAction$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["ignoreElements"])());
+        }
+        /** @type {?} */
+        const materialized$ = effectAction$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["materialize"])());
+        return materialized$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((/**
+         * @param {?} notification
+         * @return {?}
+         */
+        (notification) => ({
+            effect: sourceInstance[propertyName],
+            notification,
+            propertyName,
+            sourceName,
+            sourceInstance,
+        }))));
+    }));
+    return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["merge"])(...observables$);
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effects_error_handler.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const MAX_NUMBER_OF_RETRY_ATTEMPTS = 10;
+/**
+ * @template T
+ * @param {?} observable$
+ * @param {?} errorHandler
+ * @param {?=} retryAttemptLeft
+ * @return {?}
+ */
+function defaultEffectsErrorHandler(observable$, errorHandler, retryAttemptLeft = MAX_NUMBER_OF_RETRY_ATTEMPTS) {
+    return observable$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])((/**
+     * @param {?} error
+     * @return {?}
+     */
+    (error) => {
+        if (errorHandler)
+            errorHandler.handleError(error);
+        if (retryAttemptLeft <= 1) {
+            return observable$; // last attempt
+        }
+        // Return observable that produces this particular effect
+        return defaultEffectsErrorHandler(observable$, errorHandler, retryAttemptLeft - 1);
+    })));
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/actions.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template V
+ */
+class Actions extends rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"] {
+    /**
+     * @param {?=} source
+     */
+    constructor(source) {
+        super();
+        if (source) {
+            this.source = source;
+        }
+    }
+    /**
+     * @template R
+     * @param {?} operator
+     * @return {?}
+     */
+    lift(operator) {
+        /** @type {?} */
+        const observable = new Actions();
+        observable.source = this;
+        observable.operator = operator;
+        return observable;
+    }
+}
+Actions.ɵfac = function Actions_Factory(t) { return new (t || Actions)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["ScannedActionsSubject"])); };
+Actions.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({ token: Actions, factory: Actions.ɵfac });
+/** @nocollapse */
+Actions.ctorParameters = () => [
+    { type: rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"], args: [_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["ScannedActionsSubject"],] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵsetClassMetadata"](Actions, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"]
+    }], function () { return [{ type: rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"],
+                args: [_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["ScannedActionsSubject"]]
+            }] }]; }, null); })();
+/**
+ * @param {...?} allowedTypes
+ * @return {?}
+ */
+function ofType(...allowedTypes) {
+    return Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["filter"])((/**
+     * @param {?} action
+     * @return {?}
+     */
+    (action) => allowedTypes.some((/**
+     * @param {?} typeOrActionCreator
+     * @return {?}
+     */
+    (typeOrActionCreator) => {
+        if (typeof typeOrActionCreator === 'string') {
+            // Comparing the string to type
+            return typeOrActionCreator === action.type;
+        }
+        // We are filtering by ActionCreator
+        return typeOrActionCreator.type === action.type;
+    }))));
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effect_notification.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @record
+ */
+function EffectNotification() { }
+if (false) {}
+/**
+ * @param {?} output
+ * @param {?} reporter
+ * @return {?}
+ */
+function reportInvalidActions(output, reporter) {
+    if (output.notification.kind === 'N') {
+        /** @type {?} */
+        const action = output.notification.value;
+        /** @type {?} */
+        const isInvalidAction = !isAction(action);
+        if (isInvalidAction) {
+            reporter.handleError(new Error(`Effect ${getEffectName(output)} dispatched an invalid action: ${stringify(action)}`));
+        }
+    }
+}
+/**
+ * @param {?} action
+ * @return {?}
+ */
+function isAction(action) {
+    return (typeof action !== 'function' &&
+        action &&
+        action.type &&
+        typeof action.type === 'string');
+}
+/**
+ * @param {?} __0
+ * @return {?}
+ */
+function getEffectName({ propertyName, sourceInstance, sourceName, }) {
+    /** @type {?} */
+    const isMethod = typeof sourceInstance[propertyName] === 'function';
+    return `"${sourceName}.${String(propertyName)}${isMethod ? '()' : ''}"`;
+}
+/**
+ * @param {?} action
+ * @return {?}
+ */
+function stringify(action) {
+    try {
+        return JSON.stringify(action);
+    }
+    catch (_a) {
+        return action;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/lifecycle_hooks.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const onIdentifyEffectsKey = 'ngrxOnIdentifyEffects';
+/**
+ * @param {?} instance
+ * @return {?}
+ */
+function isOnIdentifyEffects(instance) {
+    return isFunction(instance, onIdentifyEffectsKey);
+}
+/** @type {?} */
+const onRunEffectsKey = 'ngrxOnRunEffects';
+/**
+ * @param {?} instance
+ * @return {?}
+ */
+function isOnRunEffects(instance) {
+    return isFunction(instance, onRunEffectsKey);
+}
+/** @type {?} */
+const onInitEffects = 'ngrxOnInitEffects';
+/**
+ * @param {?} instance
+ * @return {?}
+ */
+function isOnInitEffects(instance) {
+    return isFunction(instance, onInitEffects);
+}
+/**
+ * @param {?} instance
+ * @param {?} functionName
+ * @return {?}
+ */
+function isFunction(instance, functionName) {
+    return (instance &&
+        functionName in instance &&
+        typeof instance[functionName] === 'function');
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/tokens.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const _ROOT_EFFECTS_GUARD = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["InjectionToken"]('@ngrx/effects Internal Root Guard');
+/** @type {?} */
+const IMMEDIATE_EFFECTS = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["InjectionToken"]('ngrx/effects: Immediate Effects');
+/** @type {?} */
+const USER_PROVIDED_EFFECTS = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["InjectionToken"]('ngrx/effects: User Provided Effects');
+/** @type {?} */
+const _ROOT_EFFECTS = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["InjectionToken"]('ngrx/effects: Internal Root Effects');
+/** @type {?} */
+const ROOT_EFFECTS = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["InjectionToken"]('ngrx/effects: Root Effects');
+/** @type {?} */
+const _FEATURE_EFFECTS = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["InjectionToken"]('ngrx/effects: Internal Feature Effects');
+/** @type {?} */
+const FEATURE_EFFECTS = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["InjectionToken"]('ngrx/effects: Feature Effects');
+/** @type {?} */
+const EFFECTS_ERROR_HANDLER = new _angular_core__WEBPACK_IMPORTED_MODULE_3__["InjectionToken"]('ngrx/effects: Effects Error Handler');
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effect_sources.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class EffectSources extends rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"] {
+    /**
+     * @param {?} errorHandler
+     * @param {?} effectsErrorHandler
+     */
+    constructor(errorHandler, effectsErrorHandler) {
+        super();
+        this.errorHandler = errorHandler;
+        this.effectsErrorHandler = effectsErrorHandler;
+    }
+    /**
+     * @param {?} effectSourceInstance
+     * @return {?}
+     */
+    addEffects(effectSourceInstance) {
+        this.next(effectSourceInstance);
+    }
+    /**
+     * \@internal
+     * @return {?}
+     */
+    toActions() {
+        return this.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["groupBy"])(getSourceForInstance), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])((/**
+         * @param {?} source$
+         * @return {?}
+         */
+        (source$) => {
+            return source$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["groupBy"])(effectsInstance));
+        })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])((/**
+         * @param {?} source$
+         * @return {?}
+         */
+        (source$) => {
+            /** @type {?} */
+            const effect$ = source$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["exhaustMap"])((/**
+             * @param {?} sourceInstance
+             * @return {?}
+             */
+            (sourceInstance) => {
+                return resolveEffectSource(this.errorHandler, this.effectsErrorHandler)(sourceInstance);
+            })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((/**
+             * @param {?} output
+             * @return {?}
+             */
+            (output) => {
+                reportInvalidActions(output, this.errorHandler);
+                return output.notification;
+            })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["filter"])((/**
+             * @param {?} notification
+             * @return {?}
+             */
+            (notification) => notification.kind === 'N')), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["dematerialize"])());
+            // start the stream with an INIT action
+            // do this only for the first Effect instance
+            /** @type {?} */
+            const init$ = source$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["filter"])(isOnInitEffects), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((/**
+             * @param {?} instance
+             * @return {?}
+             */
+            (instance) => instance.ngrxOnInitEffects())));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["merge"])(effect$, init$);
+        })));
+    }
+}
+EffectSources.ɵfac = function EffectSources_Factory(t) { return new (t || EffectSources)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_3__["ErrorHandler"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](EFFECTS_ERROR_HANDLER)); };
+EffectSources.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({ token: EffectSources, factory: EffectSources.ɵfac });
+/** @nocollapse */
+EffectSources.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ErrorHandler"] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"], args: [EFFECTS_ERROR_HANDLER,] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵsetClassMetadata"](EffectSources, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"]
+    }], function () { return [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["ErrorHandler"] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"],
+                args: [EFFECTS_ERROR_HANDLER]
+            }] }]; }, null); })();
+if (false) {}
+/**
+ * @param {?} sourceInstance
+ * @return {?}
+ */
+function effectsInstance(sourceInstance) {
+    if (isOnIdentifyEffects(sourceInstance)) {
+        return sourceInstance.ngrxOnIdentifyEffects();
+    }
+    return '';
+}
+/**
+ * @param {?} errorHandler
+ * @param {?} effectsErrorHandler
+ * @return {?}
+ */
+function resolveEffectSource(errorHandler, effectsErrorHandler) {
+    return (/**
+     * @param {?} sourceInstance
+     * @return {?}
+     */
+    (sourceInstance) => {
+        /** @type {?} */
+        const mergedEffects$ = mergeEffects(sourceInstance, errorHandler, effectsErrorHandler);
+        if (isOnRunEffects(sourceInstance)) {
+            return sourceInstance.ngrxOnRunEffects(mergedEffects$);
+        }
+        return mergedEffects$;
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effects_runner.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class EffectsRunner {
+    /**
+     * @param {?} effectSources
+     * @param {?} store
+     */
+    constructor(effectSources, store) {
+        this.effectSources = effectSources;
+        this.store = store;
+        this.effectsSubscription = null;
+    }
+    /**
+     * @return {?}
+     */
+    start() {
+        if (!this.effectsSubscription) {
+            this.effectsSubscription = this.effectSources
+                .toActions()
+                .subscribe(this.store);
+        }
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        if (this.effectsSubscription) {
+            this.effectsSubscription.unsubscribe();
+            this.effectsSubscription = null;
+        }
+    }
+}
+EffectsRunner.ɵfac = function EffectsRunner_Factory(t) { return new (t || EffectsRunner)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](EffectSources), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["Store"])); };
+EffectsRunner.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({ token: EffectsRunner, factory: EffectsRunner.ɵfac });
+/** @nocollapse */
+EffectsRunner.ctorParameters = () => [
+    { type: EffectSources },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["Store"] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵsetClassMetadata"](EffectsRunner, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Injectable"]
+    }], function () { return [{ type: EffectSources }, { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["Store"] }]; }, null); })();
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effects_root_module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const ROOT_EFFECTS_INIT = '@ngrx/effects/init';
+/** @type {?} */
+const rootEffectsInit = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["createAction"])(ROOT_EFFECTS_INIT);
+class EffectsRootModule {
+    /**
+     * @param {?} sources
+     * @param {?} runner
+     * @param {?} store
+     * @param {?} rootEffects
+     * @param {?} storeRootModule
+     * @param {?} storeFeatureModule
+     * @param {?} guard
+     */
+    constructor(sources, runner, store, rootEffects, storeRootModule, storeFeatureModule, guard) {
+        this.sources = sources;
+        runner.start();
+        rootEffects.forEach((/**
+         * @param {?} effectSourceInstance
+         * @return {?}
+         */
+        (effectSourceInstance) => sources.addEffects(effectSourceInstance)));
+        store.dispatch({ type: ROOT_EFFECTS_INIT });
+    }
+    /**
+     * @param {?} effectSourceInstance
+     * @return {?}
+     */
+    addEffects(effectSourceInstance) {
+        this.sources.addEffects(effectSourceInstance);
+    }
+}
+EffectsRootModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineNgModule"]({ type: EffectsRootModule });
+EffectsRootModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjector"]({ factory: function EffectsRootModule_Factory(t) { return new (t || EffectsRootModule)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](EffectSources), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](EffectsRunner), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["Store"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](ROOT_EFFECTS), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreRootModule"], 8), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreFeatureModule"], 8), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_ROOT_EFFECTS_GUARD, 8)); } });
+/** @nocollapse */
+EffectsRootModule.ctorParameters = () => [
+    { type: EffectSources },
+    { type: EffectsRunner },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["Store"] },
+    { type: Array, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"], args: [ROOT_EFFECTS,] }] },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreRootModule"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"] }] },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreFeatureModule"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"], args: [_ROOT_EFFECTS_GUARD,] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵsetClassMetadata"](EffectsRootModule, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["NgModule"],
+        args: [{}]
+    }], function () { return [{ type: EffectSources }, { type: EffectsRunner }, { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["Store"] }, { type: Array, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"],
+                args: [ROOT_EFFECTS]
+            }] }, { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreRootModule"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"]
+            }] }, { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreFeatureModule"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"]
+            }] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"]
+            }, {
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"],
+                args: [_ROOT_EFFECTS_GUARD]
+            }] }]; }, null); })();
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effects_feature_module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class EffectsFeatureModule {
+    /**
+     * @param {?} root
+     * @param {?} effectSourceGroups
+     * @param {?} storeRootModule
+     * @param {?} storeFeatureModule
+     */
+    constructor(root, effectSourceGroups, storeRootModule, storeFeatureModule) {
+        effectSourceGroups.forEach((/**
+         * @param {?} group
+         * @return {?}
+         */
+        (group) => group.forEach((/**
+         * @param {?} effectSourceInstance
+         * @return {?}
+         */
+        (effectSourceInstance) => root.addEffects(effectSourceInstance)))));
+    }
+}
+EffectsFeatureModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineNgModule"]({ type: EffectsFeatureModule });
+EffectsFeatureModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjector"]({ factory: function EffectsFeatureModule_Factory(t) { return new (t || EffectsFeatureModule)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](EffectsRootModule), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](FEATURE_EFFECTS), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreRootModule"], 8), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreFeatureModule"], 8)); } });
+/** @nocollapse */
+EffectsFeatureModule.ctorParameters = () => [
+    { type: EffectsRootModule },
+    { type: Array, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"], args: [FEATURE_EFFECTS,] }] },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreRootModule"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"] }] },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreFeatureModule"], decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵsetClassMetadata"](EffectsFeatureModule, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["NgModule"],
+        args: [{}]
+    }], function () { return [{ type: EffectsRootModule }, { type: Array, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Inject"],
+                args: [FEATURE_EFFECTS]
+            }] }, { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreRootModule"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"]
+            }] }, { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_0__["StoreFeatureModule"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"]
+            }] }]; }, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/effects_module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class EffectsModule {
+    /**
+     * @param {?=} featureEffects
+     * @return {?}
+     */
+    static forFeature(featureEffects = []) {
+        return {
+            ngModule: EffectsFeatureModule,
+            providers: [
+                featureEffects,
+                {
+                    provide: _FEATURE_EFFECTS,
+                    multi: true,
+                    useValue: featureEffects,
+                },
+                {
+                    provide: USER_PROVIDED_EFFECTS,
+                    multi: true,
+                    useValue: [],
+                },
+                {
+                    provide: FEATURE_EFFECTS,
+                    multi: true,
+                    useFactory: createEffects,
+                    deps: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injector"], _FEATURE_EFFECTS, USER_PROVIDED_EFFECTS],
+                },
+            ],
+        };
+    }
+    /**
+     * @param {?=} rootEffects
+     * @return {?}
+     */
+    static forRoot(rootEffects = []) {
+        return {
+            ngModule: EffectsRootModule,
+            providers: [
+                {
+                    provide: EFFECTS_ERROR_HANDLER,
+                    useValue: defaultEffectsErrorHandler,
+                },
+                EffectsRunner,
+                EffectSources,
+                Actions,
+                rootEffects,
+                {
+                    provide: _ROOT_EFFECTS,
+                    useValue: [rootEffects],
+                },
+                {
+                    provide: _ROOT_EFFECTS_GUARD,
+                    useFactory: _provideForRootGuard,
+                    deps: [
+                        [EffectsRunner, new _angular_core__WEBPACK_IMPORTED_MODULE_3__["Optional"](), new _angular_core__WEBPACK_IMPORTED_MODULE_3__["SkipSelf"]()],
+                        [_ROOT_EFFECTS, new _angular_core__WEBPACK_IMPORTED_MODULE_3__["Self"]()],
+                    ],
+                },
+                {
+                    provide: USER_PROVIDED_EFFECTS,
+                    multi: true,
+                    useValue: [],
+                },
+                {
+                    provide: ROOT_EFFECTS,
+                    useFactory: createEffects,
+                    deps: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["Injector"], _ROOT_EFFECTS, USER_PROVIDED_EFFECTS],
+                },
+            ],
+        };
+    }
+}
+EffectsModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineNgModule"]({ type: EffectsModule });
+EffectsModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjector"]({ factory: function EffectsModule_Factory(t) { return new (t || EffectsModule)(); } });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵsetClassMetadata"](EffectsModule, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_3__["NgModule"],
+        args: [{}]
+    }], null, null); })();
+/**
+ * @param {?} injector
+ * @param {?} effectGroups
+ * @param {?} userProvidedEffectGroups
+ * @return {?}
+ */
+function createEffects(injector, effectGroups, userProvidedEffectGroups) {
+    /** @type {?} */
+    const mergedEffects = [];
+    for (let effectGroup of effectGroups) {
+        mergedEffects.push(...effectGroup);
+    }
+    for (let userProvidedEffectGroup of userProvidedEffectGroups) {
+        mergedEffects.push(...userProvidedEffectGroup);
+    }
+    return createEffectInstances(injector, mergedEffects);
+}
+/**
+ * @param {?} injector
+ * @param {?} effects
+ * @return {?}
+ */
+function createEffectInstances(injector, effects) {
+    return effects.map((/**
+     * @param {?} effect
+     * @return {?}
+     */
+    (effect) => injector.get(effect)));
+}
+/**
+ * @param {?} runner
+ * @param {?} rootEffects
+ * @return {?}
+ */
+function _provideForRootGuard(runner, rootEffects) {
+    // check whether any effects are actually passed
+    /** @type {?} */
+    const hasEffects = !(rootEffects.length === 1 && rootEffects[0].length === 0);
+    if (hasEffects && runner) {
+        throw new TypeError(`EffectsModule.forRoot() called twice. Feature modules should use EffectsModule.forFeature() instead.`);
+    }
+    return 'guarded';
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/act.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Represents config with named paratemeters for act
+ * @record
+ * @template Input, OutputAction, ErrorAction, CompleteAction, UnsubscribeAction
+ */
+function ActConfig() { }
+if (false) {}
+/**
+ * @template Input, OutputAction, ErrorAction, CompleteAction, UnsubscribeAction
+ * @param {?} configOrProject
+ * @param {?=} errorFn
+ * @return {?}
+ */
+function act(
+/** Allow to take either config object or project/error functions */
+configOrProject, errorFn) {
+    const { project, error, complete, operator, unsubscribe } = typeof configOrProject === 'function'
+        ? {
+            project: configOrProject,
+            error: (/** @type {?} */ (errorFn)),
+            operator: rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["concatMap"],
+            complete: undefined,
+            unsubscribe: undefined,
+        }
+        : Object.assign(Object.assign({}, configOrProject), { operator: configOrProject.operator || rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["concatMap"] });
+    return (/**
+     * @param {?} source
+     * @return {?}
+     */
+    (source) => Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["defer"])((/**
+     * @return {?}
+     */
+    () => {
+        /** @type {?} */
+        const subject = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["merge"])(source.pipe(operator((/**
+         * @param {?} input
+         * @param {?} index
+         * @return {?}
+         */
+        (input, index) => Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["defer"])((/**
+         * @return {?}
+         */
+        () => {
+            /** @type {?} */
+            let completed = false;
+            /** @type {?} */
+            let errored = false;
+            /** @type {?} */
+            let projectedCount = 0;
+            return project(input, index).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["materialize"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((/**
+             * @param {?} notification
+             * @return {?}
+             */
+            (notification) => {
+                switch (notification.kind) {
+                    case 'E':
+                        errored = true;
+                        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Notification"]((/** @type {?} */ (
+                        // TODO: remove any in RxJS 6.5
+                        'N')), error(notification.error, input));
+                    case 'C':
+                        completed = true;
+                        return complete
+                            ? new rxjs__WEBPACK_IMPORTED_MODULE_1__["Notification"]((/** @type {?} */ (
+                            // TODO: remove any in RxJS 6.5
+                            'N')), complete(projectedCount, input))
+                            : undefined;
+                    default:
+                        ++projectedCount;
+                        return notification;
+                }
+            })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["filter"])((/**
+             * @param {?} n
+             * @return {?}
+             */
+            (n) => n != null)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["dematerialize"])(), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["finalize"])((/**
+             * @return {?}
+             */
+            () => {
+                if (!completed && !errored && unsubscribe) {
+                    subject.next(unsubscribe(projectedCount, input));
+                }
+            })));
+        }))))), subject);
+    })));
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: public_api.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: ngrx-effects.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+
+//# sourceMappingURL=ngrx-effects.js.map
+
+/***/ }),
+
 /***/ "9ppp":
 /*!*****************************************************************************!*\
   !*** ./node_modules/rxjs/_esm2015/internal/util/ObjectUnsubscribedError.js ***!
@@ -13565,6 +14632,1546 @@ function switchMapTo(innerObservable, resultSelector) {
     return resultSelector ? Object(_switchMap__WEBPACK_IMPORTED_MODULE_0__["switchMap"])(() => innerObservable, resultSelector) : Object(_switchMap__WEBPACK_IMPORTED_MODULE_0__["switchMap"])(() => innerObservable);
 }
 //# sourceMappingURL=switchMapTo.js.map
+
+/***/ }),
+
+/***/ "agSv":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@ngrx/store-devtools/__ivy_ngcc__/fesm2015/ngrx-store-devtools.js ***!
+  \****************************************************************************************/
+/*! exports provided: INITIAL_OPTIONS, RECOMPUTE, StoreDevtools, StoreDevtoolsConfig, StoreDevtoolsModule, ɵa, ɵb, ɵc, ɵd, ɵe, ɵf, ɵg, ɵh, ɵi, ɵj */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INITIAL_OPTIONS", function() { return INITIAL_OPTIONS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RECOMPUTE", function() { return RECOMPUTE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreDevtools", function() { return StoreDevtools; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreDevtoolsConfig", function() { return StoreDevtoolsConfig; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreDevtoolsModule", function() { return StoreDevtoolsModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵa", function() { return IS_EXTENSION_OR_MONITOR_PRESENT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵb", function() { return createIsExtensionOrMonitorPresent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵc", function() { return createReduxDevtoolsExtension; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵd", function() { return createStateObservable; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵe", function() { return STORE_DEVTOOLS_CONFIG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵf", function() { return noMonitor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵg", function() { return createConfig; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵh", function() { return REDUX_DEVTOOLS_EXTENSION; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵi", function() { return DevtoolsExtension; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵj", function() { return DevtoolsDispatcher; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngrx/store */ "l7P3");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/config.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @record
+ */
+
+
+function DevToolsFeatureOptions() { }
+if (false) {}
+class StoreDevtoolsConfig {
+    constructor() {
+        this.maxAge = false;
+    }
+}
+if (false) {}
+/** @type {?} */
+const STORE_DEVTOOLS_CONFIG = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/devtools Options');
+/** @type {?} */
+const INITIAL_OPTIONS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/devtools Initial Config');
+/**
+ * @return {?}
+ */
+function noMonitor() {
+    return null;
+}
+/** @type {?} */
+const DEFAULT_NAME = 'NgRx Store DevTools';
+/**
+ * @param {?} _options
+ * @return {?}
+ */
+function createConfig(_options) {
+    /** @type {?} */
+    const DEFAULT_OPTIONS = {
+        maxAge: false,
+        monitor: noMonitor,
+        actionSanitizer: undefined,
+        stateSanitizer: undefined,
+        name: DEFAULT_NAME,
+        serialize: false,
+        logOnly: false,
+        // Add all features explicitly. This prevent buggy behavior for
+        // options like "lock" which might otherwise not show up.
+        features: {
+            pause: true,
+            // start/pause recording of dispatched actions
+            lock: true,
+            // lock/unlock dispatching actions and side effects
+            persist: true,
+            // persist states on page reloading
+            export: true,
+            // export history of actions in a file
+            import: 'custom',
+            // import history of actions from a file
+            jump: true,
+            // jump back and forth (time travelling)
+            skip: true,
+            // skip (cancel) actions
+            reorder: true,
+            // drag and drop actions in the history list
+            dispatch: true,
+            // dispatch custom actions or action creators
+            test: true,
+        },
+    };
+    /** @type {?} */
+    let options = typeof _options === 'function' ? _options() : _options;
+    /** @type {?} */
+    const logOnly = options.logOnly
+        ? { pause: true, export: true, test: true }
+        : false;
+    /** @type {?} */
+    const features = options.features || logOnly || DEFAULT_OPTIONS.features;
+    /** @type {?} */
+    const config = Object.assign({}, DEFAULT_OPTIONS, { features }, options);
+    if (config.maxAge && config.maxAge < 2) {
+        throw new Error(`Devtools 'maxAge' cannot be less than 2, got ${config.maxAge}`);
+    }
+    return config;
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/actions.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const PERFORM_ACTION = 'PERFORM_ACTION';
+/** @type {?} */
+const REFRESH = 'REFRESH';
+/** @type {?} */
+const RESET = 'RESET';
+/** @type {?} */
+const ROLLBACK = 'ROLLBACK';
+/** @type {?} */
+const COMMIT = 'COMMIT';
+/** @type {?} */
+const SWEEP = 'SWEEP';
+/** @type {?} */
+const TOGGLE_ACTION = 'TOGGLE_ACTION';
+/** @type {?} */
+const SET_ACTIONS_ACTIVE = 'SET_ACTIONS_ACTIVE';
+/** @type {?} */
+const JUMP_TO_STATE = 'JUMP_TO_STATE';
+/** @type {?} */
+const JUMP_TO_ACTION = 'JUMP_TO_ACTION';
+/** @type {?} */
+const IMPORT_STATE = 'IMPORT_STATE';
+/** @type {?} */
+const LOCK_CHANGES = 'LOCK_CHANGES';
+/** @type {?} */
+const PAUSE_RECORDING = 'PAUSE_RECORDING';
+class PerformAction {
+    /**
+     * @param {?} action
+     * @param {?} timestamp
+     */
+    constructor(action, timestamp) {
+        this.action = action;
+        this.timestamp = timestamp;
+        this.type = PERFORM_ACTION;
+        if (typeof action.type === 'undefined') {
+            throw new Error('Actions may not have an undefined "type" property. ' +
+                'Have you misspelled a constant?');
+        }
+    }
+}
+if (false) {}
+class Refresh {
+    constructor() {
+        this.type = REFRESH;
+    }
+}
+if (false) {}
+class Reset {
+    /**
+     * @param {?} timestamp
+     */
+    constructor(timestamp) {
+        this.timestamp = timestamp;
+        this.type = RESET;
+    }
+}
+if (false) {}
+class Rollback {
+    /**
+     * @param {?} timestamp
+     */
+    constructor(timestamp) {
+        this.timestamp = timestamp;
+        this.type = ROLLBACK;
+    }
+}
+if (false) {}
+class Commit {
+    /**
+     * @param {?} timestamp
+     */
+    constructor(timestamp) {
+        this.timestamp = timestamp;
+        this.type = COMMIT;
+    }
+}
+if (false) {}
+class Sweep {
+    constructor() {
+        this.type = SWEEP;
+    }
+}
+if (false) {}
+class ToggleAction {
+    /**
+     * @param {?} id
+     */
+    constructor(id) {
+        this.id = id;
+        this.type = TOGGLE_ACTION;
+    }
+}
+if (false) {}
+class SetActionsActive {
+    /**
+     * @param {?} start
+     * @param {?} end
+     * @param {?=} active
+     */
+    constructor(start, end, active = true) {
+        this.start = start;
+        this.end = end;
+        this.active = active;
+        this.type = SET_ACTIONS_ACTIVE;
+    }
+}
+if (false) {}
+class JumpToState {
+    /**
+     * @param {?} index
+     */
+    constructor(index) {
+        this.index = index;
+        this.type = JUMP_TO_STATE;
+    }
+}
+if (false) {}
+class JumpToAction {
+    /**
+     * @param {?} actionId
+     */
+    constructor(actionId) {
+        this.actionId = actionId;
+        this.type = JUMP_TO_ACTION;
+    }
+}
+if (false) {}
+class ImportState {
+    /**
+     * @param {?} nextLiftedState
+     */
+    constructor(nextLiftedState) {
+        this.nextLiftedState = nextLiftedState;
+        this.type = IMPORT_STATE;
+    }
+}
+if (false) {}
+class LockChanges {
+    /**
+     * @param {?} status
+     */
+    constructor(status) {
+        this.status = status;
+        this.type = LOCK_CHANGES;
+    }
+}
+if (false) {}
+class PauseRecording {
+    /**
+     * @param {?} status
+     */
+    constructor(status) {
+        this.status = status;
+        this.type = PAUSE_RECORDING;
+    }
+}
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/devtools-dispatcher.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class DevtoolsDispatcher extends _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ActionsSubject"] {
+}
+DevtoolsDispatcher.ɵfac = function DevtoolsDispatcher_Factory(t) { return ɵDevtoolsDispatcher_BaseFactory(t || DevtoolsDispatcher); };
+DevtoolsDispatcher.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: DevtoolsDispatcher, factory: DevtoolsDispatcher.ɵfac });
+const ɵDevtoolsDispatcher_BaseFactory = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetInheritedFactory"](DevtoolsDispatcher);
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](DevtoolsDispatcher, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], null, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} first
+ * @param {?} second
+ * @return {?}
+ */
+function difference(first, second) {
+    return first.filter((/**
+     * @param {?} item
+     * @return {?}
+     */
+    (item) => second.indexOf(item) < 0));
+}
+/**
+ * Provides an app's view into the state of the lifted store.
+ * @param {?} liftedState
+ * @return {?}
+ */
+function unliftState(liftedState) {
+    const { computedStates, currentStateIndex } = liftedState;
+    // At start up NgRx dispatches init actions,
+    // When these init actions are being filtered out by the predicate or safe/block list options
+    // we don't have a complete computed states yet.
+    // At this point it could happen that we're out of bounds, when this happens we fall back to the last known state
+    if (currentStateIndex >= computedStates.length) {
+        const { state } = computedStates[computedStates.length - 1];
+        return state;
+    }
+    const { state } = computedStates[currentStateIndex];
+    return state;
+}
+/**
+ * @param {?} liftedState
+ * @return {?}
+ */
+function unliftAction(liftedState) {
+    return liftedState.actionsById[liftedState.nextActionId - 1];
+}
+/**
+ * Lifts an app's action into an action on the lifted store.
+ * @param {?} action
+ * @return {?}
+ */
+function liftAction(action) {
+    return new PerformAction(action, +Date.now());
+}
+/**
+ * Sanitizes given actions with given function.
+ * @param {?} actionSanitizer
+ * @param {?} actions
+ * @return {?}
+ */
+function sanitizeActions(actionSanitizer, actions) {
+    return Object.keys(actions).reduce((/**
+     * @param {?} sanitizedActions
+     * @param {?} actionIdx
+     * @return {?}
+     */
+    (sanitizedActions, actionIdx) => {
+        /** @type {?} */
+        const idx = Number(actionIdx);
+        sanitizedActions[idx] = sanitizeAction(actionSanitizer, actions[idx], idx);
+        return sanitizedActions;
+    }), (/** @type {?} */ ({})));
+}
+/**
+ * Sanitizes given action with given function.
+ * @param {?} actionSanitizer
+ * @param {?} action
+ * @param {?} actionIdx
+ * @return {?}
+ */
+function sanitizeAction(actionSanitizer, action, actionIdx) {
+    return Object.assign(Object.assign({}, action), { action: actionSanitizer(action.action, actionIdx) });
+}
+/**
+ * Sanitizes given states with given function.
+ * @param {?} stateSanitizer
+ * @param {?} states
+ * @return {?}
+ */
+function sanitizeStates(stateSanitizer, states) {
+    return states.map((/**
+     * @param {?} computedState
+     * @param {?} idx
+     * @return {?}
+     */
+    (computedState, idx) => ({
+        state: sanitizeState(stateSanitizer, computedState.state, idx),
+        error: computedState.error,
+    })));
+}
+/**
+ * Sanitizes given state with given function.
+ * @param {?} stateSanitizer
+ * @param {?} state
+ * @param {?} stateIdx
+ * @return {?}
+ */
+function sanitizeState(stateSanitizer, state, stateIdx) {
+    return stateSanitizer(state, stateIdx);
+}
+/**
+ * Read the config and tell if actions should be filtered
+ * @param {?} config
+ * @return {?}
+ */
+function shouldFilterActions(config) {
+    return config.predicate || config.actionsSafelist || config.actionsBlocklist;
+}
+/**
+ * Return a full filtered lifted state
+ * @param {?} liftedState
+ * @param {?=} predicate
+ * @param {?=} safelist
+ * @param {?=} blocklist
+ * @return {?}
+ */
+function filterLiftedState(liftedState, predicate, safelist, blocklist) {
+    /** @type {?} */
+    const filteredStagedActionIds = [];
+    /** @type {?} */
+    const filteredActionsById = {};
+    /** @type {?} */
+    const filteredComputedStates = [];
+    liftedState.stagedActionIds.forEach((/**
+     * @param {?} id
+     * @param {?} idx
+     * @return {?}
+     */
+    (id, idx) => {
+        /** @type {?} */
+        const liftedAction = liftedState.actionsById[id];
+        if (!liftedAction)
+            return;
+        if (idx &&
+            isActionFiltered(liftedState.computedStates[idx], liftedAction, predicate, safelist, blocklist)) {
+            return;
+        }
+        filteredActionsById[id] = liftedAction;
+        filteredStagedActionIds.push(id);
+        filteredComputedStates.push(liftedState.computedStates[idx]);
+    }));
+    return Object.assign(Object.assign({}, liftedState), { stagedActionIds: filteredStagedActionIds, actionsById: filteredActionsById, computedStates: filteredComputedStates });
+}
+/**
+ * Return true is the action should be ignored
+ * @param {?} state
+ * @param {?} action
+ * @param {?=} predicate
+ * @param {?=} safelist
+ * @param {?=} blockedlist
+ * @return {?}
+ */
+function isActionFiltered(state, action, predicate, safelist, blockedlist) {
+    /** @type {?} */
+    const predicateMatch = predicate && !predicate(state, action.action);
+    /** @type {?} */
+    const safelistMatch = safelist &&
+        !action.action.type.match(safelist.map((/**
+         * @param {?} s
+         * @return {?}
+         */
+        (s) => escapeRegExp(s))).join('|'));
+    /** @type {?} */
+    const blocklistMatch = blockedlist &&
+        action.action.type.match(blockedlist.map((/**
+         * @param {?} s
+         * @return {?}
+         */
+        (s) => escapeRegExp(s))).join('|'));
+    return predicateMatch || safelistMatch || blocklistMatch;
+}
+/**
+ * Return string with escaped RegExp special characters
+ * https://stackoverflow.com/a/6969486/1337347
+ * @param {?} s
+ * @return {?}
+ */
+function escapeRegExp(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/extension.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const ExtensionActionTypes = {
+    START: 'START',
+    DISPATCH: 'DISPATCH',
+    STOP: 'STOP',
+    ACTION: 'ACTION',
+};
+/** @type {?} */
+const REDUX_DEVTOOLS_EXTENSION = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('Redux Devtools Extension');
+/**
+ * @record
+ */
+function ReduxDevtoolsExtensionConnection() { }
+if (false) {}
+/**
+ * @record
+ */
+function ReduxDevtoolsExtensionConfig() { }
+if (false) {}
+/**
+ * @record
+ */
+function ReduxDevtoolsExtension() { }
+if (false) {}
+class DevtoolsExtension {
+    /**
+     * @param {?} devtoolsExtension
+     * @param {?} config
+     * @param {?} dispatcher
+     */
+    constructor(devtoolsExtension, config, dispatcher) {
+        this.config = config;
+        this.dispatcher = dispatcher;
+        this.devtoolsExtension = devtoolsExtension;
+        this.createActionStreams();
+    }
+    /**
+     * @param {?} action
+     * @param {?} state
+     * @return {?}
+     */
+    notify(action, state) {
+        if (!this.devtoolsExtension) {
+            return;
+        }
+        // Check to see if the action requires a full update of the liftedState.
+        // If it is a simple action generated by the user's app and the recording
+        // is not locked/paused, only send the action and the current state (fast).
+        //
+        // A full liftedState update (slow: serializes the entire liftedState) is
+        // only required when:
+        //   a) redux-devtools-extension fires the @@Init action (ignored by
+        //      @ngrx/store-devtools)
+        //   b) an action is generated by an @ngrx module (e.g. @ngrx/effects/init
+        //      or @ngrx/store/update-reducers)
+        //   c) the state has been recomputed due to time-traveling
+        //   d) any action that is not a PerformAction to err on the side of
+        //      caution.
+        if (action.type === PERFORM_ACTION) {
+            if (state.isLocked || state.isPaused) {
+                return;
+            }
+            /** @type {?} */
+            const currentState = unliftState(state);
+            if (shouldFilterActions(this.config) &&
+                isActionFiltered(currentState, action, this.config.predicate, this.config.actionsSafelist, this.config.actionsBlocklist)) {
+                return;
+            }
+            /** @type {?} */
+            const sanitizedState = this.config.stateSanitizer
+                ? sanitizeState(this.config.stateSanitizer, currentState, state.currentStateIndex)
+                : currentState;
+            /** @type {?} */
+            const sanitizedAction = this.config.actionSanitizer
+                ? sanitizeAction(this.config.actionSanitizer, action, state.nextActionId)
+                : action;
+            this.sendToReduxDevtools((/**
+             * @return {?}
+             */
+            () => this.extensionConnection.send(sanitizedAction, sanitizedState)));
+        }
+        else {
+            // Requires full state update
+            /** @type {?} */
+            const sanitizedLiftedState = Object.assign(Object.assign({}, state), { stagedActionIds: state.stagedActionIds, actionsById: this.config.actionSanitizer
+                    ? sanitizeActions(this.config.actionSanitizer, state.actionsById)
+                    : state.actionsById, computedStates: this.config.stateSanitizer
+                    ? sanitizeStates(this.config.stateSanitizer, state.computedStates)
+                    : state.computedStates });
+            this.sendToReduxDevtools((/**
+             * @return {?}
+             */
+            () => this.devtoolsExtension.send(null, sanitizedLiftedState, this.getExtensionConfig(this.config))));
+        }
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    createChangesObservable() {
+        if (!this.devtoolsExtension) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["empty"])();
+        }
+        return new rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"]((/**
+         * @param {?} subscriber
+         * @return {?}
+         */
+        (subscriber) => {
+            /** @type {?} */
+            const connection = this.devtoolsExtension.connect(this.getExtensionConfig(this.config));
+            this.extensionConnection = connection;
+            connection.init();
+            connection.subscribe((/**
+             * @param {?} change
+             * @return {?}
+             */
+            (change) => subscriber.next(change)));
+            return connection.unsubscribe;
+        }));
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    createActionStreams() {
+        // Listens to all changes
+        /** @type {?} */
+        const changes$ = this.createChangesObservable().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["share"])());
+        // Listen for the start action
+        /** @type {?} */
+        const start$ = changes$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])((/**
+         * @param {?} change
+         * @return {?}
+         */
+        (change) => change.type === ExtensionActionTypes.START)));
+        // Listen for the stop action
+        /** @type {?} */
+        const stop$ = changes$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])((/**
+         * @param {?} change
+         * @return {?}
+         */
+        (change) => change.type === ExtensionActionTypes.STOP)));
+        // Listen for lifted actions
+        /** @type {?} */
+        const liftedActions$ = changes$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])((/**
+         * @param {?} change
+         * @return {?}
+         */
+        (change) => change.type === ExtensionActionTypes.DISPATCH)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((/**
+         * @param {?} change
+         * @return {?}
+         */
+        (change) => this.unwrapAction(change.payload))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["concatMap"])((/**
+         * @param {?} action
+         * @return {?}
+         */
+        (action) => {
+            if (action.type === IMPORT_STATE) {
+                // State imports may happen in two situations:
+                // 1. Explicitly by user
+                // 2. User activated the "persist state accross reloads" option
+                //    and now the state is imported during reload.
+                // Because of option 2, we need to give possible
+                // lazy loaded reducers time to instantiate.
+                // As soon as there is no UPDATE action within 1 second,
+                // it is assumed that all reducers are loaded.
+                return this.dispatcher.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])((/**
+                 * @param {?} action
+                 * @return {?}
+                 */
+                (action) => action.type === _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["UPDATE"])), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["timeout"])(1000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["debounceTime"])(1000), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((/**
+                 * @return {?}
+                 */
+                () => action)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])((/**
+                 * @return {?}
+                 */
+                () => Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(action))), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["take"])(1));
+            }
+            else {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(action);
+            }
+        })));
+        // Listen for unlifted actions
+        /** @type {?} */
+        const actions$ = changes$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])((/**
+         * @param {?} change
+         * @return {?}
+         */
+        (change) => change.type === ExtensionActionTypes.ACTION)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])((/**
+         * @param {?} change
+         * @return {?}
+         */
+        (change) => this.unwrapAction(change.payload))));
+        /** @type {?} */
+        const actionsUntilStop$ = actions$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(stop$));
+        /** @type {?} */
+        const liftedUntilStop$ = liftedActions$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(stop$));
+        this.start$ = start$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(stop$));
+        // Only take the action sources between the start/stop events
+        this.actions$ = this.start$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])((/**
+         * @return {?}
+         */
+        () => actionsUntilStop$)));
+        this.liftedActions$ = this.start$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["switchMap"])((/**
+         * @return {?}
+         */
+        () => liftedUntilStop$)));
+    }
+    /**
+     * @private
+     * @param {?} action
+     * @return {?}
+     */
+    unwrapAction(action) {
+        return typeof action === 'string' ? eval(`(${action})`) : action;
+    }
+    /**
+     * @private
+     * @param {?} config
+     * @return {?}
+     */
+    getExtensionConfig(config) {
+        /** @type {?} */
+        const extensionOptions = {
+            name: config.name,
+            features: config.features,
+            serialize: config.serialize,
+        };
+        if (config.maxAge !== false /* support === 0 */) {
+            extensionOptions.maxAge = config.maxAge;
+        }
+        return extensionOptions;
+    }
+    /**
+     * @private
+     * @param {?} send
+     * @return {?}
+     */
+    sendToReduxDevtools(send) {
+        try {
+            send();
+        }
+        catch (err) {
+            console.warn('@ngrx/store-devtools: something went wrong inside the redux devtools', err);
+        }
+    }
+}
+DevtoolsExtension.ɵfac = function DevtoolsExtension_Factory(t) { return new (t || DevtoolsExtension)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](REDUX_DEVTOOLS_EXTENSION), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](STORE_DEVTOOLS_CONFIG), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](DevtoolsDispatcher)); };
+DevtoolsExtension.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: DevtoolsExtension, factory: DevtoolsExtension.ɵfac });
+/** @nocollapse */
+DevtoolsExtension.ctorParameters = () => [
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [REDUX_DEVTOOLS_EXTENSION,] }] },
+    { type: StoreDevtoolsConfig, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [STORE_DEVTOOLS_CONFIG,] }] },
+    { type: DevtoolsDispatcher }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](DevtoolsExtension, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [REDUX_DEVTOOLS_EXTENSION]
+            }] }, { type: StoreDevtoolsConfig, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [STORE_DEVTOOLS_CONFIG]
+            }] }, { type: DevtoolsDispatcher }]; }, null); })();
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/reducer.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const INIT_ACTION = { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["INIT"] };
+/** @type {?} */
+const RECOMPUTE = (/** @type {?} */ ('@ngrx/store-devtools/recompute'));
+/** @type {?} */
+const RECOMPUTE_ACTION = { type: RECOMPUTE };
+/**
+ * @record
+ */
+function ComputedState() { }
+if (false) {}
+/**
+ * @record
+ */
+function LiftedAction() { }
+if (false) {}
+/**
+ * @record
+ */
+function LiftedActions() { }
+/**
+ * @record
+ */
+function LiftedState() { }
+if (false) {}
+/**
+ * Computes the next entry in the log by applying an action.
+ * @param {?} reducer
+ * @param {?} action
+ * @param {?} state
+ * @param {?} error
+ * @param {?} errorHandler
+ * @return {?}
+ */
+function computeNextEntry(reducer, action, state, error, errorHandler) {
+    if (error) {
+        return {
+            state,
+            error: 'Interrupted by an error up the chain',
+        };
+    }
+    /** @type {?} */
+    let nextState = state;
+    /** @type {?} */
+    let nextError;
+    try {
+        nextState = reducer(state, action);
+    }
+    catch (err) {
+        nextError = err.toString();
+        errorHandler.handleError(err.stack || err);
+    }
+    return {
+        state: nextState,
+        error: nextError,
+    };
+}
+/**
+ * Runs the reducer on invalidated actions to get a fresh computation log.
+ * @param {?} computedStates
+ * @param {?} minInvalidatedStateIndex
+ * @param {?} reducer
+ * @param {?} committedState
+ * @param {?} actionsById
+ * @param {?} stagedActionIds
+ * @param {?} skippedActionIds
+ * @param {?} errorHandler
+ * @param {?} isPaused
+ * @return {?}
+ */
+function recomputeStates(computedStates, minInvalidatedStateIndex, reducer, committedState, actionsById, stagedActionIds, skippedActionIds, errorHandler, isPaused) {
+    // Optimization: exit early and return the same reference
+    // if we know nothing could have changed.
+    if (minInvalidatedStateIndex >= computedStates.length &&
+        computedStates.length === stagedActionIds.length) {
+        return computedStates;
+    }
+    /** @type {?} */
+    const nextComputedStates = computedStates.slice(0, minInvalidatedStateIndex);
+    // If the recording is paused, recompute all states up until the pause state,
+    // else recompute all states.
+    /** @type {?} */
+    const lastIncludedActionId = stagedActionIds.length - (isPaused ? 1 : 0);
+    for (let i = minInvalidatedStateIndex; i < lastIncludedActionId; i++) {
+        /** @type {?} */
+        const actionId = stagedActionIds[i];
+        /** @type {?} */
+        const action = actionsById[actionId].action;
+        /** @type {?} */
+        const previousEntry = nextComputedStates[i - 1];
+        /** @type {?} */
+        const previousState = previousEntry ? previousEntry.state : committedState;
+        /** @type {?} */
+        const previousError = previousEntry ? previousEntry.error : undefined;
+        /** @type {?} */
+        const shouldSkip = skippedActionIds.indexOf(actionId) > -1;
+        /** @type {?} */
+        const entry = shouldSkip
+            ? previousEntry
+            : computeNextEntry(reducer, action, previousState, previousError, errorHandler);
+        nextComputedStates.push(entry);
+    }
+    // If the recording is paused, the last state will not be recomputed,
+    // because it's essentially not part of the state history.
+    if (isPaused) {
+        nextComputedStates.push(computedStates[computedStates.length - 1]);
+    }
+    return nextComputedStates;
+}
+/**
+ * @param {?=} initialCommittedState
+ * @param {?=} monitorReducer
+ * @return {?}
+ */
+function liftInitialState(initialCommittedState, monitorReducer) {
+    return {
+        monitorState: monitorReducer(undefined, {}),
+        nextActionId: 1,
+        actionsById: { 0: liftAction(INIT_ACTION) },
+        stagedActionIds: [0],
+        skippedActionIds: [],
+        committedState: initialCommittedState,
+        currentStateIndex: 0,
+        computedStates: [],
+        isLocked: false,
+        isPaused: false,
+    };
+}
+/**
+ * Creates a history state reducer from an app's reducer.
+ * @param {?} initialCommittedState
+ * @param {?} initialLiftedState
+ * @param {?} errorHandler
+ * @param {?=} monitorReducer
+ * @param {?=} options
+ * @return {?}
+ */
+function liftReducerWith(initialCommittedState, initialLiftedState, errorHandler, monitorReducer, options = {}) {
+    /**
+     * Manages how the history actions modify the history state.
+     */
+    return (/**
+     * @param {?} reducer
+     * @return {?}
+     */
+    (reducer) => (/**
+     * @param {?} liftedState
+     * @param {?} liftedAction
+     * @return {?}
+     */
+    (liftedState, liftedAction) => {
+        let { monitorState, actionsById, nextActionId, stagedActionIds, skippedActionIds, committedState, currentStateIndex, computedStates, isLocked, isPaused, } = liftedState || initialLiftedState;
+        if (!liftedState) {
+            // Prevent mutating initialLiftedState
+            actionsById = Object.create(actionsById);
+        }
+        /**
+         * @param {?} n
+         * @return {?}
+         */
+        function commitExcessActions(n) {
+            // Auto-commits n-number of excess actions.
+            /** @type {?} */
+            let excess = n;
+            /** @type {?} */
+            let idsToDelete = stagedActionIds.slice(1, excess + 1);
+            for (let i = 0; i < idsToDelete.length; i++) {
+                if (computedStates[i + 1].error) {
+                    // Stop if error is found. Commit actions up to error.
+                    excess = i;
+                    idsToDelete = stagedActionIds.slice(1, excess + 1);
+                    break;
+                }
+                else {
+                    delete actionsById[idsToDelete[i]];
+                }
+            }
+            skippedActionIds = skippedActionIds.filter((/**
+             * @param {?} id
+             * @return {?}
+             */
+            (id) => idsToDelete.indexOf(id) === -1));
+            stagedActionIds = [0, ...stagedActionIds.slice(excess + 1)];
+            committedState = computedStates[excess].state;
+            computedStates = computedStates.slice(excess);
+            currentStateIndex =
+                currentStateIndex > excess ? currentStateIndex - excess : 0;
+        }
+        /**
+         * @return {?}
+         */
+        function commitChanges() {
+            // Consider the last committed state the new starting point.
+            // Squash any staged actions into a single committed state.
+            actionsById = { 0: liftAction(INIT_ACTION) };
+            nextActionId = 1;
+            stagedActionIds = [0];
+            skippedActionIds = [];
+            committedState = computedStates[currentStateIndex].state;
+            currentStateIndex = 0;
+            computedStates = [];
+        }
+        // By default, aggressively recompute every state whatever happens.
+        // This has O(n) performance, so we'll override this to a sensible
+        // value whenever we feel like we don't have to recompute the states.
+        /** @type {?} */
+        let minInvalidatedStateIndex = 0;
+        switch (liftedAction.type) {
+            case LOCK_CHANGES: {
+                isLocked = liftedAction.status;
+                minInvalidatedStateIndex = Infinity;
+                break;
+            }
+            case PAUSE_RECORDING: {
+                isPaused = liftedAction.status;
+                if (isPaused) {
+                    // Add a pause action to signal the devtools-user the recording is paused.
+                    // The corresponding state will be overwritten on each update to always contain
+                    // the latest state (see Actions.PERFORM_ACTION).
+                    stagedActionIds = [...stagedActionIds, nextActionId];
+                    actionsById[nextActionId] = new PerformAction({
+                        type: '@ngrx/devtools/pause',
+                    }, +Date.now());
+                    nextActionId++;
+                    minInvalidatedStateIndex = stagedActionIds.length - 1;
+                    computedStates = computedStates.concat(computedStates[computedStates.length - 1]);
+                    if (currentStateIndex === stagedActionIds.length - 2) {
+                        currentStateIndex++;
+                    }
+                    minInvalidatedStateIndex = Infinity;
+                }
+                else {
+                    commitChanges();
+                }
+                break;
+            }
+            case RESET: {
+                // Get back to the state the store was created with.
+                actionsById = { 0: liftAction(INIT_ACTION) };
+                nextActionId = 1;
+                stagedActionIds = [0];
+                skippedActionIds = [];
+                committedState = initialCommittedState;
+                currentStateIndex = 0;
+                computedStates = [];
+                break;
+            }
+            case COMMIT: {
+                commitChanges();
+                break;
+            }
+            case ROLLBACK: {
+                // Forget about any staged actions.
+                // Start again from the last committed state.
+                actionsById = { 0: liftAction(INIT_ACTION) };
+                nextActionId = 1;
+                stagedActionIds = [0];
+                skippedActionIds = [];
+                currentStateIndex = 0;
+                computedStates = [];
+                break;
+            }
+            case TOGGLE_ACTION: {
+                // Toggle whether an action with given ID is skipped.
+                // Being skipped means it is a no-op during the computation.
+                const { id: actionId } = liftedAction;
+                /** @type {?} */
+                const index = skippedActionIds.indexOf(actionId);
+                if (index === -1) {
+                    skippedActionIds = [actionId, ...skippedActionIds];
+                }
+                else {
+                    skippedActionIds = skippedActionIds.filter((/**
+                     * @param {?} id
+                     * @return {?}
+                     */
+                    (id) => id !== actionId));
+                }
+                // Optimization: we know history before this action hasn't changed
+                minInvalidatedStateIndex = stagedActionIds.indexOf(actionId);
+                break;
+            }
+            case SET_ACTIONS_ACTIVE: {
+                // Toggle whether an action with given ID is skipped.
+                // Being skipped means it is a no-op during the computation.
+                const { start, end, active } = liftedAction;
+                /** @type {?} */
+                const actionIds = [];
+                for (let i = start; i < end; i++)
+                    actionIds.push(i);
+                if (active) {
+                    skippedActionIds = difference(skippedActionIds, actionIds);
+                }
+                else {
+                    skippedActionIds = [...skippedActionIds, ...actionIds];
+                }
+                // Optimization: we know history before this action hasn't changed
+                minInvalidatedStateIndex = stagedActionIds.indexOf(start);
+                break;
+            }
+            case JUMP_TO_STATE: {
+                // Without recomputing anything, move the pointer that tell us
+                // which state is considered the current one. Useful for sliders.
+                currentStateIndex = liftedAction.index;
+                // Optimization: we know the history has not changed.
+                minInvalidatedStateIndex = Infinity;
+                break;
+            }
+            case JUMP_TO_ACTION: {
+                // Jumps to a corresponding state to a specific action.
+                // Useful when filtering actions.
+                /** @type {?} */
+                const index = stagedActionIds.indexOf(liftedAction.actionId);
+                if (index !== -1)
+                    currentStateIndex = index;
+                minInvalidatedStateIndex = Infinity;
+                break;
+            }
+            case SWEEP: {
+                // Forget any actions that are currently being skipped.
+                stagedActionIds = difference(stagedActionIds, skippedActionIds);
+                skippedActionIds = [];
+                currentStateIndex = Math.min(currentStateIndex, stagedActionIds.length - 1);
+                break;
+            }
+            case PERFORM_ACTION: {
+                // Ignore action and return state as is if recording is locked
+                if (isLocked) {
+                    return liftedState || initialLiftedState;
+                }
+                if (isPaused ||
+                    (liftedState &&
+                        isActionFiltered(liftedState.computedStates[currentStateIndex], liftedAction, options.predicate, options.actionsSafelist, options.actionsBlocklist))) {
+                    // If recording is paused or if the action should be ignored, overwrite the last state
+                    // (corresponds to the pause action) and keep everything else as is.
+                    // This way, the app gets the new current state while the devtools
+                    // do not record another action.
+                    /** @type {?} */
+                    const lastState = computedStates[computedStates.length - 1];
+                    computedStates = [
+                        ...computedStates.slice(0, -1),
+                        computeNextEntry(reducer, liftedAction.action, lastState.state, lastState.error, errorHandler),
+                    ];
+                    minInvalidatedStateIndex = Infinity;
+                    break;
+                }
+                // Auto-commit as new actions come in.
+                if (options.maxAge && stagedActionIds.length === options.maxAge) {
+                    commitExcessActions(1);
+                }
+                if (currentStateIndex === stagedActionIds.length - 1) {
+                    currentStateIndex++;
+                }
+                /** @type {?} */
+                const actionId = nextActionId++;
+                // Mutation! This is the hottest path, and we optimize on purpose.
+                // It is safe because we set a new key in a cache dictionary.
+                actionsById[actionId] = liftedAction;
+                stagedActionIds = [...stagedActionIds, actionId];
+                // Optimization: we know that only the new action needs computing.
+                minInvalidatedStateIndex = stagedActionIds.length - 1;
+                break;
+            }
+            case IMPORT_STATE: {
+                // Completely replace everything.
+                ({
+                    monitorState,
+                    actionsById,
+                    nextActionId,
+                    stagedActionIds,
+                    skippedActionIds,
+                    committedState,
+                    currentStateIndex,
+                    computedStates,
+                    isLocked,
+                    // prettier-ignore
+                    isPaused
+                } = liftedAction.nextLiftedState);
+                break;
+            }
+            case _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["INIT"]: {
+                // Always recompute states on hot reload and init.
+                minInvalidatedStateIndex = 0;
+                if (options.maxAge && stagedActionIds.length > options.maxAge) {
+                    // States must be recomputed before committing excess.
+                    computedStates = recomputeStates(computedStates, minInvalidatedStateIndex, reducer, committedState, actionsById, stagedActionIds, skippedActionIds, errorHandler, isPaused);
+                    commitExcessActions(stagedActionIds.length - options.maxAge);
+                    // Avoid double computation.
+                    minInvalidatedStateIndex = Infinity;
+                }
+                break;
+            }
+            case _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["UPDATE"]: {
+                /** @type {?} */
+                const stateHasErrors = computedStates.filter((/**
+                 * @param {?} state
+                 * @return {?}
+                 */
+                (state) => state.error)).length > 0;
+                if (stateHasErrors) {
+                    // Recompute all states
+                    minInvalidatedStateIndex = 0;
+                    if (options.maxAge && stagedActionIds.length > options.maxAge) {
+                        // States must be recomputed before committing excess.
+                        computedStates = recomputeStates(computedStates, minInvalidatedStateIndex, reducer, committedState, actionsById, stagedActionIds, skippedActionIds, errorHandler, isPaused);
+                        commitExcessActions(stagedActionIds.length - options.maxAge);
+                        // Avoid double computation.
+                        minInvalidatedStateIndex = Infinity;
+                    }
+                }
+                else {
+                    // If not paused/locked, add a new action to signal devtools-user
+                    // that there was a reducer update.
+                    if (!isPaused && !isLocked) {
+                        if (currentStateIndex === stagedActionIds.length - 1) {
+                            currentStateIndex++;
+                        }
+                        // Add a new action to only recompute state
+                        /** @type {?} */
+                        const actionId = nextActionId++;
+                        actionsById[actionId] = new PerformAction(liftedAction, +Date.now());
+                        stagedActionIds = [...stagedActionIds, actionId];
+                        minInvalidatedStateIndex = stagedActionIds.length - 1;
+                        computedStates = recomputeStates(computedStates, minInvalidatedStateIndex, reducer, committedState, actionsById, stagedActionIds, skippedActionIds, errorHandler, isPaused);
+                    }
+                    // Recompute state history with latest reducer and update action
+                    computedStates = computedStates.map((/**
+                     * @param {?} cmp
+                     * @return {?}
+                     */
+                    (cmp) => (Object.assign(Object.assign({}, cmp), { state: reducer(cmp.state, RECOMPUTE_ACTION) }))));
+                    currentStateIndex = stagedActionIds.length - 1;
+                    if (options.maxAge && stagedActionIds.length > options.maxAge) {
+                        commitExcessActions(stagedActionIds.length - options.maxAge);
+                    }
+                    // Avoid double computation.
+                    minInvalidatedStateIndex = Infinity;
+                }
+                break;
+            }
+            default: {
+                // If the action is not recognized, it's a monitor action.
+                // Optimization: a monitor action can't change history.
+                minInvalidatedStateIndex = Infinity;
+                break;
+            }
+        }
+        computedStates = recomputeStates(computedStates, minInvalidatedStateIndex, reducer, committedState, actionsById, stagedActionIds, skippedActionIds, errorHandler, isPaused);
+        monitorState = monitorReducer(monitorState, liftedAction);
+        return {
+            monitorState,
+            actionsById,
+            nextActionId,
+            stagedActionIds,
+            skippedActionIds,
+            committedState,
+            currentStateIndex,
+            computedStates,
+            isLocked,
+            isPaused,
+        };
+    }));
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/devtools.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class StoreDevtools {
+    /**
+     * @param {?} dispatcher
+     * @param {?} actions$
+     * @param {?} reducers$
+     * @param {?} extension
+     * @param {?} scannedActions
+     * @param {?} errorHandler
+     * @param {?} initialState
+     * @param {?} config
+     */
+    constructor(dispatcher, actions$, reducers$, extension, scannedActions, errorHandler, initialState, config) {
+        /** @type {?} */
+        const liftedInitialState = liftInitialState(initialState, config.monitor);
+        /** @type {?} */
+        const liftReducer = liftReducerWith(initialState, liftedInitialState, errorHandler, config.monitor, config);
+        /** @type {?} */
+        const liftedAction$ = Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["merge"])(Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["merge"])(actions$.asObservable().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["skip"])(1)), extension.actions$).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(liftAction)), dispatcher, extension.liftedActions$).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["observeOn"])(rxjs__WEBPACK_IMPORTED_MODULE_2__["queueScheduler"]));
+        /** @type {?} */
+        const liftedReducer$ = reducers$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(liftReducer));
+        /** @type {?} */
+        const liftedStateSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["ReplaySubject"](1);
+        /** @type {?} */
+        const liftedStateSubscription = liftedAction$
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["withLatestFrom"])(liftedReducer$), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["scan"])((/**
+         * @param {?} __0
+         * @param {?} __1
+         * @return {?}
+         */
+        ({ state: liftedState }, [action, reducer]) => {
+            /** @type {?} */
+            let reducedLiftedState = reducer(liftedState, action);
+            // On full state update
+            // If we have actions filters, we must filter completely our lifted state to be sync with the extension
+            if (action.type !== PERFORM_ACTION && shouldFilterActions(config)) {
+                reducedLiftedState = filterLiftedState(reducedLiftedState, config.predicate, config.actionsSafelist, config.actionsBlocklist);
+            }
+            // Extension should be sent the sanitized lifted state
+            extension.notify(action, reducedLiftedState);
+            return { state: reducedLiftedState, action };
+        }), { state: liftedInitialState, action: (/** @type {?} */ (null)) }))
+            .subscribe((/**
+         * @param {?} __0
+         * @return {?}
+         */
+        ({ state, action }) => {
+            liftedStateSubject.next(state);
+            if (action.type === PERFORM_ACTION) {
+                /** @type {?} */
+                const unliftedAction = ((/** @type {?} */ (action))).action;
+                scannedActions.next(unliftedAction);
+            }
+        }));
+        /** @type {?} */
+        const extensionStartSubscription = extension.start$.subscribe((/**
+         * @return {?}
+         */
+        () => {
+            this.refresh();
+        }));
+        /** @type {?} */
+        const liftedState$ = (/** @type {?} */ (liftedStateSubject.asObservable()));
+        /** @type {?} */
+        const state$ = liftedState$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(unliftState));
+        this.extensionStartSubscription = extensionStartSubscription;
+        this.stateSubscription = liftedStateSubscription;
+        this.dispatcher = dispatcher;
+        this.liftedState = liftedState$;
+        this.state = state$;
+    }
+    /**
+     * @param {?} action
+     * @return {?}
+     */
+    dispatch(action) {
+        this.dispatcher.next(action);
+    }
+    /**
+     * @param {?} action
+     * @return {?}
+     */
+    next(action) {
+        this.dispatcher.next(action);
+    }
+    /**
+     * @param {?} error
+     * @return {?}
+     */
+    error(error) { }
+    /**
+     * @return {?}
+     */
+    complete() { }
+    /**
+     * @param {?} action
+     * @return {?}
+     */
+    performAction(action) {
+        this.dispatch(new PerformAction(action, +Date.now()));
+    }
+    /**
+     * @return {?}
+     */
+    refresh() {
+        this.dispatch(new Refresh());
+    }
+    /**
+     * @return {?}
+     */
+    reset() {
+        this.dispatch(new Reset(+Date.now()));
+    }
+    /**
+     * @return {?}
+     */
+    rollback() {
+        this.dispatch(new Rollback(+Date.now()));
+    }
+    /**
+     * @return {?}
+     */
+    commit() {
+        this.dispatch(new Commit(+Date.now()));
+    }
+    /**
+     * @return {?}
+     */
+    sweep() {
+        this.dispatch(new Sweep());
+    }
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    toggleAction(id) {
+        this.dispatch(new ToggleAction(id));
+    }
+    /**
+     * @param {?} actionId
+     * @return {?}
+     */
+    jumpToAction(actionId) {
+        this.dispatch(new JumpToAction(actionId));
+    }
+    /**
+     * @param {?} index
+     * @return {?}
+     */
+    jumpToState(index) {
+        this.dispatch(new JumpToState(index));
+    }
+    /**
+     * @param {?} nextLiftedState
+     * @return {?}
+     */
+    importState(nextLiftedState) {
+        this.dispatch(new ImportState(nextLiftedState));
+    }
+    /**
+     * @param {?} status
+     * @return {?}
+     */
+    lockChanges(status) {
+        this.dispatch(new LockChanges(status));
+    }
+    /**
+     * @param {?} status
+     * @return {?}
+     */
+    pauseRecording(status) {
+        this.dispatch(new PauseRecording(status));
+    }
+}
+StoreDevtools.ɵfac = function StoreDevtools_Factory(t) { return new (t || StoreDevtools)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](DevtoolsDispatcher), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ActionsSubject"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ReducerObservable"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](DevtoolsExtension), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ScannedActionsSubject"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_core__WEBPACK_IMPORTED_MODULE_0__["ErrorHandler"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["INITIAL_STATE"]), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](STORE_DEVTOOLS_CONFIG)); };
+StoreDevtools.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: StoreDevtools, factory: StoreDevtools.ɵfac });
+/** @nocollapse */
+StoreDevtools.ctorParameters = () => [
+    { type: DevtoolsDispatcher },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ActionsSubject"] },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ReducerObservable"] },
+    { type: DevtoolsExtension },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ScannedActionsSubject"] },
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ErrorHandler"] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["INITIAL_STATE"],] }] },
+    { type: StoreDevtoolsConfig, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [STORE_DEVTOOLS_CONFIG,] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](StoreDevtools, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], function () { return [{ type: DevtoolsDispatcher }, { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ActionsSubject"] }, { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ReducerObservable"] }, { type: DevtoolsExtension }, { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ScannedActionsSubject"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ErrorHandler"] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["INITIAL_STATE"]]
+            }] }, { type: StoreDevtoolsConfig, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [STORE_DEVTOOLS_CONFIG]
+            }] }]; }, null); })();
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/instrument.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const IS_EXTENSION_OR_MONITOR_PRESENT = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('Is Devtools Extension or Monitor Present');
+/**
+ * @param {?} extension
+ * @param {?} config
+ * @return {?}
+ */
+function createIsExtensionOrMonitorPresent(extension, config) {
+    return Boolean(extension) || config.monitor !== noMonitor;
+}
+/**
+ * @return {?}
+ */
+function createReduxDevtoolsExtension() {
+    /** @type {?} */
+    const extensionKey = '__REDUX_DEVTOOLS_EXTENSION__';
+    if (typeof window === 'object' &&
+        typeof ((/** @type {?} */ (window)))[extensionKey] !== 'undefined') {
+        return ((/** @type {?} */ (window)))[extensionKey];
+    }
+    else {
+        return null;
+    }
+}
+/**
+ * @param {?} devtools
+ * @return {?}
+ */
+function createStateObservable(devtools) {
+    return devtools.state;
+}
+class StoreDevtoolsModule {
+    /**
+     * @param {?=} options
+     * @return {?}
+     */
+    static instrument(options = {}) {
+        return {
+            ngModule: StoreDevtoolsModule,
+            providers: [
+                DevtoolsExtension,
+                DevtoolsDispatcher,
+                StoreDevtools,
+                {
+                    provide: INITIAL_OPTIONS,
+                    useValue: options,
+                },
+                {
+                    provide: IS_EXTENSION_OR_MONITOR_PRESENT,
+                    deps: [REDUX_DEVTOOLS_EXTENSION, STORE_DEVTOOLS_CONFIG],
+                    useFactory: createIsExtensionOrMonitorPresent,
+                },
+                {
+                    provide: REDUX_DEVTOOLS_EXTENSION,
+                    useFactory: createReduxDevtoolsExtension,
+                },
+                {
+                    provide: STORE_DEVTOOLS_CONFIG,
+                    deps: [INITIAL_OPTIONS],
+                    useFactory: createConfig,
+                },
+                {
+                    provide: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["StateObservable"],
+                    deps: [StoreDevtools],
+                    useFactory: createStateObservable,
+                },
+                {
+                    provide: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__["ReducerManagerDispatcher"],
+                    useExisting: DevtoolsDispatcher,
+                },
+            ],
+        };
+    }
+}
+StoreDevtoolsModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({ type: StoreDevtoolsModule });
+StoreDevtoolsModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({ factory: function StoreDevtoolsModule_Factory(t) { return new (t || StoreDevtoolsModule)(); } });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](StoreDevtoolsModule, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
+        args: [{}]
+    }], null, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: public_api.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: ngrx-store-devtools.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+
+//# sourceMappingURL=ngrx-store-devtools.js.map
 
 /***/ }),
 
@@ -49918,6 +52525,2151 @@ class OuterSubscriber extends _Subscriber__WEBPACK_IMPORTED_MODULE_0__["Subscrib
 
 /***/ }),
 
+/***/ "l7P3":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@ngrx/store/__ivy_ngcc__/fesm2015/ngrx-store.js ***!
+  \**********************************************************************/
+/*! exports provided: ActionsSubject, FEATURE_REDUCERS, INIT, INITIAL_REDUCERS, INITIAL_STATE, META_REDUCERS, REDUCER_FACTORY, ReducerManager, ReducerManagerDispatcher, ReducerObservable, STORE_FEATURES, ScannedActionsSubject, State, StateObservable, Store, StoreFeatureModule, StoreModule, StoreRootModule, UPDATE, USER_PROVIDED_META_REDUCERS, USER_RUNTIME_CHECKS, combineReducers, compose, createAction, createFeatureSelector, createReducer, createReducerFactory, createSelector, createSelectorFactory, defaultMemoize, defaultStateFn, isNgrxMockEnvironment, on, props, reduceState, resultMemoize, select, setNgrxMockEnvironment, union, ɵb, ɵba, ɵbb, ɵbc, ɵbd, ɵbe, ɵbf, ɵbg, ɵbh, ɵc, ɵd, ɵe, ɵf, ɵg, ɵh, ɵi, ɵj, ɵk, ɵl, ɵm, ɵn, ɵo, ɵp, ɵq, ɵr, ɵs, ɵt, ɵu, ɵv, ɵw, ɵx, ɵy, ɵz */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ActionsSubject", function() { return ActionsSubject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FEATURE_REDUCERS", function() { return FEATURE_REDUCERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INIT", function() { return INIT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INITIAL_REDUCERS", function() { return INITIAL_REDUCERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INITIAL_STATE", function() { return INITIAL_STATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "META_REDUCERS", function() { return META_REDUCERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "REDUCER_FACTORY", function() { return REDUCER_FACTORY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReducerManager", function() { return ReducerManager; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReducerManagerDispatcher", function() { return ReducerManagerDispatcher; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReducerObservable", function() { return ReducerObservable; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "STORE_FEATURES", function() { return STORE_FEATURES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScannedActionsSubject", function() { return ScannedActionsSubject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "State", function() { return State; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StateObservable", function() { return StateObservable; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreFeatureModule", function() { return StoreFeatureModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreModule", function() { return StoreModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "StoreRootModule", function() { return StoreRootModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE", function() { return UPDATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "USER_PROVIDED_META_REDUCERS", function() { return USER_PROVIDED_META_REDUCERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "USER_RUNTIME_CHECKS", function() { return USER_RUNTIME_CHECKS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "combineReducers", function() { return combineReducers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "compose", function() { return compose; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createAction", function() { return createAction; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createFeatureSelector", function() { return createFeatureSelector; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createReducer", function() { return createReducer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createReducerFactory", function() { return createReducerFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createSelector", function() { return createSelector; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createSelectorFactory", function() { return createSelectorFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultMemoize", function() { return defaultMemoize; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultStateFn", function() { return defaultStateFn; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isNgrxMockEnvironment", function() { return isNgrxMockEnvironment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "on", function() { return on; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "props", function() { return props; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "reduceState", function() { return reduceState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resultMemoize", function() { return resultMemoize; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "select", function() { return select; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setNgrxMockEnvironment", function() { return setNgrxMockEnvironment; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "union", function() { return union; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵb", function() { return STORE_PROVIDERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵba", function() { return createActiveRuntimeChecks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbb", function() { return createSerializationCheckMetaReducer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbc", function() { return createImmutabilityCheckMetaReducer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbd", function() { return createInNgZoneCheckMetaReducer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbe", function() { return provideRuntimeChecks; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbf", function() { return checkForActionTypeUniqueness; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbg", function() { return _runtimeChecksFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵbh", function() { return _actionTypeUniquenessCheck; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵc", function() { return ACTIONS_SUBJECT_PROVIDERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵd", function() { return REDUCER_MANAGER_PROVIDERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵe", function() { return SCANNED_ACTIONS_SUBJECT_PROVIDERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵf", function() { return isEqualCheck; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵg", function() { return STATE_PROVIDERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵh", function() { return _ROOT_STORE_GUARD; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵi", function() { return _INITIAL_STATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵj", function() { return _REDUCER_FACTORY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵk", function() { return _INITIAL_REDUCERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵl", function() { return _STORE_REDUCERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵm", function() { return _FEATURE_REDUCERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵn", function() { return _FEATURE_CONFIGS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵo", function() { return _STORE_FEATURES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵp", function() { return _FEATURE_REDUCERS_TOKEN; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵq", function() { return _RESOLVED_META_REDUCERS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵr", function() { return _USER_RUNTIME_CHECKS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵs", function() { return _ACTIVE_RUNTIME_CHECKS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵt", function() { return _ACTION_TYPE_UNIQUENESS_CHECK; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵu", function() { return _createStoreReducers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵv", function() { return _createFeatureStore; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵw", function() { return _createFeatureReducers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵx", function() { return _initialStateFactory; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵy", function() { return _concatMetaReducers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵz", function() { return _provideForRootGuard; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+
+
+
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/globals.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+
+const REGISTERED_ACTION_TYPES = {};
+/**
+ * @return {?}
+ */
+function resetRegisteredActionTypes() {
+    for (const key of Object.keys(REGISTERED_ACTION_TYPES)) {
+        delete REGISTERED_ACTION_TYPES[key];
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/action_creator.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * \@description
+ * Creates a configured `Creator` function that, when called, returns an object in the shape of the `Action` interface.
+ *
+ * Action creators reduce the explicitness of class-based action creators.
+ *
+ * \@usageNotes
+ *
+ * **Declaring an action creator**
+ *
+ * Without additional metadata:
+ * ```ts
+ * export const increment = createAction('[Counter] Increment');
+ * ```
+ * With additional metadata:
+ * ```ts
+ * export const loginSuccess = createAction(
+ *   '[Auth/API] Login Success',
+ *   props<{ user: User }>()
+ * );
+ * ```
+ * With a function:
+ * ```ts
+ * export const loginSuccess = createAction(
+ *   '[Auth/API] Login Success',
+ *   (response: Response) => response.user
+ * );
+ * ```
+ *
+ * **Dispatching an action**
+ *
+ * Without additional metadata:
+ * ```ts
+ * store.dispatch(increment());
+ * ```
+ * With additional metadata:
+ * ```ts
+ * store.dispatch(loginSuccess({ user: newUser }));
+ * ```
+ *
+ * **Referencing an action in a reducer**
+ *
+ * Using a switch statement:
+ * ```ts
+ * switch (action.type) {
+ *   // ...
+ *   case AuthApiActions.loginSuccess.type: {
+ *     return {
+ *       ...state,
+ *       user: action.user
+ *     };
+ *   }
+ * }
+ * ```
+ * Using a reducer creator:
+ * ```ts
+ * on(AuthApiActions.loginSuccess, (state, { user }) => ({ ...state, user }))
+ * ```
+ *
+ *  **Referencing an action in an effect**
+ * ```ts
+ * effectName$ = createEffect(
+ *   () => this.actions$.pipe(
+ *     ofType(AuthApiActions.loginSuccess),
+ *     // ...
+ *   )
+ * );
+ * ```
+ * @template T, C
+ * @param {?} type Describes the action that will be dispatched
+ * @param {?=} config Additional metadata needed for the handling of the action.  See {\@link createAction#usage-notes Usage Notes}.
+ *
+ * @return {?}
+ */
+function createAction(type, config) {
+    REGISTERED_ACTION_TYPES[type] = (REGISTERED_ACTION_TYPES[type] || 0) + 1;
+    if (typeof config === 'function') {
+        return defineType(type, (/**
+         * @param {...?} args
+         * @return {?}
+         */
+        (...args) => (Object.assign(Object.assign({}, config(...args)), { type }))));
+    }
+    /** @type {?} */
+    const as = config ? config._as : 'empty';
+    switch (as) {
+        case 'empty':
+            return defineType(type, (/**
+             * @return {?}
+             */
+            () => ({ type })));
+        case 'props':
+            return defineType(type, (/**
+             * @param {?} props
+             * @return {?}
+             */
+            (props) => (Object.assign(Object.assign({}, props), { type }))));
+        default:
+            throw new Error('Unexpected config.');
+    }
+}
+/**
+ * @template P
+ * @return {?}
+ */
+function props() {
+    return { _as: 'props', _p: (/** @type {?} */ (undefined)) };
+}
+/**
+ * @template C
+ * @param {?} creators
+ * @return {?}
+ */
+function union(creators) {
+    return (/** @type {?} */ (undefined));
+}
+/**
+ * @template T
+ * @param {?} type
+ * @param {?} creator
+ * @return {?}
+ */
+function defineType(type, creator) {
+    return Object.defineProperty(creator, 'type', {
+        value: type,
+        writable: false,
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/actions_subject.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const INIT = (/** @type {?} */ ('@ngrx/store/init'));
+class ActionsSubject extends rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"] {
+    constructor() {
+        super({ type: INIT });
+    }
+    /**
+     * @param {?} action
+     * @return {?}
+     */
+    next(action) {
+        if (typeof action === 'function') {
+            throw new TypeError(`
+        Dispatch expected an object, instead it received a function.
+        If you're using the createAction function, make sure to invoke the function
+        before dispatching the action. For example, someAction should be someAction().`);
+        }
+        else if (typeof action === 'undefined') {
+            throw new TypeError(`Actions must be objects`);
+        }
+        else if (typeof action.type === 'undefined') {
+            throw new TypeError(`Actions must have a type property`);
+        }
+        super.next(action);
+    }
+    /**
+     * @return {?}
+     */
+    complete() {
+        /* noop */
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        super.complete();
+    }
+}
+ActionsSubject.ɵfac = function ActionsSubject_Factory(t) { return new (t || ActionsSubject)(); };
+ActionsSubject.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: ActionsSubject, factory: ActionsSubject.ɵfac });
+/** @nocollapse */
+ActionsSubject.ctorParameters = () => [];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ActionsSubject, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], function () { return []; }, null); })();
+/** @type {?} */
+const ACTIONS_SUBJECT_PROVIDERS = [ActionsSubject];
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/tokens.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const _ROOT_STORE_GUARD = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Root Guard');
+/** @type {?} */
+const _INITIAL_STATE = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Initial State');
+/** @type {?} */
+const INITIAL_STATE = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Initial State');
+/** @type {?} */
+const REDUCER_FACTORY = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Reducer Factory');
+/** @type {?} */
+const _REDUCER_FACTORY = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Reducer Factory Provider');
+/** @type {?} */
+const INITIAL_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Initial Reducers');
+/** @type {?} */
+const _INITIAL_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Initial Reducers');
+/** @type {?} */
+const STORE_FEATURES = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Store Features');
+/** @type {?} */
+const _STORE_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Store Reducers');
+/** @type {?} */
+const _FEATURE_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Feature Reducers');
+/** @type {?} */
+const _FEATURE_CONFIGS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Feature Configs');
+/** @type {?} */
+const _STORE_FEATURES = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Store Features');
+/** @type {?} */
+const _FEATURE_REDUCERS_TOKEN = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Feature Reducers Token');
+/** @type {?} */
+const FEATURE_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Feature Reducers');
+/**
+ * User-defined meta reducers from StoreModule.forRoot()
+ * @type {?}
+ */
+const USER_PROVIDED_META_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store User Provided Meta Reducers');
+/**
+ * Meta reducers defined either internally by \@ngrx/store or by library authors
+ * @type {?}
+ */
+const META_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Meta Reducers');
+/**
+ * Concats the user provided meta reducers and the meta reducers provided on the multi
+ * injection token
+ * @type {?}
+ */
+const _RESOLVED_META_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Resolved Meta Reducers');
+/**
+ * Runtime checks defined by the user via an InjectionToken
+ * Defaults to `_USER_RUNTIME_CHECKS`
+ * @type {?}
+ */
+const USER_RUNTIME_CHECKS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store User Runtime Checks Config');
+/**
+ * Runtime checks defined by the user via forRoot()
+ * @type {?}
+ */
+const _USER_RUNTIME_CHECKS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal User Runtime Checks Config');
+/**
+ * Runtime checks currently in use
+ * @type {?}
+ */
+const _ACTIVE_RUNTIME_CHECKS = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Internal Runtime Checks');
+/** @type {?} */
+const _ACTION_TYPE_UNIQUENESS_CHECK = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]('@ngrx/store Check if Action types are unique');
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * \@description
+ * Combines reducers for individual features into a single reducer.
+ *
+ * You can use this function to delegate handling of state transitions to multiple reducers, each acting on their
+ * own sub-state within the root state.
+ *
+ * \@usageNotes
+ *
+ * **Example combining two feature reducers into one "root" reducer**
+ *
+ * ```ts
+ * export const reducer = combineReducers({
+ *   featureA: featureAReducer,
+ *   featureB: featureBReducer
+ * });
+ * ```
+ *
+ * You can also override the initial states of the sub-features:
+ * ```ts
+ * export const reducer = combineReducers({
+ *   featureA: featureAReducer,
+ *   featureB: featureBReducer
+ * }, {
+ *   featureA: { counterA: 13 },
+ *   featureB: { counterB: 37 }
+ * });
+ * ```
+ * @param {?} reducers An object mapping keys of the root state to their corresponding feature reducer.
+ * @param {?=} initialState Provides a state value if the current state is `undefined`, as it is initially.
+ * @return {?} A reducer function.
+ *
+ */
+function combineReducers(reducers, initialState = {}) {
+    /** @type {?} */
+    const reducerKeys = Object.keys(reducers);
+    /** @type {?} */
+    const finalReducers = {};
+    for (let i = 0; i < reducerKeys.length; i++) {
+        /** @type {?} */
+        const key = reducerKeys[i];
+        if (typeof reducers[key] === 'function') {
+            finalReducers[key] = reducers[key];
+        }
+    }
+    /** @type {?} */
+    const finalReducerKeys = Object.keys(finalReducers);
+    return (/**
+     * @param {?} state
+     * @param {?} action
+     * @return {?}
+     */
+    function combination(state, action) {
+        state = state === undefined ? initialState : state;
+        /** @type {?} */
+        let hasChanged = false;
+        /** @type {?} */
+        const nextState = {};
+        for (let i = 0; i < finalReducerKeys.length; i++) {
+            /** @type {?} */
+            const key = finalReducerKeys[i];
+            /** @type {?} */
+            const reducer = finalReducers[key];
+            /** @type {?} */
+            const previousStateForKey = state[key];
+            /** @type {?} */
+            const nextStateForKey = reducer(previousStateForKey, action);
+            nextState[key] = nextStateForKey;
+            hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+        }
+        return hasChanged ? nextState : state;
+    });
+}
+/**
+ * @template T
+ * @param {?} object
+ * @param {?} keyToRemove
+ * @return {?}
+ */
+function omit(object, keyToRemove) {
+    return Object.keys(object)
+        .filter((/**
+     * @param {?} key
+     * @return {?}
+     */
+    (key) => key !== keyToRemove))
+        .reduce((/**
+     * @param {?} result
+     * @param {?} key
+     * @return {?}
+     */
+    (result, key) => Object.assign(result, { [key]: object[key] })), {});
+}
+/**
+ * @param {...?} functions
+ * @return {?}
+ */
+function compose(...functions) {
+    return (/**
+     * @param {?} arg
+     * @return {?}
+     */
+    function (arg) {
+        if (functions.length === 0) {
+            return arg;
+        }
+        /** @type {?} */
+        const last = functions[functions.length - 1];
+        /** @type {?} */
+        const rest = functions.slice(0, -1);
+        return rest.reduceRight((/**
+         * @param {?} composed
+         * @param {?} fn
+         * @return {?}
+         */
+        (composed, fn) => fn(composed)), last(arg));
+    });
+}
+/**
+ * @template T, V
+ * @param {?} reducerFactory
+ * @param {?=} metaReducers
+ * @return {?}
+ */
+function createReducerFactory(reducerFactory, metaReducers) {
+    if (Array.isArray(metaReducers) && metaReducers.length > 0) {
+        ((/** @type {?} */ (reducerFactory))) = compose.apply(null, [
+            ...metaReducers,
+            reducerFactory,
+        ]);
+    }
+    return (/**
+     * @param {?} reducers
+     * @param {?=} initialState
+     * @return {?}
+     */
+    (reducers, initialState) => {
+        /** @type {?} */
+        const reducer = reducerFactory(reducers);
+        return (/**
+         * @param {?} state
+         * @param {?} action
+         * @return {?}
+         */
+        (state, action) => {
+            state = state === undefined ? ((/** @type {?} */ (initialState))) : state;
+            return reducer(state, action);
+        });
+    });
+}
+/**
+ * @template T, V
+ * @param {?=} metaReducers
+ * @return {?}
+ */
+function createFeatureReducerFactory(metaReducers) {
+    /** @type {?} */
+    const reducerFactory = Array.isArray(metaReducers) && metaReducers.length > 0
+        ? compose(...metaReducers)
+        : (/**
+         * @param {?} r
+         * @return {?}
+         */
+        (r) => r);
+    return (/**
+     * @param {?} reducer
+     * @param {?=} initialState
+     * @return {?}
+     */
+    (reducer, initialState) => {
+        reducer = reducerFactory(reducer);
+        return (/**
+         * @param {?} state
+         * @param {?} action
+         * @return {?}
+         */
+        (state, action) => {
+            state = state === undefined ? initialState : state;
+            return reducer(state, action);
+        });
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/reducer_manager.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @abstract
+ */
+class ReducerObservable extends rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"] {
+}
+/**
+ * @abstract
+ */
+class ReducerManagerDispatcher extends ActionsSubject {
+}
+/** @type {?} */
+const UPDATE = (/** @type {?} */ ('@ngrx/store/update-reducers'));
+class ReducerManager extends rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"] {
+    /**
+     * @param {?} dispatcher
+     * @param {?} initialState
+     * @param {?} reducers
+     * @param {?} reducerFactory
+     */
+    constructor(dispatcher, initialState, reducers, reducerFactory) {
+        super(reducerFactory(reducers, initialState));
+        this.dispatcher = dispatcher;
+        this.initialState = initialState;
+        this.reducers = reducers;
+        this.reducerFactory = reducerFactory;
+    }
+    /**
+     * @param {?} feature
+     * @return {?}
+     */
+    addFeature(feature) {
+        this.addFeatures([feature]);
+    }
+    /**
+     * @param {?} features
+     * @return {?}
+     */
+    addFeatures(features) {
+        /** @type {?} */
+        const reducers = features.reduce((/**
+         * @param {?} reducerDict
+         * @param {?} __1
+         * @return {?}
+         */
+        (reducerDict, { reducers, reducerFactory, metaReducers, initialState, key }) => {
+            /** @type {?} */
+            const reducer = typeof reducers === 'function'
+                ? createFeatureReducerFactory(metaReducers)(reducers, initialState)
+                : createReducerFactory(reducerFactory, metaReducers)(reducers, initialState);
+            reducerDict[key] = reducer;
+            return reducerDict;
+        }), (/** @type {?} */ ({})));
+        this.addReducers(reducers);
+    }
+    /**
+     * @param {?} feature
+     * @return {?}
+     */
+    removeFeature(feature) {
+        this.removeFeatures([feature]);
+    }
+    /**
+     * @param {?} features
+     * @return {?}
+     */
+    removeFeatures(features) {
+        this.removeReducers(features.map((/**
+         * @param {?} p
+         * @return {?}
+         */
+        (p) => p.key)));
+    }
+    /**
+     * @param {?} key
+     * @param {?} reducer
+     * @return {?}
+     */
+    addReducer(key, reducer) {
+        this.addReducers({ [key]: reducer });
+    }
+    /**
+     * @param {?} reducers
+     * @return {?}
+     */
+    addReducers(reducers) {
+        this.reducers = Object.assign(Object.assign({}, this.reducers), reducers);
+        this.updateReducers(Object.keys(reducers));
+    }
+    /**
+     * @param {?} featureKey
+     * @return {?}
+     */
+    removeReducer(featureKey) {
+        this.removeReducers([featureKey]);
+    }
+    /**
+     * @param {?} featureKeys
+     * @return {?}
+     */
+    removeReducers(featureKeys) {
+        featureKeys.forEach((/**
+         * @param {?} key
+         * @return {?}
+         */
+        (key) => {
+            this.reducers = (/** @type {?} */ (omit(this.reducers, key) /*TODO(#823)*/));
+        }));
+        this.updateReducers(featureKeys);
+    }
+    /**
+     * @private
+     * @param {?} featureKeys
+     * @return {?}
+     */
+    updateReducers(featureKeys) {
+        this.next(this.reducerFactory(this.reducers, this.initialState));
+        this.dispatcher.next((/** @type {?} */ ({
+            type: UPDATE,
+            features: featureKeys,
+        })));
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.complete();
+    }
+}
+ReducerManager.ɵfac = function ReducerManager_Factory(t) { return new (t || ReducerManager)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ReducerManagerDispatcher), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](INITIAL_STATE), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](INITIAL_REDUCERS), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](REDUCER_FACTORY)); };
+ReducerManager.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: ReducerManager, factory: ReducerManager.ɵfac });
+/** @nocollapse */
+ReducerManager.ctorParameters = () => [
+    { type: ReducerManagerDispatcher },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [INITIAL_STATE,] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [INITIAL_REDUCERS,] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [REDUCER_FACTORY,] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ReducerManager, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], function () { return [{ type: ReducerManagerDispatcher }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [INITIAL_STATE]
+            }] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [INITIAL_REDUCERS]
+            }] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [REDUCER_FACTORY]
+            }] }]; }, null); })();
+if (false) {}
+/** @type {?} */
+const REDUCER_MANAGER_PROVIDERS = [
+    ReducerManager,
+    { provide: ReducerObservable, useExisting: ReducerManager },
+    { provide: ReducerManagerDispatcher, useExisting: ActionsSubject },
+];
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/scanned_actions_subject.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ScannedActionsSubject extends rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"] {
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.complete();
+    }
+}
+ScannedActionsSubject.ɵfac = function ScannedActionsSubject_Factory(t) { return ɵScannedActionsSubject_BaseFactory(t || ScannedActionsSubject); };
+ScannedActionsSubject.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: ScannedActionsSubject, factory: ScannedActionsSubject.ɵfac });
+const ɵScannedActionsSubject_BaseFactory = /*@__PURE__*/ _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵgetInheritedFactory"](ScannedActionsSubject);
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ScannedActionsSubject, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], null, null); })();
+/** @type {?} */
+const SCANNED_ACTIONS_SUBJECT_PROVIDERS = [
+    ScannedActionsSubject,
+];
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/state.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @abstract
+ */
+class StateObservable extends rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"] {
+}
+/**
+ * @template T
+ */
+class State extends rxjs__WEBPACK_IMPORTED_MODULE_1__["BehaviorSubject"] {
+    /**
+     * @param {?} actions$
+     * @param {?} reducer$
+     * @param {?} scannedActions
+     * @param {?} initialState
+     */
+    constructor(actions$, reducer$, scannedActions, initialState) {
+        super(initialState);
+        /** @type {?} */
+        const actionsOnQueue$ = actions$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["observeOn"])(rxjs__WEBPACK_IMPORTED_MODULE_1__["queueScheduler"]));
+        /** @type {?} */
+        const withLatestReducer$ = actionsOnQueue$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["withLatestFrom"])(reducer$));
+        /** @type {?} */
+        const seed = { state: initialState };
+        /** @type {?} */
+        const stateAndAction$ = withLatestReducer$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["scan"])(reduceState, seed));
+        this.stateSubscription = stateAndAction$.subscribe((/**
+         * @param {?} __0
+         * @return {?}
+         */
+        ({ state, action }) => {
+            this.next(state);
+            scannedActions.next((/** @type {?} */ (action)));
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.stateSubscription.unsubscribe();
+        this.complete();
+    }
+}
+State.ɵfac = function State_Factory(t) { return new (t || State)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ActionsSubject), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ReducerObservable), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ScannedActionsSubject), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](INITIAL_STATE)); };
+State.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: State, factory: State.ɵfac });
+State.INIT = INIT;
+/** @nocollapse */
+State.ctorParameters = () => [
+    { type: ActionsSubject },
+    { type: ReducerObservable },
+    { type: ScannedActionsSubject },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [INITIAL_STATE,] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](State, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], function () { return [{ type: ActionsSubject }, { type: ReducerObservable }, { type: ScannedActionsSubject }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [INITIAL_STATE]
+            }] }]; }, null); })();
+if (false) {}
+/**
+ * @template T, V
+ * @param {?=} stateActionPair
+ * @param {?=} __1
+ * @return {?}
+ */
+function reduceState(stateActionPair = { state: undefined }, [action, reducer]) {
+    const { state } = stateActionPair;
+    return { state: reducer(state, action), action };
+}
+/** @type {?} */
+const STATE_PROVIDERS = [
+    State,
+    { provide: StateObservable, useExisting: State },
+];
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/store.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ */
+class Store extends rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"] {
+    /**
+     * @param {?} state$
+     * @param {?} actionsObserver
+     * @param {?} reducerManager
+     */
+    constructor(state$, actionsObserver, reducerManager) {
+        super();
+        this.actionsObserver = actionsObserver;
+        this.reducerManager = reducerManager;
+        this.source = state$;
+    }
+    /**
+     * @template Props, K
+     * @param {?} pathOrMapFn
+     * @param {...?} paths
+     * @return {?}
+     */
+    select(pathOrMapFn, ...paths) {
+        return ((/** @type {?} */ (select))).call(null, pathOrMapFn, ...paths)(this);
+    }
+    /**
+     * @template R
+     * @param {?} operator
+     * @return {?}
+     */
+    lift(operator) {
+        /** @type {?} */
+        const store = new Store(this, this.actionsObserver, this.reducerManager);
+        store.operator = operator;
+        return store;
+    }
+    /**
+     * @template V
+     * @param {?} action
+     * @return {?}
+     */
+    dispatch(action) {
+        this.actionsObserver.next(action);
+    }
+    /**
+     * @param {?} action
+     * @return {?}
+     */
+    next(action) {
+        this.actionsObserver.next(action);
+    }
+    /**
+     * @param {?} err
+     * @return {?}
+     */
+    error(err) {
+        this.actionsObserver.error(err);
+    }
+    /**
+     * @return {?}
+     */
+    complete() {
+        this.actionsObserver.complete();
+    }
+    /**
+     * @template State, Actions
+     * @param {?} key
+     * @param {?} reducer
+     * @return {?}
+     */
+    addReducer(key, reducer) {
+        this.reducerManager.addReducer(key, reducer);
+    }
+    /**
+     * @template Key
+     * @param {?} key
+     * @return {?}
+     */
+    removeReducer(key) {
+        this.reducerManager.removeReducer(key);
+    }
+}
+Store.ɵfac = function Store_Factory(t) { return new (t || Store)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](StateObservable), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ActionsSubject), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ReducerManager)); };
+Store.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({ token: Store, factory: Store.ɵfac });
+/** @nocollapse */
+Store.ctorParameters = () => [
+    { type: StateObservable },
+    { type: ActionsSubject },
+    { type: ReducerManager }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](Store, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"]
+    }], function () { return [{ type: StateObservable }, { type: ActionsSubject }, { type: ReducerManager }]; }, null); })();
+if (false) {}
+/** @type {?} */
+const STORE_PROVIDERS = [Store];
+/**
+ * @template T, Props, K
+ * @param {?} pathOrMapFn
+ * @param {?=} propsOrPath
+ * @param {...?} paths
+ * @return {?}
+ */
+function select(pathOrMapFn, propsOrPath, ...paths) {
+    return (/**
+     * @param {?} source$
+     * @return {?}
+     */
+    function selectOperator(source$) {
+        /** @type {?} */
+        let mapped$;
+        if (typeof pathOrMapFn === 'string') {
+            /** @type {?} */
+            const pathSlices = [(/** @type {?} */ (propsOrPath)), ...paths].filter(Boolean);
+            mapped$ = source$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["pluck"])(pathOrMapFn, ...pathSlices));
+        }
+        else if (typeof pathOrMapFn === 'function') {
+            mapped$ = source$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])((/**
+             * @param {?} source
+             * @return {?}
+             */
+            (source) => pathOrMapFn(source, (/** @type {?} */ (propsOrPath))))));
+        }
+        else {
+            throw new TypeError(`Unexpected type '${typeof pathOrMapFn}' in select operator,` +
+                ` expected 'string' or 'function'`);
+        }
+        return mapped$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["distinctUntilChanged"])());
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/flags.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+let _ngrxMockEnvironment = false;
+/**
+ * @param {?} value
+ * @return {?}
+ */
+function setNgrxMockEnvironment(value) {
+    _ngrxMockEnvironment = value;
+}
+/**
+ * @return {?}
+ */
+function isNgrxMockEnvironment() {
+    return _ngrxMockEnvironment;
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/selector.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @record
+ * @template State, Result, ProjectorFn
+ */
+function MemoizedSelector() { }
+if (false) {}
+/**
+ * @record
+ * @template State, Props, Result, ProjectorFn
+ */
+function MemoizedSelectorWithProps() { }
+if (false) {}
+/**
+ * @param {?} a
+ * @param {?} b
+ * @return {?}
+ */
+function isEqualCheck(a, b) {
+    return a === b;
+}
+/**
+ * @param {?} args
+ * @param {?} lastArguments
+ * @param {?} comparator
+ * @return {?}
+ */
+function isArgumentsChanged(args, lastArguments, comparator) {
+    for (let i = 0; i < args.length; i++) {
+        if (!comparator(args[i], lastArguments[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+/**
+ * @param {?} projectionFn
+ * @param {?} isResultEqual
+ * @return {?}
+ */
+function resultMemoize(projectionFn, isResultEqual) {
+    return defaultMemoize(projectionFn, isEqualCheck, isResultEqual);
+}
+/**
+ * @param {?} projectionFn
+ * @param {?=} isArgumentsEqual
+ * @param {?=} isResultEqual
+ * @return {?}
+ */
+function defaultMemoize(projectionFn, isArgumentsEqual = isEqualCheck, isResultEqual = isEqualCheck) {
+    /** @type {?} */
+    let lastArguments = null;
+    // tslint:disable-next-line:no-any anything could be the result.
+    /** @type {?} */
+    let lastResult = null;
+    /** @type {?} */
+    let overrideResult;
+    /**
+     * @return {?}
+     */
+    function reset() {
+        lastArguments = null;
+        lastResult = null;
+    }
+    /**
+     * @param {?=} result
+     * @return {?}
+     */
+    function setResult(result = undefined) {
+        overrideResult = { result };
+    }
+    /**
+     * @return {?}
+     */
+    function clearResult() {
+        overrideResult = undefined;
+    }
+    // tslint:disable-next-line:no-any anything could be the result.
+    /**
+     * @return {?}
+     */
+    function memoized() {
+        if (overrideResult !== undefined) {
+            return overrideResult.result;
+        }
+        if (!lastArguments) {
+            lastResult = projectionFn.apply(null, (/** @type {?} */ (arguments)));
+            lastArguments = arguments;
+            return lastResult;
+        }
+        if (!isArgumentsChanged(arguments, lastArguments, isArgumentsEqual)) {
+            return lastResult;
+        }
+        /** @type {?} */
+        const newResult = projectionFn.apply(null, (/** @type {?} */ (arguments)));
+        lastArguments = arguments;
+        if (isResultEqual(lastResult, newResult)) {
+            return lastResult;
+        }
+        lastResult = newResult;
+        return newResult;
+    }
+    return { memoized, reset, setResult, clearResult };
+}
+/**
+ * @param {...?} input
+ * @return {?}
+ */
+function createSelector(...input) {
+    return createSelectorFactory(defaultMemoize)(...input);
+}
+/**
+ * @param {?} state
+ * @param {?} selectors
+ * @param {?} props
+ * @param {?} memoizedProjector
+ * @return {?}
+ */
+function defaultStateFn(state, selectors, props, memoizedProjector) {
+    if (props === undefined) {
+        /** @type {?} */
+        const args = ((/** @type {?} */ (selectors))).map((/**
+         * @param {?} fn
+         * @return {?}
+         */
+        (fn) => fn(state)));
+        return memoizedProjector.memoized.apply(null, args);
+    }
+    /** @type {?} */
+    const args = ((/** @type {?} */ (selectors))).map((/**
+     * @param {?} fn
+     * @return {?}
+     */
+    (fn) => fn(state, props)));
+    return memoizedProjector.memoized.apply(null, [...args, props]);
+}
+/**
+ * @param {?} memoize
+ * @param {?=} options
+ * @return {?}
+ */
+function createSelectorFactory(memoize, options = {
+    stateFn: defaultStateFn,
+}) {
+    return (/**
+     * @param {...?} input
+     * @return {?}
+     */
+    function (...input) {
+        /** @type {?} */
+        let args = input;
+        if (Array.isArray(args[0])) {
+            const [head, ...tail] = args;
+            args = [...head, ...tail];
+        }
+        /** @type {?} */
+        const selectors = args.slice(0, args.length - 1);
+        /** @type {?} */
+        const projector = args[args.length - 1];
+        /** @type {?} */
+        const memoizedSelectors = selectors.filter((/**
+         * @param {?} selector
+         * @return {?}
+         */
+        (selector) => selector.release && typeof selector.release === 'function'));
+        /** @type {?} */
+        const memoizedProjector = memoize((/**
+         * @param {...?} selectors
+         * @return {?}
+         */
+        function (...selectors) {
+            return projector.apply(null, selectors);
+        }));
+        /** @type {?} */
+        const memoizedState = defaultMemoize((/**
+         * @param {?} state
+         * @param {?} props
+         * @return {?}
+         */
+        function (state, props) {
+            return options.stateFn.apply(null, [
+                state,
+                selectors,
+                props,
+                memoizedProjector,
+            ]);
+        }));
+        /**
+         * @return {?}
+         */
+        function release() {
+            memoizedState.reset();
+            memoizedProjector.reset();
+            memoizedSelectors.forEach((/**
+             * @param {?} selector
+             * @return {?}
+             */
+            (selector) => selector.release()));
+        }
+        return Object.assign(memoizedState.memoized, {
+            release,
+            projector: memoizedProjector.memoized,
+            setResult: memoizedState.setResult,
+            clearResult: memoizedState.clearResult,
+        });
+    });
+}
+/**
+ * @param {?} featureName
+ * @return {?}
+ */
+function createFeatureSelector(featureName) {
+    return createSelector((/**
+     * @param {?} state
+     * @return {?}
+     */
+    (state) => {
+        /** @type {?} */
+        const featureState = state[featureName];
+        if (!isNgrxMockEnvironment() && Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["isDevMode"])() && !(featureName in state)) {
+            console.warn(`@ngrx/store: The feature name \"${featureName}\" does ` +
+                'not exist in the state, therefore createFeatureSelector ' +
+                'cannot access it.  Be sure it is imported in a loaded module ' +
+                `using StoreModule.forRoot('${featureName}', ...) or ` +
+                `StoreModule.forFeature('${featureName}', ...).  If the default ` +
+                'state is intended to be undefined, as is the case with router ' +
+                'state, this development-only warning message can be ignored.');
+        }
+        return featureState;
+    }), (/**
+     * @param {?} featureState
+     * @return {?}
+     */
+    (featureState) => featureState));
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/meta-reducers/utils.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const RUNTIME_CHECK_URL = 'https://ngrx.io/guide/store/configuration/runtime-checks';
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isUndefined(target) {
+    return target === undefined;
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isNull(target) {
+    return target === null;
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isArray(target) {
+    return Array.isArray(target);
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isString(target) {
+    return typeof target === 'string';
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isBoolean(target) {
+    return typeof target === 'boolean';
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isNumber(target) {
+    return typeof target === 'number';
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isObjectLike(target) {
+    return typeof target === 'object' && target !== null;
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isObject(target) {
+    return isObjectLike(target) && !isArray(target);
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isPlainObject(target) {
+    if (!isObject(target)) {
+        return false;
+    }
+    /** @type {?} */
+    const targetPrototype = Object.getPrototypeOf(target);
+    return targetPrototype === Object.prototype || targetPrototype === null;
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isFunction(target) {
+    return typeof target === 'function';
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function isComponent(target) {
+    return isFunction(target) && target.hasOwnProperty('ɵcmp');
+}
+/**
+ * @param {?} target
+ * @param {?} propertyName
+ * @return {?}
+ */
+function hasOwnProperty(target, propertyName) {
+    return Object.prototype.hasOwnProperty.call(target, propertyName);
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/meta-reducers/immutability_reducer.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} reducer
+ * @param {?} checks
+ * @return {?}
+ */
+function immutabilityCheckMetaReducer(reducer, checks) {
+    return (/**
+     * @param {?} state
+     * @param {?} action
+     * @return {?}
+     */
+    function (state, action) {
+        /** @type {?} */
+        const act = checks.action(action) ? freeze(action) : action;
+        /** @type {?} */
+        const nextState = reducer(state, act);
+        return checks.state() ? freeze(nextState) : nextState;
+    });
+}
+/**
+ * @param {?} target
+ * @return {?}
+ */
+function freeze(target) {
+    Object.freeze(target);
+    /** @type {?} */
+    const targetIsFunction = isFunction(target);
+    Object.getOwnPropertyNames(target).forEach((/**
+     * @param {?} prop
+     * @return {?}
+     */
+    (prop) => {
+        // Ignore Ivy properties, ref: https://github.com/ngrx/platform/issues/2109#issuecomment-582689060
+        if (prop.startsWith('ɵ')) {
+            return;
+        }
+        if (hasOwnProperty(target, prop) &&
+            (targetIsFunction
+                ? prop !== 'caller' && prop !== 'callee' && prop !== 'arguments'
+                : true)) {
+            /** @type {?} */
+            const propValue = target[prop];
+            if ((isObjectLike(propValue) || isFunction(propValue)) &&
+                !Object.isFrozen(propValue)) {
+                freeze(propValue);
+            }
+        }
+    }));
+    return target;
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/meta-reducers/serialization_reducer.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} reducer
+ * @param {?} checks
+ * @return {?}
+ */
+function serializationCheckMetaReducer(reducer, checks) {
+    return (/**
+     * @param {?} state
+     * @param {?} action
+     * @return {?}
+     */
+    function (state, action) {
+        if (checks.action(action)) {
+            /** @type {?} */
+            const unserializableAction = getUnserializable(action);
+            throwIfUnserializable(unserializableAction, 'action');
+        }
+        /** @type {?} */
+        const nextState = reducer(state, action);
+        if (checks.state()) {
+            /** @type {?} */
+            const unserializableState = getUnserializable(nextState);
+            throwIfUnserializable(unserializableState, 'state');
+        }
+        return nextState;
+    });
+}
+/**
+ * @param {?=} target
+ * @param {?=} path
+ * @return {?}
+ */
+function getUnserializable(target, path = []) {
+    // Guard against undefined and null, e.g. a reducer that returns undefined
+    if ((isUndefined(target) || isNull(target)) && path.length === 0) {
+        return {
+            path: ['root'],
+            value: target,
+        };
+    }
+    /** @type {?} */
+    const keys = Object.keys(target);
+    return keys.reduce((/**
+     * @param {?} result
+     * @param {?} key
+     * @return {?}
+     */
+    (result, key) => {
+        if (result) {
+            return result;
+        }
+        /** @type {?} */
+        const value = ((/** @type {?} */ (target)))[key];
+        // Ignore Ivy components
+        if (isComponent(value)) {
+            return result;
+        }
+        if (isUndefined(value) ||
+            isNull(value) ||
+            isNumber(value) ||
+            isBoolean(value) ||
+            isString(value) ||
+            isArray(value)) {
+            return false;
+        }
+        if (isPlainObject(value)) {
+            return getUnserializable(value, [...path, key]);
+        }
+        return {
+            path: [...path, key],
+            value,
+        };
+    }), false);
+}
+/**
+ * @param {?} unserializable
+ * @param {?} context
+ * @return {?}
+ */
+function throwIfUnserializable(unserializable, context) {
+    if (unserializable === false) {
+        return;
+    }
+    /** @type {?} */
+    const unserializablePath = unserializable.path.join('.');
+    /** @type {?} */
+    const error = new Error(`Detected unserializable ${context} at "${unserializablePath}". ${RUNTIME_CHECK_URL}#strict${context}serializability`);
+    error.value = unserializable.value;
+    error.unserializablePath = unserializablePath;
+    throw error;
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/meta-reducers/inNgZoneAssert_reducer.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} reducer
+ * @param {?} checks
+ * @return {?}
+ */
+function inNgZoneAssertMetaReducer(reducer, checks) {
+    return (/**
+     * @param {?} state
+     * @param {?} action
+     * @return {?}
+     */
+    function (state, action) {
+        if (checks.action(action) && !_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"].isInAngularZone()) {
+            throw new Error(`Action '${action.type}' running outside NgZone. ${RUNTIME_CHECK_URL}#strictactionwithinngzone`);
+        }
+        return reducer(state, action);
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/meta-reducers/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/runtime_checks.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?=} runtimeChecks
+ * @return {?}
+ */
+function createActiveRuntimeChecks(runtimeChecks) {
+    if (Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["isDevMode"])()) {
+        return Object.assign({ strictStateSerializability: false, strictActionSerializability: false, strictStateImmutability: true, strictActionImmutability: true, strictActionWithinNgZone: false, strictActionTypeUniqueness: false }, runtimeChecks);
+    }
+    return {
+        strictStateSerializability: false,
+        strictActionSerializability: false,
+        strictStateImmutability: false,
+        strictActionImmutability: false,
+        strictActionWithinNgZone: false,
+        strictActionTypeUniqueness: false,
+    };
+}
+/**
+ * @param {?} __0
+ * @return {?}
+ */
+function createSerializationCheckMetaReducer({ strictActionSerializability, strictStateSerializability, }) {
+    return (/**
+     * @param {?} reducer
+     * @return {?}
+     */
+    (reducer) => strictActionSerializability || strictStateSerializability
+        ? serializationCheckMetaReducer(reducer, {
+            action: (/**
+             * @param {?} action
+             * @return {?}
+             */
+            (action) => strictActionSerializability && !ignoreNgrxAction(action)),
+            state: (/**
+             * @return {?}
+             */
+            () => strictStateSerializability),
+        })
+        : reducer);
+}
+/**
+ * @param {?} __0
+ * @return {?}
+ */
+function createImmutabilityCheckMetaReducer({ strictActionImmutability, strictStateImmutability, }) {
+    return (/**
+     * @param {?} reducer
+     * @return {?}
+     */
+    (reducer) => strictActionImmutability || strictStateImmutability
+        ? immutabilityCheckMetaReducer(reducer, {
+            action: (/**
+             * @param {?} action
+             * @return {?}
+             */
+            (action) => strictActionImmutability && !ignoreNgrxAction(action)),
+            state: (/**
+             * @return {?}
+             */
+            () => strictStateImmutability),
+        })
+        : reducer);
+}
+/**
+ * @param {?} action
+ * @return {?}
+ */
+function ignoreNgrxAction(action) {
+    return action.type.startsWith('@ngrx');
+}
+/**
+ * @param {?} __0
+ * @return {?}
+ */
+function createInNgZoneCheckMetaReducer({ strictActionWithinNgZone, }) {
+    return (/**
+     * @param {?} reducer
+     * @return {?}
+     */
+    (reducer) => strictActionWithinNgZone
+        ? inNgZoneAssertMetaReducer(reducer, {
+            action: (/**
+             * @param {?} action
+             * @return {?}
+             */
+            (action) => strictActionWithinNgZone && !ignoreNgrxAction(action)),
+        })
+        : reducer);
+}
+/**
+ * @param {?=} runtimeChecks
+ * @return {?}
+ */
+function provideRuntimeChecks(runtimeChecks) {
+    return [
+        {
+            provide: _USER_RUNTIME_CHECKS,
+            useValue: runtimeChecks,
+        },
+        {
+            provide: USER_RUNTIME_CHECKS,
+            useFactory: _runtimeChecksFactory,
+            deps: [_USER_RUNTIME_CHECKS],
+        },
+        {
+            provide: _ACTIVE_RUNTIME_CHECKS,
+            deps: [USER_RUNTIME_CHECKS],
+            useFactory: createActiveRuntimeChecks,
+        },
+        {
+            provide: META_REDUCERS,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: createImmutabilityCheckMetaReducer,
+        },
+        {
+            provide: META_REDUCERS,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: createSerializationCheckMetaReducer,
+        },
+        {
+            provide: META_REDUCERS,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: createInNgZoneCheckMetaReducer,
+        },
+    ];
+}
+/**
+ * @return {?}
+ */
+function checkForActionTypeUniqueness() {
+    return [
+        {
+            provide: _ACTION_TYPE_UNIQUENESS_CHECK,
+            multi: true,
+            deps: [_ACTIVE_RUNTIME_CHECKS],
+            useFactory: _actionTypeUniquenessCheck,
+        },
+    ];
+}
+/**
+ * @param {?} runtimeChecks
+ * @return {?}
+ */
+function _runtimeChecksFactory(runtimeChecks) {
+    return runtimeChecks;
+}
+/**
+ * @param {?} config
+ * @return {?}
+ */
+function _actionTypeUniquenessCheck(config) {
+    if (!config.strictActionTypeUniqueness) {
+        return;
+    }
+    /** @type {?} */
+    const duplicates = Object.entries(REGISTERED_ACTION_TYPES)
+        .filter((/**
+     * @param {?} __0
+     * @return {?}
+     */
+    ([, registrations]) => registrations > 1))
+        .map((/**
+     * @param {?} __0
+     * @return {?}
+     */
+    ([type]) => type));
+    if (duplicates.length) {
+        throw new Error(`Action types are registered more than once, ${duplicates
+            .map((/**
+         * @param {?} type
+         * @return {?}
+         */
+        (type) => `"${type}"`))
+            .join(', ')}. ${RUNTIME_CHECK_URL}#strictactiontypeuniqueness`);
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/store_module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class StoreRootModule {
+    /**
+     * @param {?} actions$
+     * @param {?} reducer$
+     * @param {?} scannedActions$
+     * @param {?} store
+     * @param {?} guard
+     * @param {?} actionCheck
+     */
+    constructor(actions$, reducer$, scannedActions$, store, guard, actionCheck) { }
+}
+StoreRootModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({ type: StoreRootModule });
+StoreRootModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({ factory: function StoreRootModule_Factory(t) { return new (t || StoreRootModule)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ActionsSubject), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ReducerObservable), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ScannedActionsSubject), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](Store), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_ROOT_STORE_GUARD, 8), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_ACTION_TYPE_UNIQUENESS_CHECK, 8)); } });
+/** @nocollapse */
+StoreRootModule.ctorParameters = () => [
+    { type: ActionsSubject },
+    { type: ReducerObservable },
+    { type: ScannedActionsSubject },
+    { type: Store },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_ROOT_STORE_GUARD,] }] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](StoreRootModule, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
+        args: [{}]
+    }], function () { return [{ type: ActionsSubject }, { type: ReducerObservable }, { type: ScannedActionsSubject }, { type: Store }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"]
+            }, {
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [_ROOT_STORE_GUARD]
+            }] }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"]
+            }, {
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [_ACTION_TYPE_UNIQUENESS_CHECK]
+            }] }]; }, null); })();
+class StoreFeatureModule {
+    /**
+     * @param {?} features
+     * @param {?} featureReducers
+     * @param {?} reducerManager
+     * @param {?} root
+     * @param {?} actionCheck
+     */
+    constructor(features, featureReducers, reducerManager, root, actionCheck) {
+        this.features = features;
+        this.featureReducers = featureReducers;
+        this.reducerManager = reducerManager;
+        /** @type {?} */
+        const feats = features.map((/**
+         * @param {?} feature
+         * @param {?} index
+         * @return {?}
+         */
+        (feature, index) => {
+            /** @type {?} */
+            const featureReducerCollection = featureReducers.shift();
+            /** @type {?} */
+            const reducers = (/** @type {?} */ (featureReducerCollection /*TODO(#823)*/))[index];
+            return Object.assign(Object.assign({}, feature), { reducers, initialState: _initialStateFactory(feature.initialState) });
+        }));
+        reducerManager.addFeatures(feats);
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.reducerManager.removeFeatures(this.features);
+    }
+}
+StoreFeatureModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({ type: StoreFeatureModule });
+StoreFeatureModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({ factory: function StoreFeatureModule_Factory(t) { return new (t || StoreFeatureModule)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_STORE_FEATURES), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](FEATURE_REDUCERS), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](ReducerManager), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](StoreRootModule), _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_ACTION_TYPE_UNIQUENESS_CHECK, 8)); } });
+/** @nocollapse */
+StoreFeatureModule.ctorParameters = () => [
+    { type: Array, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_STORE_FEATURES,] }] },
+    { type: Array, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [FEATURE_REDUCERS,] }] },
+    { type: ReducerManager },
+    { type: StoreRootModule },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"] }, { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_ACTION_TYPE_UNIQUENESS_CHECK,] }] }
+];
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](StoreFeatureModule, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
+        args: [{}]
+    }], function () { return [{ type: Array, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [_STORE_FEATURES]
+            }] }, { type: Array, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [FEATURE_REDUCERS]
+            }] }, { type: ReducerManager }, { type: StoreRootModule }, { type: undefined, decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"]
+            }, {
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"],
+                args: [_ACTION_TYPE_UNIQUENESS_CHECK]
+            }] }]; }, null); })();
+if (false) {}
+/**
+ * @record
+ * @template T, V
+ */
+function StoreConfig() { }
+if (false) {}
+/**
+ * @record
+ * @template T, V
+ */
+function RootStoreConfig() { }
+if (false) {}
+class StoreModule {
+    /**
+     * @param {?} reducers
+     * @param {?=} config
+     * @return {?}
+     */
+    static forRoot(reducers, config = {}) {
+        return {
+            ngModule: StoreRootModule,
+            providers: [
+                {
+                    provide: _ROOT_STORE_GUARD,
+                    useFactory: _provideForRootGuard,
+                    deps: [[Store, new _angular_core__WEBPACK_IMPORTED_MODULE_0__["Optional"](), new _angular_core__WEBPACK_IMPORTED_MODULE_0__["SkipSelf"]()]],
+                },
+                { provide: _INITIAL_STATE, useValue: config.initialState },
+                {
+                    provide: INITIAL_STATE,
+                    useFactory: _initialStateFactory,
+                    deps: [_INITIAL_STATE],
+                },
+                { provide: _INITIAL_REDUCERS, useValue: reducers },
+                {
+                    provide: _STORE_REDUCERS,
+                    useExisting: reducers instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"] ? reducers : _INITIAL_REDUCERS,
+                },
+                {
+                    provide: INITIAL_REDUCERS,
+                    deps: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"], _INITIAL_REDUCERS, [new _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"](_STORE_REDUCERS)]],
+                    useFactory: _createStoreReducers,
+                },
+                {
+                    provide: USER_PROVIDED_META_REDUCERS,
+                    useValue: config.metaReducers ? config.metaReducers : [],
+                },
+                {
+                    provide: _RESOLVED_META_REDUCERS,
+                    deps: [META_REDUCERS, USER_PROVIDED_META_REDUCERS],
+                    useFactory: _concatMetaReducers,
+                },
+                {
+                    provide: _REDUCER_FACTORY,
+                    useValue: config.reducerFactory
+                        ? config.reducerFactory
+                        : combineReducers,
+                },
+                {
+                    provide: REDUCER_FACTORY,
+                    deps: [_REDUCER_FACTORY, _RESOLVED_META_REDUCERS],
+                    useFactory: createReducerFactory,
+                },
+                ACTIONS_SUBJECT_PROVIDERS,
+                REDUCER_MANAGER_PROVIDERS,
+                SCANNED_ACTIONS_SUBJECT_PROVIDERS,
+                STATE_PROVIDERS,
+                STORE_PROVIDERS,
+                provideRuntimeChecks(config.runtimeChecks),
+                checkForActionTypeUniqueness(),
+            ],
+        };
+    }
+    /**
+     * @param {?} featureName
+     * @param {?} reducers
+     * @param {?=} config
+     * @return {?}
+     */
+    static forFeature(featureName, reducers, config = {}) {
+        return {
+            ngModule: StoreFeatureModule,
+            providers: [
+                {
+                    provide: _FEATURE_CONFIGS,
+                    multi: true,
+                    useValue: config,
+                },
+                {
+                    provide: STORE_FEATURES,
+                    multi: true,
+                    useValue: {
+                        key: featureName,
+                        reducerFactory: !(config instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]) && config.reducerFactory
+                            ? config.reducerFactory
+                            : combineReducers,
+                        metaReducers: !(config instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]) && config.metaReducers
+                            ? config.metaReducers
+                            : [],
+                        initialState: !(config instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]) && config.initialState
+                            ? config.initialState
+                            : undefined,
+                    },
+                },
+                {
+                    provide: _STORE_FEATURES,
+                    deps: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"], _FEATURE_CONFIGS, STORE_FEATURES],
+                    useFactory: _createFeatureStore,
+                },
+                { provide: _FEATURE_REDUCERS, multi: true, useValue: reducers },
+                {
+                    provide: _FEATURE_REDUCERS_TOKEN,
+                    multi: true,
+                    useExisting: reducers instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"] ? reducers : _FEATURE_REDUCERS,
+                },
+                {
+                    provide: FEATURE_REDUCERS,
+                    multi: true,
+                    deps: [
+                        _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"],
+                        _FEATURE_REDUCERS,
+                        [new _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"](_FEATURE_REDUCERS_TOKEN)],
+                    ],
+                    useFactory: _createFeatureReducers,
+                },
+                checkForActionTypeUniqueness(),
+            ],
+        };
+    }
+}
+StoreModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineNgModule"]({ type: StoreModule });
+StoreModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({ factory: function StoreModule_Factory(t) { return new (t || StoreModule)(); } });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](StoreModule, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"],
+        args: [{}]
+    }], null, null); })();
+/**
+ * @param {?} injector
+ * @param {?} reducers
+ * @return {?}
+ */
+function _createStoreReducers(injector, reducers) {
+    return reducers instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"] ? injector.get(reducers) : reducers;
+}
+/**
+ * @param {?} injector
+ * @param {?} configs
+ * @param {?} featureStores
+ * @return {?}
+ */
+function _createFeatureStore(injector, configs, featureStores) {
+    return featureStores.map((/**
+     * @param {?} feat
+     * @param {?} index
+     * @return {?}
+     */
+    (feat, index) => {
+        if (configs[index] instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"]) {
+            /** @type {?} */
+            const conf = injector.get(configs[index]);
+            return {
+                key: feat.key,
+                reducerFactory: conf.reducerFactory
+                    ? conf.reducerFactory
+                    : combineReducers,
+                metaReducers: conf.metaReducers ? conf.metaReducers : [],
+                initialState: conf.initialState,
+            };
+        }
+        return feat;
+    }));
+}
+/**
+ * @param {?} injector
+ * @param {?} reducerCollection
+ * @return {?}
+ */
+function _createFeatureReducers(injector, reducerCollection) {
+    /** @type {?} */
+    const reducers = reducerCollection.map((/**
+     * @param {?} reducer
+     * @return {?}
+     */
+    (reducer) => {
+        return reducer instanceof _angular_core__WEBPACK_IMPORTED_MODULE_0__["InjectionToken"] ? injector.get(reducer) : reducer;
+    }));
+    return reducers;
+}
+/**
+ * @param {?} initialState
+ * @return {?}
+ */
+function _initialStateFactory(initialState) {
+    if (typeof initialState === 'function') {
+        return initialState();
+    }
+    return initialState;
+}
+/**
+ * @param {?} metaReducers
+ * @param {?} userProvidedMetaReducers
+ * @return {?}
+ */
+function _concatMetaReducers(metaReducers, userProvidedMetaReducers) {
+    return metaReducers.concat(userProvidedMetaReducers);
+}
+/**
+ * @param {?} store
+ * @return {?}
+ */
+function _provideForRootGuard(store) {
+    if (store) {
+        throw new TypeError(`StoreModule.forRoot() called twice. Feature modules should use StoreModule.forFeature() instead.`);
+    }
+    return 'guarded';
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/reducer_creator.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @record
+ * @template S
+ */
+function On() { }
+if (false) {}
+/**
+ * @record
+ * @template S, C
+ */
+function OnReducer() { }
+/**
+ * \@description
+ * Associates actions with a given state change function.
+ * A state change function must be provided as the last parameter.
+ *
+ * @param {...?} args `ActionCreator`'s followed by a state change function.
+ *
+ * **To maintain type-safety**: pass 10 or less `ActionCreator`'s.
+ * @return {?} an association of action types with a state change function.
+ */
+function on(...args) {
+    /** @type {?} */
+    const reducer = (/** @type {?} */ (args.pop()));
+    /** @type {?} */
+    const types = args.reduce((/**
+     * @param {?} result
+     * @param {?} creator
+     * @return {?}
+     */
+    (result, creator) => [...result, ((/** @type {?} */ (creator))).type]), (/** @type {?} */ ([])));
+    return { reducer, types };
+}
+/**
+ * \@description
+ * Creates a reducer function to handle state transitions.
+ *
+ * Reducer creators reduce the explicitness of reducer functions with switch statements.
+ *
+ * \@usageNotes
+ *
+ * - Must be used with `ActionCreator`'s (returned by `createAction`). Cannot be used with class-based action creators.
+ * - The returned `ActionReducer` should additionally be wrapped with another function, if you are using View Engine AOT.
+ * In case you are using Ivy (or only JIT View Engine) the extra wrapper function is not required.
+ *
+ * **Declaring a reducer creator**
+ *
+ * ```ts
+ * export const reducer = createReducer(
+ *   initialState,
+ *   on(
+ *     featureActions.actionOne,
+ *     featureActions.actionTwo,
+ *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })
+ *   ),
+ *   on(featureActions.actionThree, () => initialState);
+ * );
+ * ```
+ *
+ * **Declaring a reducer creator using a wrapper function (Only needed if using View Engine AOT)**
+ *
+ * ```ts
+ * const featureReducer = createReducer(
+ *   initialState,
+ *   on(
+ *     featureActions.actionOne,
+ *     featureActions.actionTwo,
+ *     (state, { updatedValue }) => ({ ...state, prop: updatedValue })
+ *   ),
+ *   on(featureActions.actionThree, () => initialState);
+ * );
+ *
+ * export function reducer(state: State | undefined, action: Action) {
+ *   return featureReducer(state, action);
+ * }
+ * ```
+ * @template S, A
+ * @param {?} initialState Provides a state value if the current state is `undefined`, as it is initially.
+ * @param {...?} ons Associations between actions and state changes.
+ * @return {?} A reducer function.
+ *
+ */
+function createReducer(initialState, ...ons) {
+    /** @type {?} */
+    const map = new Map();
+    for (let on of ons) {
+        for (let type of on.types) {
+            if (map.has(type)) {
+                /** @type {?} */
+                const existingReducer = (/** @type {?} */ (map.get(type)));
+                /** @type {?} */
+                const newReducer = (/**
+                 * @param {?} state
+                 * @param {?} action
+                 * @return {?}
+                 */
+                (state, action) => on.reducer(existingReducer(state, action), action));
+                map.set(type, newReducer);
+            }
+            else {
+                map.set(type, on.reducer);
+            }
+        }
+    }
+    return (/**
+     * @param {?=} state
+     * @param {?=} action
+     * @return {?}
+     */
+    function (state = initialState, action) {
+        /** @type {?} */
+        const reducer = map.get(action.type);
+        return reducer ? reducer(state, action) : state;
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: src/index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: public_api.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: index.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: ngrx-store.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+
+
+//# sourceMappingURL=ngrx-store.js.map
+
+/***/ }),
+
 /***/ "lJxs":
 /*!**************************************************************!*\
   !*** ./node_modules/rxjs/_esm2015/internal/operators/map.js ***!
@@ -50215,6 +54967,269 @@ function isDate(value) {
     return value instanceof Date && !isNaN(+value);
 }
 //# sourceMappingURL=isDate.js.map
+
+/***/ }),
+
+/***/ "mrSG":
+/*!*****************************************!*\
+  !*** ./node_modules/tslib/tslib.es6.js ***!
+  \*****************************************/
+/*! exports provided: __extends, __assign, __rest, __decorate, __param, __metadata, __awaiter, __generator, __createBinding, __exportStar, __values, __read, __spread, __spreadArrays, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__extends", function() { return __extends; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__assign", function() { return __assign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__rest", function() { return __rest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__decorate", function() { return __decorate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__param", function() { return __param; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__metadata", function() { return __metadata; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__awaiter", function() { return __awaiter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__generator", function() { return __generator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__createBinding", function() { return __createBinding; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__exportStar", function() { return __exportStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__values", function() { return __values; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__read", function() { return __read; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spread", function() { return __spread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spreadArrays", function() { return __spreadArrays; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__await", function() { return __await; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncGenerator", function() { return __asyncGenerator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncDelegator", function() { return __asyncDelegator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncValues", function() { return __asyncValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__makeTemplateObject", function() { return __makeTemplateObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importStar", function() { return __importStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importDefault", function() { return __importDefault; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__classPrivateFieldGet", function() { return __classPrivateFieldGet; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__classPrivateFieldSet", function() { return __classPrivateFieldSet; });
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+var __createBinding = Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+});
+
+function __exportStar(m, o) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) __createBinding(o, m, p);
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+var __setModuleDefault = Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+}
+
 
 /***/ }),
 

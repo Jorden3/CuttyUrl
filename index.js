@@ -161,7 +161,7 @@ const init = async() => {
             try {
                 res = await URLdb.url.findOne({where: {shortUrl: req.query.url}});
                 if(res === null){
-                    return 'Link is not found'
+                    return boom.notFound('Link is not found');
                 }
                       
             } catch (error) {
@@ -213,10 +213,10 @@ const init = async() => {
                             }
                         });
                     } catch (error) {
-                        return error;
+                        return boom.conflict(error);
                     }
                 }
-                return error;
+                return boom.conflict(error);
             }
             return res;
         }
